@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>终端管理</title>
+    <link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/terminal.css"/>
+</head>
+<body>
+	<div class="weui_panel weui_panel_access">
+	  <div class="weui_search_bar" id="search_bar">
+		  <form class="weui_search_outer">
+		    <div class="weui_search_inner">
+		      <i class="weui_icon_search"></i>
+		      <input type="search" class="weui_search_input" id="search_input" onclick="search()" placeholder="搜索" required/>
+		      <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+		    </div>
+		    <label for="search_input" class="weui_search_text" id="search_text">
+		      <i class="weui_icon_search"></i>
+		      <span>搜索</span>
+		    </label>
+		  </form>
+		  <a href="javascript:" class="weui_search_cancel" id="search_cancel">搜索</a>
+		</div>
+	</div>
+	<!-- 商品列表 -->
+	<div class="weui_panel weui_panel_access">
+	  <div class="weui_panel_bd" data-bind="foreach: terminals">
+	    <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+	      <div class="weui_media_bd" data-bind="attr:{onclick: 'toLocation(\''+ ($data.type ? $data.type: 0) + '\',' + $data.id + ', 0)'}">
+	        <h4 class="weui_media_title" data-bind="text: $data.title"></h4>
+	        <p class="weui_media_desc" data-bind="text: '编号：' + $data.id"></p>
+	        <p class="weui_media_desc" data-bind="text: '渠道：' + $data.channel"></p>
+	        <p class="weui_media_desc" data-bind="text: '网点等级：' + $data.branchLevel"></p>
+	        <p class="weui_media_desc">网点类型：终端</p>
+	      </div>
+		  <div class="weui_btn weui_btn_mini weui_btn_primary" data-bind="attr:{onclick: 'toLocation(\''+ ($data.type ? $data.type: 0) + '\',' + $data.id + ', 1)'}">编辑</div>
+	    </a>
+	  </div>
+	</div>
+	<!-- 选择 -->
+	<div class="weui_cells weui_cells_radio" style="display: none">
+	</div>
+	<div class="bottomBtnBox">
+		<a href="javascript:;" class="weui_btn weui_btn_primary" onclick="toAdd()">新增终端</a>
+	</div>
+
+
+</body>
+	<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="UTF-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/wechat.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript">
+		function toAdd(){
+			$.actions({
+				actions: [{
+					text: "名烟名酒店",
+					onClick: function() {
+						window.location.href=PATH.PORTAL.TO_TERMINAL_ADD_ONE;
+					}
+				},{
+					text: "酒店",
+					onClick: function() {
+						window.location.href=PATH.PORTAL.TO_TERMINAL_ADD_TWO;
+					}
+				}]
+			});
+
+		}
+	</script>
+<script>
+	var viewModel = {
+		terminals : ko.observableArray([]),
+		initList: function(){
+			var _this = this;
+			var options = {};
+			options.createrId = '612';
+			options.key = $('#search_input').val();
+			$.get(PATH.PORTAL.SALESMAN_TERMINAL, options, function(data){
+				var array = [];
+				$.each(data, function(i, value){
+					array[i] = value;
+					//TYPE暂时没有/默认跳转到1
+					array[i].url = PATH.PORTAL.TO_TERMINAL_ADD_ONE;
+					//TODO
+				});
+				_this.terminals(array);
+			});
+		}
+	};
+	ko.applyBindings(viewModel);
+
+	$(function () {
+		viewModel.initList();
+	});
+
+	var toLocation = function(type, id, status){
+		var url = '';
+		if(type && (type === '0' || type == '名烟名酒店')){
+			url = PATH.PORTAL.TO_TERMINAL_ADD_ONE;
+		}else{
+			url = PATH.PORTAL.TO_TERMINAL_ADD_TWO;
+		}
+		url += ('?id=' + id + '&status=' + status);
+		location.href = url;
+	};
+
+	var search = function(){
+		viewModel.initList();
+	};
+</script>
+</html>

@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jnc-marketing-clustering</artifactId>
+	<packaging>jar</packaging>
+	<name>JNC Marketing Clustering</name>
+	<parent>
+		<groupId>com.sap.jnc.marketing</groupId>
+		<artifactId>jnc-marketing</artifactId>
+		<version>${com.sap.jnc.marketing.version}</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<dependencies>
+		<!-- JNC Dependencies -->
+		<dependency>
+			<groupId>com.sap.jnc.marketing</groupId>
+			<artifactId>jnc-marketing-infrastructure</artifactId>
+			<version>${com.sap.jnc.marketing.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>8.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<!-- Copy the Redis cluster session properties file based on the profile -->
+					<execution>
+						<id>db-properties</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<outputDirectory>src/main/resources/META-INF</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources/META-INF/profiles/${runtime}</directory>
+								</resource>
+							</resources>
+							<overwrite>true</overwrite>
+						</configuration>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

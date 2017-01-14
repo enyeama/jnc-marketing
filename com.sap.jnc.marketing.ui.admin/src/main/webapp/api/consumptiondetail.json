@@ -1,0 +1,44 @@
+[{
+	"id":"id1",
+	"verificationStatus": "未核销",
+	"verificationDate": "20160101",
+	"positionId": "positionID1",
+	"positionDescription": "城市经理",
+	"employeeName": "张三",
+	"materialID": "M00001",
+	"materialName": "小酒 500*1*24",
+	"paidQuantity": "3",
+	"verifiedQuantity": "2",
+	"differenceQuantity": 1,
+	"verificationComment": "xxx活动"
+},
+{
+	"id":"id1",
+	"verificationStatus": "未核销",
+	"verificationDate": "20160101",
+	"positionId": "positionID1",
+	"positionDescription": "城市经理",
+	"employeeName": "张三",
+	"materialID": "M00001",
+	"materialName": "小酒 500*1*24",
+	"paidQuantity": "3",
+	"verifiedQuantity": "2",
+	"differenceQuantity": 1,
+	"verificationComment": "xxx活动"
+},
+{
+	"id":"id1",
+	"verificationStatus": "未核销",
+	"verificationDate": "20160101",
+	"positionId": "positionID1",
+	"positionDescription": "城市经理",
+	"employeeName": "张三",
+	"materialID": "M00001",
+	"materialName": "小酒 500*1*24",
+	"paidQuantity": "3",
+	"verifiedQuantity": "2",
+	"differenceQuantity": 1,
+	"verificationComment": "xxx活动"
+}
+
+]

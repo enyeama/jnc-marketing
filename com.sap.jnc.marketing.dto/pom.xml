@@ -1,0 +1,23 @@
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jnc-marketing-dto</artifactId>
+	<packaging>jar</packaging>
+	<name>JNC Marketing Data Transfer Object</name>
+	<parent>
+		<groupId>com.sap.jnc.marketing</groupId>
+		<artifactId>jnc-marketing</artifactId>
+		<version>${com.sap.jnc.marketing.version}</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<dependencies>
+		<!-- JNC Dependencies -->
+        <dependency>
+            <groupId>com.sap.jnc.marketing</groupId>
+            <artifactId>jnc-marketing-persistence</artifactId>
+            <version>${com.sap.jnc.marketing.version}</version>
+        </dependency>
+	</dependencies>
+</project>

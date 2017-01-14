@@ -1,0 +1,12 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "发货明细",
+		"href": "sparematerial/deliverydetail"
+	},
+	{
+		"name": "兑付明细",
+		"href": "sparematerial/consumptiondetail"
+	}]
+}]

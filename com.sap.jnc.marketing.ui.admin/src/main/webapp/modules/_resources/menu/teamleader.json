@@ -1,0 +1,20 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "核销申请",
+		"href": "banquet/banquets/application"
+	}]
+},
+{
+	"name": "备用物料",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "发货明细",
+		"href": "sparematerial/deliverydetail"
+	},
+	{
+		"name": "兑付明细",
+		"href": "sparematerial/consumptiondetail"
+	}]
+}]

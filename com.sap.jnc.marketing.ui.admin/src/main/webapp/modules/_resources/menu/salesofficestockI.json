@@ -1,0 +1,8 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "宴会管理",
+		"href": "banquet/banquet/manage"
+	}]
+}]

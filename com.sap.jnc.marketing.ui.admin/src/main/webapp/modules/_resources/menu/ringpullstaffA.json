@@ -1,0 +1,8 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "签收核销申请",
+		"href": "banquet/banquets/sign"
+	}]
+}]

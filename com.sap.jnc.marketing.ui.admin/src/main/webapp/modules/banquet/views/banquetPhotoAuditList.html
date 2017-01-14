@@ -1,0 +1,224 @@
+﻿<div class="row">
+	<div class="col-lg-12">
+		<div class="hpanel">
+			<script type="text/ng-template" id="firstDialogId">
+        <div class="ngdialog-message">
+            <h3>ngDialog template</h3>
+            <p ng-show="theme">Test content for <code>{{theme}}</code></p>
+            <p ng-show="ngDialogId">Dialog Id: <code>{{ngDialogId}}</code></p>
+            <p class="data-passed-through" ng-show="ngDialogData.foo">Data passed through: <code>{{ngDialogData.foo}}</code></p>
+            <p ng-show="dialogModel.message">Scope passed through: <code>{{dialogModel.message}}</code></p>
+            <p>Close this dialog: <button class="inline close-this-dialog" ng-click="closeThisDialog()">Close</button></p>
+
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary"
+                ng-dialog="secondDialogId"
+                ng-dialog-class="ngdialog-theme-default"
+                ng-dialog-controller="SecondModalCtrl"
+                ng-dialog-close-previous>Close and open</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()">Open next</button>
+        </div>
+    </script>
+			<div class="panel-heading">
+				 <a href="#">宴会照片审核
+					<!-- button class="btn btn-success btn-xs pull-right" type="button">
+						<i class="fa fa-plus"></i> <span class="bold">kangkang</span>
+					</button-->
+				</a>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div>
+						<div class="col-lg-2">
+							<label>核销状态</label> <input type="text" value=""
+								class="form-control" placeholder="" width="10px"
+								ng-keypress="searchKeyDown($event)" ng-model="criteria.keywords.officeName"/>
+						</div>
+						<div class="col-lg-2">
+							<label>稽核状态</label> <input type="text" value="" 
+								class="form-control" placeholder=""
+								ng-keypress="searchKeyDown($event)" ng-model="criteria.keywords.id"/>
+						</div>
+						<div class="col-lg-2">
+							<label>照片核销状态</label> <input type="text" id="banquetTimeFrom"
+								class="form-control pull-right" ng-model="criteria.keywords.banquetTimeFrom">
+						</div>
+						<div class="col-lg-2">
+							<label>活动单号</label> <input type="text" id="banquetTimeTo"
+								class="form-control pull-right" ng-model="criteria.keywords.banquetTimeTo">
+						</div>
+						<div class="col-lg-2">
+							<label>报备单号</label>
+							<!--important-->
+							<select class="form-control" ng-model="criteria.keywords.banquetStatus"
+								ng-options="statusItem.value as statusItem.label for statusItem in banquetStatusEnum"></select>
+						</div>
+						<div class="col-lg-2">
+							<label>执行月份</label>
+							<!--important-->
+							<select class="form-control" ng-model="criteria.keywords.banquetStatus"
+								ng-options="statusItem.value as statusItem.label for statusItem in criteria.monthConfig"></select>
+						</div>
+						<div class="col-lg-2">
+							<label>费用细类</label>
+							<!--important-->
+							<select class="form-control" ng-model="criteria.keywords.banquetStatus"
+								ng-options="statusItem.value as statusItem.label for statusItem in banquetStatusEnum"></select>
+						</div>
+						<div class="col-lg-2">
+							<button type="button" class="btn btn-info search-btn" data-toggle="modal"
+								ng-click="searchBanquetItem()">查询</button>
+							<button type="button" class="btn btn-info search-btn" data-toggle="modal"
+								ng-click="searchBanquetItem()">重置</button>
+						</div>
+					</div>
+					<!--Start Dialog div-->
+				</div>
+
+				<!--End Dialog div-->
+			</div>
+
+			<div class="table-list-div" style="margin-left:10px;height:auto">
+				<table id="orderList" style="width: 1350px;height:auto;"" cellpadding="0" cellspacing="0"
+					class="footable table table-stripped table-bordered toggle-arrow-tiny" data-filter=#filter>
+					<thead>
+						<tr class="info">
+							<th width="80"></th>
+							<th width="200">宴会地址</th>
+							<th width="100">使用时间</th>
+							<th width="100">配送时间</th>
+							<th width="100">宴会备注</th>
+							<th width="100">客户姓名</th>
+							<th width="100">联系电话</th>
+							<th width="80">业务员</th>
+							<th width="100">成交价格</th>
+							<th width="100">上传照片状态</th>
+							<th width="80">开放次数</th>
+							<th width="80">执行月份</th>
+							<th width="80">零核销</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in banquetData" ng-if="banquetData.length>0" data-ng-click="showDetail(item.productId)">
+							<td width="">
+								<div class="icheckbox_minimal-blue" aria-checked="false"
+									aria-disabled="false">
+								 <input type="checkbox" id="{{item.id}}" name="banquetReportItem"  ng-click="updateSelected(item.id,'banquetReportItem');">
+								</div>
+							</td>
+						
+                             <td ng-bind="item.product"></td>
+						
+							<td ng-bind="item.id"></td>
+							<td ng-bind="{{item.banquetTime}}"></td>
+							<td ng-bind="item.banquetAddr"></td>
+							<td ng-bind="item.banquetTime"></td>
+							<td ng-bind="item.banquetTime"></td>
+							<td ng-bind="item.status"></td>
+							<td ng-bind="item.banquetTime"></td>
+							<td ng-bind="item.dealerName"></td>
+							<td ng-bind="item.terminal"></td>
+							<td ng-bind="item.customerName"></td>
+							<td ng-bind="item.customerPhone"></td>
+						</tr>
+						<tr ng-if="!banquetData.length>0" data-ng-click="testddd()">
+							<td td colspan="13" align="center" style="font-weight:bold;">没有相关记录</td>
+						</tr>
+					</tbody>
+					<tfoot>
+					 <div id="pagination">
+					  <tr>
+					    <td colspan="13" valign="middle">
+						    <div style="float: left">
+								<label>显示</label> 
+								<select ng-model="criteria.paging.size" ng-options="statusItem.value as statusItem.label for statusItem in criteria.pageConfig"
+								  ng-change="searchBanquetItem()">
+								</select> 
+								<label>条/页</label>
+					        </div>
+							<div style="float:left;margin-left:20px;">
+								<button ng-disabled="criteria.paging.index == 0"
+									ng-click="changePageNo('first')">首页</button>
+								<button ng-disabled="criteria.paging.index == 0"
+									ng-click="changePageNo('previous')">上一页</button>
+								<label>{{criteria.paging.index}}/{{numberOfPages}}</label>
+								<button ng-disabled="currentPage >= numberOfPages-1"
+									ng-click="changePageNo('next')">下一页</button>
+								<button ng-disabled="currentPage >= data.length/pageSize - 1"
+									ng-click="changePageNo('last')">末页</button>
+								<input type="text" class="page-number-input" ng-model="pagenum"
+									ng-keypress="pageNoKeyDown($event)" />
+								<button ng-click="switchPage()">转到</button>
+							</div>
+                          </td>
+                        </tr>
+                        </div>
+                        
+                        <div style="clear:both;">
+                        </div>
+                       
+					</tfoot>
+				</table>
+			</div>
+			 <div style="height:100px;margin-left:10px;">
+             <label>宴会信息</label>
+             <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="right" width="10%"><label>桌数:</label></td>
+                <td width="20">&nbsp;</td>
+                <td width="20%" align="left">30</td>
+                <td align="right"  width="10%"><label>使用数量:</label></td>
+                <td width="20">&nbsp;</td>
+                <td width="10%" align="left">90</td>
+                <td align="right"  width="10%"><label>使用时间:</label></td>
+                <td width="20">&nbsp;</td>
+                <td width="10%" align="left">2016-06-17</td>
+                <td align="right"  width="10%"><label>宴会类型:</label></td>
+                <td width="20">&nbsp;</td>
+                <td width="10%" align="left">满月酒</td>
+              </tr>
+              <tr>
+                <td align="right"  width="15%"><label>宴会地址:</label></td> 
+                <td width="20">&nbsp;</td>
+                <td align="left" colspan="11">成都市武侯区</td>
+              </tr>
+              <tr>
+                <td align="right"  width="15%"><label>宴会备注:</label></td> 
+                <td width="20">&nbsp;</td>
+                <td align="left" colspan="11">XXX结婚庆典</td>
+              </tr>
+             </table>
+            </div>
+             <div style="height:200px;margin-left:10px;">
+             <label>手机上传凭证信息</label>
+             <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+               
+              </tr>
+              <tr>
+                
+              </tr>
+             </table>
+            </div>
+            <div style="height:200px;margin-left:10px;">
+             <label>审批备注</label>
+             <table width="90%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="80%"><textArea rows="5" cols="180"></textArea></td>
+              </tr>
+              <tr>
+                <td align="right">
+                <button type="button" class="btn btn-default"
+										data-dismiss="modal" ng-click="verificationReport(4)">不合格</button>
+				<button type="button" class="btn btn-info" ng-click="verificationReport(2)">合格</button>
+                </td>
+              </tr>
+             </table>
+            </div>
+			<!--end for table div-->
+		</div>
+	</div>
+</div>
+</div>
+</div>

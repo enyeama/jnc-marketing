@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>KA门店列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/terminal.css"/>
+</head>
+<body>
+	<div class="weui_panel">
+	  <div class="weui_panel_bd">
+	    <div class="weui_media_box weui_media_small_appmsg">
+	      <div class="weui_cells weui_cells_access" data-bind="foreach: infos">
+	        <a class="weui_cell" href="javascript:;" data-bind="attr:{onclick: 'toDetail(\''+ $data.id +'\')'}">
+	          <div class="weui_cell_hd">
+				  <img data-bind="attr:{src: $data.pictureUrl}"></div>
+	          <div class="weui_cell_bd weui_cell_primary">
+	            <p data-bind="text: $data.branchName"></p>
+	          </div>
+	          <span class="weui_cell_ft"></span>
+	        </a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</body>
+	<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="UTF-8"></script>
+	<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/validator.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/wechat.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	var viewModel = {
+		infos : ko.observableArray([]),
+		initList: function(){
+			var _this = this;
+			var options = {};
+			options.kaSalesId = '5401';
+			$.get(PATH.PORTAL.KA_LIST, options, function(data){
+				_this.infos(data);
+			});
+		}
+	};
+
+	ko.applyBindings(viewModel);
+	$(function () {
+		viewModel.initList();
+	});
+
+	function toDetail(id){
+		location.href = PATH.PORTAL.TO_TERMINAL_ACCOUNT_ADD + '?terminalId=' + id;
+	}
+</script>
+</html>

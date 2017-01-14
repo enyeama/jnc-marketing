@@ -1,0 +1,21 @@
+[{
+	"name": "收发货",
+	"icon": "fa-list-alt",
+	"items": [
+	{
+		"name": "扫码收货",
+		"href": "dealers/smIn"
+	},
+	{
+		"name": "扫码发货",
+		"href": "dealers/smNPtOut"
+	}]
+},
+{
+	"name": "订单管理",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "终端订单",
+		"href": "dealers/smNPtOrders"
+	}]
+}]

@@ -1,0 +1,13 @@
+[{
+	"name": "稽核",
+	"icon": "fa-list-alt",
+	"items": [{
+		"id": 9,
+		"name": "分配稽核任务",
+		"href": "audit/auditQuery/504&assign"
+	},
+	{
+		"name": "审核稽核结果",
+		"href": "audit/auditQuery/504&check"
+	}]
+}]

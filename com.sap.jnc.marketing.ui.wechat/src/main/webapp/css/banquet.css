@@ -1,0 +1,8 @@
+body{
+  overflow-x: hidden;
+  background: #fbf9fe;
+}
+.weui_media_title .weui_media_label{
+	display:inline-block;
+	min-width:5em;
+}

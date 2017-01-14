@@ -1,0 +1,16 @@
+[{
+	"name": "报表",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "红包发放明细报表",
+		"href": ""
+	}]
+},
+{
+	"name": "业务配置",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "支付账户配置",
+		"href": "payment/list"
+	}]
+}]

@@ -1,0 +1,206 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "核销申请",
+		"href": "banquet/banquets/application"
+	},
+	{
+		"name": "宴会审批",
+		"href": "banquet/banquets/writeoff"
+	},
+	{
+		"name": "宴会全流程报表",
+		"href": "banquet/banquetProcessReport"
+	},
+	{
+		"name": "签收核销申请",
+		"href": "banquet/banquets/sign"
+	},
+	{
+		"name": "宴会拉环报表",
+		"href": "banquet/ringPostListReport"
+	},
+	{
+		"name": "拉环结果明细表",
+		"href": "banquet/ringPostList/detailList"
+	},
+	{
+		"name": "拉环核数",
+		"href": "banquet/ringPostList/verifiyCount"
+	},
+	{
+		"name": "拉环验证",
+		"href": "banquet/ringPostList/verification"
+	},
+	{
+		"name": "宴会照片审批",
+		"href": "banquet/banquetPhotoAuditList"
+	},
+	{
+		"name": "核销三项统计报表",
+		"href": "banquet/banquetSaleReport"
+	},
+	{
+		"name": "宴会管理",
+		"href": "/banquet/banquet/manage"
+	}]
+},
+{
+	"name": "移动访销",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "人事子范围-DMS大类",
+		"href": "ydfx/prodectsalescategory"
+	},{
+		"name":"经销商-组长-产品",
+		"href":"ydfx/dealerconfig"
+	}]
+},
+{
+	"name": "稽核",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "宴会复核导入",
+		"href": "banquet/banquet?type=reviewImport"
+	},
+	{
+		"name": "稽核超级管理",
+		"href": "audit/audits?type=market"
+	},
+	{
+		"name": "稽核人员分配",
+		"href": "audit/audits?type=market"
+	},
+	{
+		"name": "稽核查询",
+		"href": "audit/auditQuery/12&query"
+	},
+	{
+		"name": "分配稽核任务",
+		"href": "audit/auditQuery/503&assign"
+	},{
+		"name":"审核稽核结果",
+		"href":"audit/auditQuery/503&check"
+	}]
+},
+{
+	"name": "业务配置",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "红包金额配置",
+		"href": "bonus/list"
+	},
+	{
+		"name": "支付账户配置",
+		"href": "payment/list"
+	}]
+},
+{
+	"name": "备用物料",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "兑付明细",
+		"href": "sparematerial/consumptiondetail"
+	},
+	{
+		"name": "微信扫码领酒记录",
+		"href": "sparematerial/wechatpromotiondetail"
+	},
+	{
+		"name": "安全库存管理",
+		"href": "sparematerial/safestock"
+	},
+	{
+		"name": "发货明细",
+		"href": "sparematerial/deliverydetail"
+	}]
+},
+{
+	"name": "报表",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "物流环节返利报表",
+		"href": "bonus/logisticsRebateList"
+	},
+	{
+		"name": "红包发放明细报表",
+		"href": ""
+	}]
+},
+{
+	"name": "数据导入",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "HR主数据",
+		"href": "migration/employee"
+	},
+	{
+		"name": "经销商",
+		"href": "migration/dealer"
+	},
+	{
+		"name": "物料主数据",
+		"href": "migration/product"
+	},
+	{
+		"name": "旧物流码",
+		"href": "旧物流码"
+	},
+	{
+		"name": "合同",
+		"href": "migration/contract"
+	}]
+},
+{
+	"name": "收发货",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "扫码收货",
+		"href": "dealers/smIn"
+	},
+	{
+		"name": "非平台出库",
+		"href": "dealers/smNPtOut"
+	},
+	{
+		"name": "扫码发货",
+		"href": "dealers/smPtOut"
+	}]
+},
+{
+	"name": "订单管理",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "终端订单",
+		"href": "dealers/smNPtOrders"
+	}]
+},
+{
+	"name": "KA考核",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "送货及时率",
+		"href": "ka/goodsratioreport"
+	},
+	{
+		"name": "到货汇总",
+		"href": "ka/goodsreceiptreport"
+	}]
+},
+{
+	"name": "KA订单管理",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "KA网点订单",
+		"href": "ka/ordermanagement"
+	}]
+},
+{
+	"name": "KA网点维护",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "KA网点信息维护",
+		"href": "ka/branchmanagement"
+	}]
+}]

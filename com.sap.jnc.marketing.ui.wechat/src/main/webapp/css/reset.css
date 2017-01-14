@@ -1,0 +1,14 @@
+/* reset */
+.weui_media_box .weui_media_title{
+	font-size: 14px;
+}
+.weui_media_box.weui_media_appmsg .weui_media_appmsg_thumb{
+	border-radius: 50%;
+}
+.weui_grid{
+	width: 50%;
+}
+.weui_media_box.weui_media_appmsg .weui_media_bd.moneyBox{
+	text-align: center;
+	line-height: 1.4rem;
+}

@@ -1,0 +1,242 @@
+<!-- author: Zero Yu -->
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa"></i> 稽核 > <a href="#/audit/assign">人员分配界面</a>
+			</h2>
+		</div>
+	</div>
+</div>
+
+<div class="content">
+	<!-- search panel -->
+	<div class="hpanel panel-default">
+		<div class="text-right marginBottm10">
+			<input type="button" class="btn btn-info" value="显示/隐藏搜索条件"
+				data-toggle="collapse" ng-click="toggleDisplay()">
+		</div>
+		<div id="searchPanel" class="panel-body panel-collapse collapse in">
+			<form name="myForm">
+				<div class="row">
+					<div class="form-group col-lg-12 col-md-12">
+						<label class="col-lg-2 col-md-4 control-label">人员</label> <select
+							id="formAuditors" ng-model="criteria.keywords.auditorId"
+							class="selectpicker col-lg-2"
+							ng-options="option.id as option.name for option in auditors">
+						</select>
+					</div>
+					<div class="form-group col-lg-12 col-md-12">
+						<label class="col-lg-2 col-md-4 control-label">职务</label> <select
+							ng-model="criteria.keywords.jobId" class="selectpicker col-lg-2">
+							<option value="12">稽核员</option>
+							<option value="503">省区经理</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-12 col-md-12">
+						<label class="col-lg-2 col-md-4 control-label">办事处</label>
+						<!-- <select
+							id="formOffices" ng-model="criteria.keywords.officeId"
+							class="selectpicker col-lg-2"
+							ng-options="option.officeId as option.officeName for option in offices"></select> -->
+						<input id="formOffices" ng-model="criteria.keywords.officeId" value="officeName" type="text"
+							class="col-lg-2" />
+					</div>
+					<div class="form-group col-lg-12 col-md-12">
+						<label class="col-lg-2 col-md-4 control-label">生效日期</label> <input
+							id="formDate" type="text" ng-model="criteria.keywords.validFrom"
+							class="col-lg-2">
+					</div>
+					<div class="form-group col-lg-12 col-md-12">
+						<label class="col-lg-2 col-md-4 control-label">是否已分配</label> <input
+							type="checkbox" ng-model="criteria.keywords.assigned">
+					</div>
+				</div>
+				<div class="text-center">
+					<input type="button" class="btn btn-primary rightMarginSpacing"
+						value="查询" data-toggle="collapse" ng-click="search()"> <input
+						type="reset" ng-click="clearForm()" class="btn btn-default"
+						value="清空">
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- result table -->
+	<div class="tableContainer">
+		<table
+			class="footable table table-stripped table-bordered no-wrap toggle-arrow-tiny dataTable jnc-table"
+			data-filter=#filter>
+			<thead>
+				<tr>
+					<th width="150">操作</th>
+					<th>人员ID</th>
+					<th>人员姓名</th>
+					<th>岗位</th>
+					<th>职务</th>
+					<th>办事ID</th>
+					<th>办事处名称</th>
+					<th>生效日期开始</th>
+					<th>生效日期终止</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in model.content" ng-if="model.content.length>0">
+					<td><input type="button" class="btn btn-primary btn-xs"
+						value="指定办事处" ng-click="openAssignDialog()" ng-model="item" /> <input
+						type="button" class="btn btn-primary btn-xs" value="终止"
+						ng-click="openTerminateDialog()" ng-model="item" /></td>
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.jobName}}</td>
+					<td>{{item.positionName}}</td>
+					<td>{{item.officeId}}</td>
+					<td>{{item.officeName}}</td>
+					<td>{{item.validFrom | date:'yyyy-MM-dd'}}</td>
+					<td>{{item.validTo}}</td>
+				</tr>
+				<tr>
+					<td colspan="9" ng-if="model.content.length===0" class="alignLeft">没有相关记录</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div ng-show="model.totalElements">
+		<div style="float: left">
+			<span>每页显示</span> <select ng-model="criteria.paging.size"
+				id="pageSize" ng-change="page()">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+			</select> <span>条</span>
+		</div>
+		<div style="float: right">
+			<button ng-hide="model.first" ng-click="page(0)">首页</button>
+			<button ng-hide="model.first" ng-click="page(model.number - 1)">上一页</button>
+			{{currentPage+1}}/{{model.totalPages}}
+			<button ng-hide="model.last" ng-click="page(model.number + 1)">下一页</button>
+			<button ng-hide="model.last" ng-click="page(model.totalPages - 1)">末页</button>
+			<input type="text"
+				class="page-number-input input-small input-align-center"
+				align="center" />
+			<button ng-click="">转到</button>
+		</div>
+	</div>
+
+	<!-- start assign dialog -->
+	<div class="modal fade" id="assignModal" tabindex="-1" role="dialog"
+		aria-labelledby="assignModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">指定办事处</h4>
+				</div>
+				<div class="modal-body">
+					<div class="hpanel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<form class="form form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">人员ID</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" ng-readonly="true"
+												ng-model="item.id" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">人员姓名</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" ng-readonly="true"
+												ng-model="item.name" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">岗位</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" ng-readonly="true"
+												ng-model="item.jobName" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">职务</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" ng-readonly="true"
+												ng-model="item.positionName" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">生效日期</label>
+										<div class="col-sm-4">
+											<input id="assignDialogDateFrom" type="text"
+												class="form-control" ng-model="item.validFrom" />
+										</div>
+										<label class="col-sm-1 control-label">到</label>
+										<div class="col-sm-4">
+											<input id="assignDialogDateTo" type="text"
+												class="form-control" ng-model="item.validTo" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">办事处</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control"
+												ng-model="item.officeName" />
+											<!-- <select
+												ng-model="criteria.keywords.officeId"
+												class="selectpicker form-control"
+												ng-options="option.officeId as option.officeName for option in offices">
+											</select> -->
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end assign dialog -->
+
+	<!-- start terminate dialog -->
+	<div class="modal fade" id="terminateModal" tabindex="-1" role="dialog"
+		aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">终止关联</h4>
+				</div>
+				<div style="margin: 20px 0px 20px 0px">
+					<form class="form form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">输入终止日期</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" ng-readonly="true"
+									ng-model="item.validTo" />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end terminate dialog -->
+</div>

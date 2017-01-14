@@ -1,0 +1,59 @@
+<div class="bs-loading-container">
+	<div class="normalheader transition animated fadeIn small-header">
+		<div class="hpanel">
+			<div class="panel-body">
+				<h2 class="font-light m-b-xs">
+					<i class="fa fa-volume-up"></i> 人员主数据导入
+				</h2>
+			</div>
+		</div>
+	</div>
+	<div class="content">
+			<div class="form-group">
+		    <div class="radio">
+		        <label>
+		            <input type="radio" name="type" ng-checked="true" ng-model="type" ng-value=false>增量导入
+		        </label>
+		    </div>
+		    <div class="radio">
+		        <label>
+		            <input type="radio" name="type" ng-model="type" ng-value=true>期初导入
+		        </label>
+		    </div>
+		</div>
+		<div class="row">
+			<form id="uploadForm" enctype="multipart/form-data" method="POST">
+				<div class="col-lg-6">
+					<input type="file" id="file" class="form-control" name="file" placeholder="">
+				</div>
+				<div class="col-lg-6">
+					<button id="submit" type="submit" class="btn btn-primary" ng-click="submitForm()">确认导入</button>
+				</div>
+			</form>
+			<div class="clearfix"></div>
+			<hr />
+			<div class="col-lg-12">
+				<div class="hpanel">
+					<div class="panel-body">
+						<table id="orderList" class="footable table table-stripped toggle-arrow-tiny" data-page-size="20" data-filter=#filter>
+							<thead>
+								<tr>
+									<th>Excel页名称</th>
+									<th>Excel行号</th>
+									<th>错误消息</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="result in model track by $index">
+									<td ng-bind="result.excelName"></td>
+									<td ng-bind="result.excelRow"></td>
+									<td ng-bind="result.checkResult"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

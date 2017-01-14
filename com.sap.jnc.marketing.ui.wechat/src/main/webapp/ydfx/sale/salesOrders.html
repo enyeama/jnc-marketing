@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>我的订单</title>
+<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../css/salesman.css" />
+</head>
+<body>
+	<div class="weui_tab">
+		<div class="weui_navbar">
+			<a href="#" class="weui_navbar_item weui_navbar_item_on" onclick="filterOrders('CANCEL')">全部</a>
+			<a href="#" class="weui_navbar_item" onclick="filterOrders('WAITFORDELIVERY')">待发货</a>
+			<a href="#" class="weui_navbar_item" onclick="filterOrders('INDELIVERY')">配送中</a>
+			<a href="#" class="weui_navbar_item" onclick="filterOrders('FINISH')">完成</a>
+		</div>
+		<div class="weui_tab_bd">
+			<!-- 商品列表 -->
+			<div class="weui_panel weui_panel_access">
+				<div class="weui_panel_bd" data-bind="foreach: orders">
+					<a data-bind="attr: {href: 'salesOrderView.html?orderId=' + $data.orderNO}" class="weui_media_box weui_media_appmsg clear">
+						<div class="weui_media_bd">
+							<h4 class="weui_media_title" data-bind="text: '订单编号：' + $data.orderNO"></h4>
+							<p class="weui_media_desc" data-bind="text: $data.materialName"></p>
+							<p class="weui_media_desc" data-bind="text: $data.address"></p>
+							<p class="weui_media_desc" data-bind="text: '联系电话：' + $data.tel"></p>
+						</div>
+						<div class="" style="text-align: right;">
+							<h4 class="weui_media_title status" data-bind="text: $data.status"></h4>
+							<p class="weui_media_desc" data-bind="text: $data.quantity"></p>
+							<p class="weui_media_desc">&nbsp;</p>
+							<p class="weui_media_desc">&nbsp;</p>
+						</div>
+					</a>
+					<a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_default bottombtn" 
+						data-bind="visible: $data.statusValue == 1, click: function() { viewModel.cancelOrder($data.orderNO) }">取消订单</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bottomBtnBox">
+		<a data-bind="attr: {href: 'salesOrderAdd.html?terminalId=' + $root.terminalId() + '&salesId=' + $root.salesId()}" class="weui_btn weui_btn_primary">新增订单</a>
+	</div>
+	
+</body>
+<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var viewModel = {
+		orders: ko.observableArray([]),
+		terminalId: ko.observable(),
+		salesId: ko.observable(),
+		initOrders: function() {
+			var _this = this;
+			// load data .... // hard code terminalId and salesmanId
+			$.showLoading("数据加载中...");
+			$.get(PATH.PORTAL.SALESMAN_ORDERS, {
+				terminalId: viewModel.terminalId(), 
+				salesmanId: viewModel.salesId(),
+				status: 'CANCEL'
+			}, function(data) {
+				if (data) {
+					_this.orders(data);
+				}
+				$.hideLoading();
+			});
+		},
+		cancelOrder: function(orderId) {
+			$.showLoading("正在处理...");
+			$.post(PATH.PORTAL.SALESMAN_ORDERS + '/' + orderId).done(function(data) {
+				// remove from order list
+				$(viewModel.orders()).each(function(idx, order) {
+					if (order.orderNO === data.orderNO) {
+						order.status = data.status;
+						var arr = viewModel.orders();
+						arr.splice(idx, 1, order);
+						viewModel.orders(arr);
+					}
+				});
+				$.hideLoading();
+				$.toast("订单已取消");
+			}).fail(function(response) {
+				$.hideLoading();
+				$.toast("处理失败", "forbidden");
+			});
+		}
+	};
+	ko.applyBindings(viewModel);
+	
+	var filterOrders = function(status) {
+		// load data .... // hard code terminalId and salesmanId
+		$.showLoading("数据加载中...");
+		$.get(PATH.PORTAL.SALESMAN_ORDERS, {terminalId: viewModel.terminalId(), salesmanId: viewModel.salesId(), 'status': status})
+		.done(function(data) {
+			viewModel.orders(data);
+			$.hideLoading();
+		})
+		.fail(function(response) {
+			$.hideLoading();
+			$.toast("数据加载失败", "forbidden");
+		});
+	}
+	
+	$(function() {
+		// get terminalId
+		viewModel.terminalId(COMMON.METHOD.GET_QUERY_STRING('terminalId'));
+		viewModel.salesId(CONSTANT.YDFX.salesExtId);
+		viewModel.initOrders();
+
+		var hideAdd = COMMON.METHOD.GET_QUERY_STRING('hideAdd');
+		if(hideAdd){
+			$('.bottomBtnBox').hide();
+		}
+	});
+</script>
+</html>

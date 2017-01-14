@@ -1,0 +1,12 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "宴会拉环报表",
+		"href": "banquet/ringPostListReport"
+	},
+	{
+		"name": "拉环结果明细表",
+		"href": "banquet/ringPostList/detailList"
+	}]
+}]

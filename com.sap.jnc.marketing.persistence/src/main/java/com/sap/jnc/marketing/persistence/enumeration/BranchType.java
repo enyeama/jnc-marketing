@@ -1,0 +1,44 @@
+package com.sap.jnc.marketing.persistence.enumeration;
+
+import com.sap.jnc.marketing.infrastructure.shared.enumeration.DisplayableEnumModel;
+
+public enum BranchType implements DisplayableEnumModel {
+
+	TERMINAL(0, "终端");
+
+	private final int value;
+	private final String label;
+
+	BranchType(int value, String label) {
+		this.value = value;
+		this.label = label;
+	}
+
+	@Override
+	public int getIntValue() {
+		return value;
+	}
+
+	@Override
+	public String getLabel() {
+		return label;
+	}
+
+	public static BranchType valueOf(int value) {
+		for (BranchType candidate : values()) {
+			if (candidate.value == value) {
+				return candidate;
+			}
+		}
+		return null;
+	}
+
+	public static BranchType labelOf(String branchType) {
+		for (BranchType candidate : values()) {
+			if (candidate.getLabel().equals(branchType)) {
+				return candidate;
+			}
+		}
+		return null;
+	}
+}

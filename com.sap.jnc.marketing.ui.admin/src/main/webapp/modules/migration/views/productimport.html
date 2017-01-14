@@ -1,0 +1,210 @@
+<link rel="stylesheet" href="vendor/datatables.net-bs/css/dataTables.bootstrap.min.css" />
+<link rel="stylesheet" href="vendor/datatables.net-buttons/css/buttons.dataTables.min.css" />
+
+<script src="vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa fa-volume-up"></i> 物料主数据导入
+			</h2>
+		</div>
+	</div>
+</div>
+
+<div class="content">
+	<div class="hpanel panel-default">
+		<div class="text-right marginBottm10">
+			<button type="button" class="btn btn-info" ng-click="returnToDealer()">返回</button>
+       	</div>
+		<div id="fitlerPanel" class="panel-body panel-collapse collapse in">
+			<form name="myForm" role="form" ng-submit="uploadAndSubmit()" class="form-inline" enctype="multipart/form-data">
+				<div class="row">
+					<div class="form-group col-lg-6 col-md-8">
+						<label for="uploadFileInput" class="col-lg-2 col-md-3 control-label">文件</label> 
+						<input id="uploadFileInput" type="file" name="file">
+					</div>
+				</div>
+				<div class="row text-center">
+					<button type="submit" class="btn btn-info">提交</button>
+					<input type="reset"  class="btn btn-default" value="清空" />
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div class="tableContainer">
+		<ul class="nav nav-tabs nav-pills" role="tablist">
+			<li role="presentation" class="active"><a href="migration/productimport#group" aria-controls="home" role="tab" data-toggle="tab">物料组</a></li>
+			<li role="presentation"><a href="migration/productimport#type" aria-controls="profile" role="tab" data-toggle="tab">物料类型</a></li>
+			<li role="presentation"><a href="migration/productimport#erpcategory" aria-controls="messages" role="tab" data-toggle="tab">14级分类编码</a></li>
+			<li role="presentation"><a href="migration/productimport#dmscategory" aria-controls="settings" role="tab" data-toggle="tab">DMS三级大类</a></li>
+			<li role="presentation"><a href="migration/productimport#channel" aria-controls="settings" role="tab" data-toggle="tab">渠道</a></li>
+			<li role="presentation"><a href="migration/productimport#product" aria-controls="settings" role="tab" data-toggle="tab">物料主数据基本信息</a></li>
+			<li role="presentation"><a href="migration/productimport#producterpcategory" aria-controls="settings" role="tab" data-toggle="tab">物料编码和14级大类</a></li>
+			<li role="presentation"><a href="migration/productimport#productdmscategory" aria-controls="settings" role="tab" data-toggle="tab">DMS三级大类对应物料编码</a></li>
+			<li role="presentation"><a href="migration/productimport#productchannel" aria-controls="settings" role="tab" data-toggle="tab">物料编码和渠道对应关系</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="group">
+				<div>&nbsp;</div>
+				<table id="groupTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>物料组编码</th>
+							<th>物料组描述</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="type">
+				<div>&nbsp;</div>
+				<table id="typeTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>物料类型</th>
+							<th>物料类型描述</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="erpcategory">
+				<div>&nbsp;</div>
+				<table id="erpCategoryTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>分类级别</th>
+							<th>分类级别描述</th>
+							<th>分类值</th>
+							<th>分类值描述</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="dmscategory">
+				<div>&nbsp;</div>
+				<table id="dmsCategoryTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>DMS三级大类</th>
+							<th>DMS分类级别</th>
+							<th>DMS三级大类描述</th>
+							<th>上级类别ID</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="channel">
+				<div>&nbsp;</div>
+				<table id="channelTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>渠道编码</th>
+							<th>渠道描述</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="product">
+				<div>&nbsp;</div>
+				<table id="productTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>物料编码</th>
+							<th>物料名称</th>
+							<th>物料组</th>
+							<th>物料类型</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			
+			<div role="tabpanel" class="tab-pane" id="productchannel">
+				<div>&nbsp;</div>
+				<table id="productChannelTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>物料编码</th>
+							<th>渠道编码</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="producterpcategory">
+				<div>&nbsp;</div>
+				<table id="productErpCateTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>物料编码</th>
+							<th>物料分类级别</th>
+							<th>分类值</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="productdmscategory">
+				<div>&nbsp;</div>
+				<table id="productDmsCateTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>物料编码</th>
+							<th>DMS第三级大类</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

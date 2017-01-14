@@ -1,0 +1,136 @@
+<!-- author: Herbert ZHAO -->
+	<div class="content ngDialogContent">
+		<div class="hpanel panel-default">
+			<div class="panel-heading">
+                 <h3 class="modal-title">物流环节返利详细信息</h3>
+      		</div>
+			<div class="panel-body panel-collapse collapse in modal-body">
+			<form id="detailForm">
+				<div class="row">
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4  control-label">瓶盖内物流码</label> 
+		                <input type='text' class="col-sm-8" readonly="readonly" ng-model="selected.item.capInnerCode" />
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">产品</label> 
+		                <input type='text' class="col-sm-8" readonly="readonly" ng-model="selected.item.product"  />
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">品牌经理职位编号</label> 
+		                <input type='text' class="col-sm-8"  readonly="readonly"ng-model="selected.item.brandManagerPositionId"  />
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">品牌经理职位名称</label> 
+		                <input type='text' class="col-sm-8"  readonly="readonly"ng-model="selected.item.brandManagerPositionName"  />
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">品牌经理员工编号</label> 
+						<input ng-model="selected.item.brandManagerId"  readonly="readonly"type="text" class="col-sm-8" >
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">品牌经理员工姓名</label> 
+						<input  ng-model="selected.item.brandManagerName"  readonly="readonly"type="text" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">组长职位编号</label> 
+						<input ng-model="selected.item.leaderPositionId"  readonly="readonly"type="text" class="col-sm-8" >
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">组长职位名称</label> 
+						<input  ng-model="selected.item.leaderPositionName"  readonly="readonly"type="text" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">组长员工编号</label> 
+						<input  ng-model="selected.item.leaderId" type="text"  readonly="readonly"class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">组长员工姓名</label> 
+						<input ng-model="selected.item.leaderName" type="text"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">业务员职位编号</label> 
+						<input type="text" ng-model="selected.item.salesManPositionId"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">业务员职位名称</label> 
+						<input type="text" ng-model="selected.item.salesManPositionName"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">业务员员工编号</label> 
+						<input type="text" ng-model="selected.item.salesManId"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">业务员员工姓名</label> 
+						<input type="text" ng-model="selected.item.salesManPositionName"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">经销商编号</label> 
+						<input  ng-model="selected.item.dealerId" type="text"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">经销商名称</label> 
+						<input type="text" ng-model="selected.item.dealerName"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">终端编号</label> 
+						<input type="text" ng-model="selected.item.terminalId"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">终端名称</label> 
+						<input type="text" ng-model="selected.item.terminalName"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">组长出货日期</label> 
+						<input type="text" ng-model="selected.item.leaderOutDate"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">终端收货日期</label> 
+						<input type="text" ng-model="selected.item.terminalInDate"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">消费者扫码日期</label> 
+						<input type="text" ng-model="selected.item.consumerScanDate"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">是否平台业务</label> 
+						<input type="text" ng-model="selected.item.isPlatformDealer"  readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">区域合法性</label> 
+						<input type="text" ng-model="selected.item.regionValid" readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">物流环节完整性</label> 
+						<input type="text" ng-model="selected.item.leaderName" readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">合法经营地级市</label> 
+						<input type="text" ng-model="selected.item.legalOperationCity" readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">消费者扫码地级市</label> 
+						<input type="text" ng-model="selected.item.counsumerScanCity" readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">终端所在省</label> 
+						<input type="text" ng-model="selected.item.terminalProvince" readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">终端所在市</label> 
+						<input type="text" ng-model="selected.item.terminalCity" readonly="readonly" class="col-sm-8">
+					</div>
+					<div class="form-group col-md-6 clearSpacingMarginLeft">
+						<label class="col-sm-4 control-label">终端所在县</label> 
+						<input type="text" ng-model="selected.item.terminalCounty" readonly="readonly" class="col-sm-8">
+					</div>
+				</div>
+			</form>
+			
+		</div>
+		<div class="panel-footer">
+			<div class="text-right">
+				<input type="button" class="btn btn-primary" value="关闭"  ng-click="close()"> 
+			</div>
+		</div>
+		</div>
+	</div>

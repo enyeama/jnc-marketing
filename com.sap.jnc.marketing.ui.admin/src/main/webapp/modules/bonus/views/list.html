@@ -1,0 +1,115 @@
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa"></i> 业务配置 > <a href="#/bonus/list">红包金额配置</a>
+			</h2>
+		</div>
+	</div>
+</div>
+
+
+<div class="content">
+	<div class="hpanel">
+		<div class="text-right marginBottm10">
+			<input type="button" class="btn btn-info" value="显示/隐藏搜索条件"
+				data-toggle="collapse" ng-click="toggleDisplay()">
+		</div>
+		<div id="searchBonusListPanel"
+			class="panel-body panel-collapse collapse in">
+			<form>
+				<div class="form-group col-lg-12 col-md-12 col-sm-12">
+					<label
+						class="col-lg-2 col-md-2 col-sm-4 control-label form-label-slim"
+						for="categoryName">产品</label> <input type="text"
+						class="col-md-4 form-control-slim" id="categoryName"
+						ng-model="categoryName">
+				</div>
+				<div class="form-group col-lg-12 col-md-12 col-sm-12">
+					<label
+						class="col-lg-2 col-md-2 col-sm-4 control-label form-label-slim"
+						for="kaSystemNumber" style="clear: both;">生效日期 (晚于)</label>
+					<div class="input-group date">
+						<input type="text" class="form-control-slim" name="validFrom"
+							id="validFrom" ng-bind="validFrom" placeholder="请选择生效日期" />
+					</div>
+				</div>
+				<div class="form-group col-lg-12 col-md-12 col-sm-12">
+					<label
+						class="col-lg-2 col-md-2 col-sm-4 control-label form-label-slim"
+						for="terminalOrderStatus" style="clear: both;">失效日期 (早于)</label>
+					<div class="input-group date" id="invalid-datetimepicker">
+						<input type="text" class="form-control-slim" name="validTo"
+							id="validTo" ng-bind="validTo" placeholder="请选择失效日期" />
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-label form-label-slim"></label> <input
+						class="btn btn-primary rightMarginSpacing" id="conditionSerach"
+						ng-click="skipToPage(0)" type="button" value="查询"></input> <input
+						type="reset" ng-click="clearAduitQuery()" class="btn btn-default"
+						value="清空">
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="text-right marginBottm10">
+		<input type="button" class="btn btn-primary" value="新建"
+			ng-click="create()">
+	</div>
+
+	<div class="tableContainer">
+		<table id="orderList"
+			class="footable table table-stripped table-bordered toggle-arrow-tiny jnc-table"
+			data-page-size="20" data-filter=#filter>
+			<thead ng-show="model.content.length>0">
+				<tr>
+					<th>产品类型</th>
+					<th>计划均值金额</th>
+					<th>均值误差金额</th>
+					<th>生效日期</th>
+					<th>失效日期</th>
+				</tr>
+			</thead>
+			<tbody id="table_body" ng-show="model.content.length>0">
+				<tr ng-repeat="item in model.content">
+					<td>{{item.erpRespose.categoryName}}</td>
+					<td>{{item.averageAmount}}</td>
+					<td>{{item.varianceAmount}}</td>
+					<td>{{item.validFrom}}</td>
+					<td>{{item.validTo}}</td>
+				</tr>
+				<tr>
+					<td colspan="5" ng-if="model.content.length===0">没有相关记录</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div ng-show="model.numberOfElements" class="paginationBar">
+		<div style="float: left">
+			<span>每页显示</span> <select ng-model="criteria.paging.size"
+				id="pageSize" ng-change="setSize()">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+			</select> <span>条</span>
+		</div>
+		<div style="float: right">
+			<button ng-click="skipToPage(0)">首页</button>
+			<button ng-click="skipToPage(model.prevPage)">上一页</button>
+			<span></span>{{model.number + 1}} / {{model.totalPages}}</span>
+			<button ng-click="skipToPage(model.nextPage)">下一页</button>
+			<button ng-click="skipToPage(model.lastPage)">末页</button>
+			<input type="text"
+				class="page-number-input input-small input-align-center"
+				align="center" ng-model="go" ng-keypress="pageNoKeyDown($event)" />
+			<button ng-click="skipToPage(go - 1)">GO</button>
+		</div>
+	</div>
+</div>
+
+

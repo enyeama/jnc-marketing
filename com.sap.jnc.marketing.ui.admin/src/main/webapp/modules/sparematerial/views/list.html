@@ -1,0 +1,59 @@
+<div class="row">
+	<div class="col-lg-12">
+		<div class="hpanel">
+			<div class="panel-heading">
+				消费者红包金额配置
+				<a href="couponAdd.html">
+					<button class="btn btn-success btn-xs pull-right" type="button">
+						<i class="fa fa-plus"></i>
+						<span class="bold">新建配置</span>
+					</button>
+				</a>
+			</div>
+			<div class="panel-body">
+				<table id="orderList" class="footable table table-stripped toggle-arrow-tiny" data-page-size="20" data-filter=#filter>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>产品类型</th>
+							<th>计划均值金额</th>
+							<th>占比</th>
+							<th>生效日期</th>
+							<th>失效日期</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in bonus.config track by $index">
+							<td ng-bind="item.level"></td>
+							<td ng-bind="item.price.avg"></td>
+							<td ng-bind="item.percentage | toPercentage"></td>
+							<td ng-bind="item.percentage | toPercentage"></td>
+							<td ng-bind="item.validity.start"></td>
+							<td ng-bind="item.validity.end"></td>
+							<td>
+								<button class="btn btn-success btn-xs" type="button">
+									<i class="fa fa-eye"></i>
+									<span class="bold">详情</span>
+								</button>
+								丨
+								<button class="btn btn-success btn-xs" type="button">
+									<i class="fa fa-pencil"></i>
+									<span class="bold">编辑</span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="6">
+								<ul class="pagination pull-right"></ul>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

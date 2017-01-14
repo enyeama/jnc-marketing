@@ -1,0 +1,100 @@
+<! DOCTYPE html />
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>订单详细</title>
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css"/>
+</head>
+<body>
+	<div class="weui_cells weui_cells_form">
+		<form id="orderForm">
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">订单编号</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<label data-bind="text: orderId"></label>
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">品类</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<label data-bind="text: category"></label>
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">版本</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<label class="weui_label">烟酒版</label>
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">商品名称</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<label data-bind="text: product"></label>
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">数量（瓶）</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<label class="weui_label" data-bind="text: quantity"></label>
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">备注</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<label class="weui_label" data-bind="text: comment"></label>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/wx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	var viewModel = {
+		'orderId': ko.observable(),
+		'category': ko.observable(),
+		'product': ko.observable(),
+		'quantity': ko.observable(),
+		'notice': ko.observable(),
+		'comment': ko.observable()
+	};
+	ko.applyBindings(viewModel);
+
+	$(function() {
+		var orderId = COMMON.METHOD.GET_QUERY_STRING('orderId');
+		// load data
+		$.showLoading("数据加载中...");
+		$.get(PATH.PORTAL.SALESMAN_ORDERS + '/' + orderId).done(function(data) {
+			viewModel.orderId(data.orderNO);
+			viewModel.category(data.category);
+			viewModel.product(data.prodName);
+			viewModel.quantity(data.quantity);
+			viewModel.comment(data.comment);
+			$.hideLoading();
+		}).fail(function(response) {
+			$.hideLoading();
+			$.toast("数据加载失败", "forbidden");
+		});
+	});
+</script>
+</html>

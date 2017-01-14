@@ -1,0 +1,8 @@
+[{
+	"name": "报表",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "红包发放明细报表",
+		"href": ""
+	}]
+}]

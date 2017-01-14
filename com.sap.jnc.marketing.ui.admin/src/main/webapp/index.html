@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html ng-app="jnc-admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Page title -->
+<title>剑南春终端管理系统 1.0</title>
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
+<!-- Vendor styles -->
+<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.css" />
+<link rel="stylesheet" href="vendor/metisMenu/dist/metisMenu.css" />
+<link rel="stylesheet" href="vendor/animate.css/animate.css" />
+<link rel="stylesheet" href="vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" href="vendor/bootstrap-dialog/dist/css/bootstrap-dialog.min.css">
+<link rel="stylesheet" href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="vendor/summernote/dist/summernote.css">
+<link rel="stylesheet" href="vendor/summernote/dist/summernote-bs3.css">
+<link rel="stylesheet" href="vendor/sweetalert/lib/sweetalert.css">
+<!-- App styles -->
+<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="vendor/angular-toastr-master/dist/angular-toastr.css">
+<link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css" />
+<link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/helper.css" />
+<link rel="stylesheet" href="vendor/jquery-ui/jquery-ui.css" />
+<link rel="stylesheet" href="vendor/angular-loading-bar/dist/loading-bar.css" />
+<link rel="stylesheet" href="styles/login.css">
+<link rel="stylesheet" href="styles/style.css">
+</head>
+<body class="fixed-small-header fixed-sidebar fixed-navbar fixed-footer">
+	<!-- 页面加载样式 -->
+	<!--<div class="splash"> <div class="color-line"></div><div class="splash-title"><p>请求处理中，请耐心等待...</p><div class="spinner"> <div class="rect1"></div> <div class="rect2"></div> <div class="rect3"></div> <div class="rect4"></div> <div class="rect5"></div> </div> </div> </div>-->
+	<!-- 低版本浏览器提示 -->
+	<!--[if lt IE 7]>
+<p class="alert alert-danger">您在使用一个<strong>过时的</strong>浏览器，请<a href="http://browsehappy.com/">浏览器</a>来提高您的体验。</p>
+<![endif]-->
+	<div ng-include="'modules/_components/header.html'" id="header"></div>
+	<div ng-include="'modules/_components/menu.html'" id="menu"></div>
+	<!-- ------------------------------------------------------------------- -->
+	<!-- Main Content Wrapper Here -->
+	<div ng-view autoscroll id="wrapper" class="collapseScreen"></div>
+	<!-- ------------------------------------------------------------------- -->
+	<div ng-include="'modules/_components/footer.html'"></div>
+	<!-- Vendor scripts -->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/jquery/jquery.md5.min.js"></script>
+	<script src="vendor/jquery-ui/jquery-ui.min.js"></script>
+	<script src="vendor/angular/angular.js"></script>
+	<script src="vendor/angular/angular-route.min.js"></script>
+	<script src="vendor/angular/angular-cookies.min.js"></script>
+	<script src="vendor/angular/angular-resource.min.js"></script>
+	<script type="text/javascript" src="vendor/angular-toastr-master/dist/angular-toastr.min.js"></script>
+	<script src="vendor/underscore/underscore-min.js"></script>
+	<script src="vendor/moment/moment.js"></script>
+	<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+	<script src="vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js"></script>
+	<script src="vendor/bootstrap-dialog/dist/js/bootstrap-dialog.min.js"></script>
+	<script src="vendor/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+	<script src="vendor/xeditable/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+	<script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
+	<script src="vendor/summernote/dist/summernote.min.js"></script>
+	<script src="vendor/slimScroll/jquery.slimscroll.min.js"></script>
+	<script src="vendor/metisMenu/dist/metisMenu.min.js"></script>
+	<script src="vendor/iCheck/icheck.min.js"></script>
+	<script src="vendor/sparkline/index.js"></script>
+	<script src="vendor/ui-bootstrap-tpls/ui-bootstrap-tpls.js"></script>
+	<script src="vendor/toastr/build/toastr.min.js"></script>
+	<script src="vendor/fooTable/dist/footable.all.min.js"></script>
+	<script src="vendor/sweetalert/lib/sweetalert-dev.js"></script>
+	<script type="text/javascript" src="vendor/jquery-cxselect/jquery.cxselect.min.js"></script>
+	<script src="vendor/angular-loading-bar/dist/loading-bar.js"></script>
+	<script src="vendor/CryptoJS/rollups/hmac-sha256.js"></script>
+	<script src="vendor/CryptoJS/components/enc-base64-min.js"></script>
+	<script src="vendor/filesaver/FileSaver.min.js"></script>
+	<!-- App scripts -->
+	<script src="scripts/homer.js"></script>
+	<!-- Angular Global -->
+	<script src="modules/app.js"></script>
+	<script src="modules/route.js"></script>
+	<script src="modules/_services/authentication.js"></script>
+	<script src="modules/_controllers/header.controller.js"></script>
+	<script src="modules/_controllers/menu.controller.js"></script>
+	<!-- Angular Home&Global -->
+	<script src="modules/_controllers/home.controller.js"></script>
+	<script src="modules/_controllers/error.controller.js"></script>
+	<!-- Angular Services -->
+	<script src="modules/_services/authentication.js"></script>
+	<script src="modules/_services/constant.js"></script>
+	<script src="modules/_services/interceptor.js"></script>
+	<script src="modules/_services/filter/kaorderstatus.filter.js"></script>
+	<script src="modules/_services/filter/dateformat.filter.js"></script>
+	<!-- Angular Controllers - Authentication -->
+	<script src="modules/authentication/controllers/login.controller.js"></script>
+	<script src="modules/authentication/controllers/profile.controller.js"></script>
+	<!-- Angular Controllers - Ring Office -->
+	<script src="modules/banquet/controllers/ringPostList.controller.js"></script>
+	<!-- Angular Controllers - Banquet -->
+	<script src="modules/banquet/controllers/banquetReportVerificationList.controller.js"></script>
+	<script src="modules/banquet/controllers/banquetWriteoffList.controller.js"></script>
+	<script src="modules/banquet/controllers/banquetSignList.controller.js"></script>
+	<script src="modules/banquet/controllers/banquetAuditList.controller.js"></script>
+	<script src="modules/banquet/controllers/banquetAuditReviewList.controller.js"></script>
+	<script src="modules/banquet/controllers/banquetPhotoAuditList.controller.js"></script>
+	<!-- Angular Controllers - Audit -->
+	<script src="modules/audit/controllers/auditQuery.controller.js"></script>
+	<script src="modules/audit/controllers/assign.controller.js"></script>
+	<!-- Angular Controllers - Migration -->
+	<script src="modules/migration/controllers/provincemanager.controller.js"></script>
+	<script src="modules/migration/controllers/employee.controller.js"></script>
+	<script src="modules/migration/controllers/employeeupload.controller.js"></script>
+	<script src="modules/migration/controllers/dealer.controller.js"></script>
+	<script src="modules/migration/controllers/dealerimport.controller.js"></script>
+	<script src="modules/migration/controllers/product.controller.js"></script>
+	<script src="modules/migration/controllers/productimport.controller.js"></script>
+	<!-- Angular Controllers - Bonus -->
+	<script src="modules/bonus/controllers/list.controller.js"></script>
+	<script src="modules/bonus/controllers/detail.controller.js"></script>
+	<script src="modules/bonus/controllers/logisticsRebateList.controller.js"></script>
+	<script src="modules/bonus/controllers/logisticsRebateDetail.controller.js"></script>
+	<!-- Angular Controllers - TDFX -->
+	<script src="modules/ydfx/controllers/dealerConfig.controller.js"></script>
+	<script src="modules/ydfx/controllers/prodectSalesCategory.controller.js"></script>
+	<script src="modules/ydfx/controllers/addDLPRelationshipDialog.controller.js"></script>
+	<script src="modules/ydfx/controllers/addPSCDRelationshipDialog.controller.js"></script>
+	<!-- Angular Controllers - Dealer -->
+	<script src="modules/dealers/controllers/dealerSMIn.controller.js"></script>
+	<script src="modules/dealers/controllers/dealerSMNPTOrders.controller.js"></script>
+	<script src="modules/dealers/controllers/dealerSMNPTOut.controller.js"></script>
+	<script src="modules/dealers/controllers/dealerSMPTOut.controller.js"></script>
+	<script src="modules/dealers/controllers/dealerSMPTOutSearch.controller.js"></script>
+	<!-- Angular Controllers - KA -->
+	<script src="modules/ka/controllers/branchmanagement.controller.js"></script>
+	<script src="modules/ka/controllers/ordermanagement.controller.js"></script>
+	<!--script src="modules/banquet/controllers/banquetWriteoffList.controller.js"></script>
+	<script src="modules/banquet/controllers/banquetAuditList.controller.js"></script>
+	<script src="modules/banquet/controllers/banquetAuditReviewList.controller.js"></script>
+	<script src="modules/banquet/controllers/banquetPhotoAuditList.controller.js"></script-->
+	<!-- Angular Controllers - Spare Material -->
+	<script src="modules/sparematerial/controllers/safestock.controller.js"></script>
+	<script src="modules/sparematerial/controllers/consumptiondetail.controller.js"></script>
+	<script src="modules/sparematerial/controllers/deliverydetail.controller.js"></script>
+	<script src="modules/sparematerial/controllers/safestockimport.controller.js"></script>
+	<script src="modules/sparematerial/controllers/deliverysafetystockDialog.controller.js"></script>
+	<!-- Angular Controllers - Payment -->
+	<script src="modules/payment/controllers/list.controller.js"></script>
+	<script src="modules/payment/controllers/detail.controller.js"></script>
+	<!-- Angular Controllers - Contract -->
+	<script src="modules/contract/controllers/contractquery.controller.js"></script>
+	<script src="modules/contract/controllers/contractimport.controller.js"></script>
+	<!-- Angular Controllers - Exhibit -->
+	<script src="modules/exhibit/controllers/list.controller.js"></script>
+</body>
+</html>

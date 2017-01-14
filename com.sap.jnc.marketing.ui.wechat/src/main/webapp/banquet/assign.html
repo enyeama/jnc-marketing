@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/banquet.css" />
+</head>
+
+<body>
+	<!-- 搜索 -->
+	<div class="weui_search_bar" id="search_bar">
+		<form class="weui_search_outer">
+			<div class="weui_search_inner">
+				<i class="weui_icon_search"></i> 
+				<input type="search" class="weui_search_input" id="search_input" placeholder="请输入跟单员ID或名字搜索" required="" data-bind="textInput: keyword"> 
+				<a href="javascript:" class="weui_icon_clear" id="search_clear" data-bind="click: function(){keyword('')}"></a>
+			</div>
+			<label for="search_input" class="weui_search_text" id="search_text"> 
+				<i class="weui_icon_search"></i> 
+				<span>搜索</span>
+			</label>
+		</form>
+		<a href="javascript:" class="weui_search_cancel" id="search_cancel" data-bind="click: function(){keyword('')}">取消</a>
+	</div>
+	<!-- 宴会指定跟单人 -->
+	<div class="bd">
+		<div class="weui_media_box weui_media_small_appmsg">
+			<div class="weui_cells weui_cells_access" data-bind="foreach: filterList">
+				<a class="weui_cell" href="javascript:;" data-bind="click: $parent.assign.bind($data, $parent)">
+					<div class="weui_cell_bd weui_cell_primary">
+						<p>
+							<i class="weui_icon_success" data-bind="visible: Number($root.handlerId) == id"></i>
+							<span data-bind="text: name"></span>
+						</p>
+					</div>
+					<span class="weui_cell_ft"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/const.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/assign.js" type="text/javascript" charset="utf-8"></script>
+</html>

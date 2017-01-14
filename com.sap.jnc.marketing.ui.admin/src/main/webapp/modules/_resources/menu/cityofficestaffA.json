@@ -1,0 +1,15 @@
+[{
+	"name": "稽核",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "宴会复核导入",
+		"href": "banquet/banquet?type=reviewImport"
+	}]
+},{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "宴会审批",
+		"href": "banquet/banquets/writeoff"
+	}]
+}]

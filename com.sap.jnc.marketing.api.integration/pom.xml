@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jnc-marketing-api-integration</artifactId>
+	<packaging>war</packaging>
+	<name>JNC Marketing Integration API</name>
+	<parent>
+		<groupId>com.sap.jnc.marketing</groupId>
+		<artifactId>jnc-marketing</artifactId>
+		<version>${com.sap.jnc.marketing.version}</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<properties>
+		<!-- Project Build Up -->
+		<maven-war-plugin.version>2.6</maven-war-plugin.version>
+		<wechat.account>wechat</wechat.account>
+	</properties>
+	<dependencies>
+		<!-- JNC Dependencies -->
+		<dependency>
+			<groupId>com.sap.jnc.marketing</groupId>
+			<artifactId>jnc-marketing-service</artifactId>
+			<version>${com.sap.jnc.marketing.version}</version>
+		</dependency>
+		<!-- Spring Framework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<profile>
+  			<id>deploy</id>
+  			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<url>${tomcat.url}</url>
+							<username>${tomcat.username}</username>
+							<password>${tomcat.password}</password>
+							<path>/integration</path>
+						</configuration>
+						<executions>
+							  <execution>
+					            <id>undeploy-war</id>
+					            <phase>install</phase>
+					            <goals>
+					              <goal>undeploy</goal>
+					            </goals>
+					          </execution>
+					          <execution>
+					            <id>deploy-war</id>
+					            <phase>install</phase>
+					            <goals>
+					              <goal>redeploy-only</goal>
+					            </goals>
+					          </execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles> 
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

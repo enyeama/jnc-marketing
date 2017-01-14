@@ -1,0 +1,18 @@
+.weui_counter{
+	display:inline-block;
+	position:absolute;
+	width:23px;
+	height:23px;
+	font-size:.9em;
+	text-align:center;
+	border-radius:12px;
+	-webkit-border-radius:12px;
+	-moz-border-radius:12px;
+	background:#F43530;
+	color:white;
+	right:-3px;
+	top:-3px;
+}
+.weui_grids{
+	overflow:visible;
+}

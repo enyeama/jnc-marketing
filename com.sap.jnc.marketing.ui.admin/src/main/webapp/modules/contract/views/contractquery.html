@@ -1,0 +1,118 @@
+<!-- author: Zero Yu -->
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa"></i> 数据导入 > <a href="#/migration/contract">合同</a>
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="hpanel">
+		 <div class="text-right marginBottm10">
+        	<input type="button" class="btn btn-info" value="显示/隐藏搜索条件" data-toggle="collapse" ng-click="toggleDisplay()"> 
+       	</div>
+		<div id="searchContractPanel" class="panel-body panel-collapse collapse in">
+			<div class="row">
+				<form>
+					<div class="form-group col-lg-12">
+						<label class="col-lg-2 control-label">合同 ID</label> 
+						<input class="col-lg-4" ng-model="request.keywords.contractId">
+					</div>
+					<div class="form-group col-lg-12">
+						<label class="col-lg-2 control-label">经销商 ID</label> 
+						<input class="col-lg-4" ng-model="request.keywords.dealerId">
+					</div>
+					<div class="form-group col-lg-12">
+						<label class="col-lg-2 control-label">岗位 ID</label> 
+						<input class="col-lg-4" ng-model="request.keywords.positionId">
+					</div>
+					<div class="form-group col-lg-12">
+						<label class="col-lg-2 control-label">物料三大类 ID</label> 
+						<input class="col-lg-4" ng-model="request.keywords.productDmsCategoryId">
+					</div>
+					<div class="form-group col-lg-12">
+						<label class="col-lg-2 control-label">状态</label> 
+						<select ng-model="request.keywords.status">
+							<option value="">不限</option>
+							<option value="INACTIVE">停用</option>
+							<option value="ACTIVE">可用</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-12">
+						<label class="col-lg-2 control-label"></label>
+						<input type="button" class="btn btn-primary rightMarginSpacing" value="查询" ng-click="search()"></input> 
+						<input type="button" class="btn btn-default" value="清空" ng-click="request.keywords={}"></input>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="text-right marginBottm10">
+		<a href="#/migration/contractimport" class="btn btn-primary rightMarginSpacing">导入</a>
+		 <input type="button" class="btn btn-primary" value="导出" ng-click="export()">
+	</div>
+	<div class="tableContainer">
+		<table id="orderList" class="footable table table-stripped toggle-arrow-tiny table-bordered jnc-table" style="min-width:1100px">
+			<thead>
+				<tr>
+					<th>合同ID</th>
+					<th>合同模板名</th>
+					<th>合同状态</th>
+					<th>经销商ID</th>
+					<th>城市经理岗位ID</th>
+					<th>财年</th>
+					<th>合同开始日期</th>
+					<th>合同截至日期</th>
+					<th>物料三大类ID</th>
+					<th>渠道ID</th>
+					<th>区域ID</th>
+				</tr>
+			</thead>
+			<tbody class="text-center" id="table_body">
+				<tr ng-repeat="item in model.content">
+					<td>{{item.externalId}}</td>
+					<td>{{item.contractTemplate}}</td>
+					<td>{{item.status}}</td>
+					<td>{{item.dealerId}}</td>
+					<td>{{item.positionId}}</td>
+					<td>{{item.finacialYear}}</td>
+					<td ng-bind="item.validFrom | date:'yyyy-MM-dd'"></td>
+					<td ng-bind="item.validTo| date:'yyyy-MM-dd'"></td>
+					<td>{{item.productDmsCategoryId}}</td>
+					<td>{{item.channelId}}</td>
+					<td>{{item.regionId}}</td>
+				</tr>
+				<tr>
+					<td td colspan="12" ng-if="model.content.length===0">没有相关记录</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div ng-show="model.numberOfElements" class="paginationBar">
+			<div style="float: left">
+				<span>每页显示</span> <select ng-model="request.paging.size"
+					id="pageSize" ng-change="page()">
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select> <span>条</span>
+			</div>
+			<div style="float: right">
+				<button ng-disabled="model.first" ng-click="page(0)">首页</button>
+				<button ng-disabled="model.first" ng-click="page(model.number - 1)">上一页</button>
+				{{model.number+1}}/{{model.totalPages}}
+				<button ng-disabled="model.last" ng-click="page(model.number + 1)">下一页</button>
+				<button ng-disabled="model.last"
+					ng-click="page(model.totalPages - 1)">末页</button>
+				<input type="text"
+					class="page-number-input input-small input-align-center"
+					align="center" ng-model="model.targetPage" />
+				<button ng-click="model.number=page(model.targetPage-1)">GO</button>
+			</div>
+		</div>
+</div>

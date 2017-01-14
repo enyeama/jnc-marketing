@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--删除苹果默认菜单栏和工具栏-->
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <!--添加到主屏幕后 全屏显示-->
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <!--状态栏颜色-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--不识别电话号码和邮箱-->	
+    <meta name="format-detection" content="telephone=no; email=no" />
+    <!-- uc强制竖屏 -->
+	<meta name="screen-orientation" content="portrait"/>
+	<!-- QQ强制竖屏 -->
+	<meta name="x5-orientation" content="portrait"/>
+	<!-- UC强制全屏 -->
+	<meta name="full-screen" content="yes"/>
+	<!-- QQ强制全屏 -->
+	<meta name="x5-fullscreen" content="true"/>
+	<!-- UC应用模式 -->
+	<meta name="browsermode" content="application"/>
+	<!-- QQ应用模式 -->
+	<meta name="x5-page-mode" content="app"/>
+	<!-- windows phone 点击无高光 -->
+	<meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>扫码抽奖</title>
+	<link rel="stylesheet" type="text/css" href="css/transfer.css"/>
+    <link href='http://api.youziku.com/webfont/CSS/5742c650f629d80834c7bf80' rel='stylesheet' type='text/css' />
+</head>
+<body class="body">
+	<div class="checkResult">
+		<div class="draw-gift">
+		    <div class="draw-img">
+		        <div class="draw-up hide"></div>
+		        <div class="draw-up-up" id="draw-up-up"></div>
+		        <div class="draw-mid draw-mid-move"></div>
+		        <div class="draw-down"></div>
+		        <div class="draw-down2 hide"></div>
+		        <div class="draw-list">
+		        		<p class="money">哇哦～抽到大奖了哟!<br />获得1元红包奖励</p>
+		        		<small>红包奖励将在1分钟之类发送到您的账户,请注意查收</small>
+		        </div>
+		    </div>
+		    <input type="text" id="yz_code" placeholder="请输入验证码" />
+		</div>
+	</div>
+  	<!-- 以上是签到 -->
+  	<img src="img/jnc4.png" class="logo-jnc"/>
+	<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+	<script src="js/common/bonus-common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("body,html").height(100+"%");
+			$(".checkResult").show();
+			$("#yz_code").focus(function(){
+				$("#yz_code").css("position","absolute");
+			});
+			$("#yz_code").blur(function(){
+				$("#yz_code").css("position","fixed");
+			});
+		})
+		//打开红包
+		$(function () {
+			$(".draw-mid.draw-mid-move").on("click", function () {
+				var code = $("#yz_code").val();
+				if (code == null || code == '') {
+					alert("请先输入验证码!");
+					return false;
+				}
+				var url = '/pay/bonus';
+				$.get(url, {code: code}, function(result) {
+					if (result.hasOwnProperty("code") && result.code == "e.ex.mm.0000") {
+						var message = "恭喜你获得" + result.result + "元红包,稍后将发送到你的钱包";
+						alert(message);
+						WeixinJSBridge.invoke('closeWindow',{},function(res){});
+					}
+				})
+			});
+		})
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

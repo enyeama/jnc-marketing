@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/banquet.css" />
+</head>
+
+<body>
+	<!-- 搜索 -->
+	<div class="weui_search_bar" id="search_bar">
+		<form class="weui_search_outer">
+			<div class="weui_search_inner">
+				<i class="weui_icon_search"></i> 
+				<input type="search" class="weui_search_input" id="search_input" placeholder="请输入报备单号/联系电话/跟单人姓名或ID搜索" required="" data-bind="textInput: keyword"> 
+				<a href="javascript:" class="weui_icon_clear" id="search_clear" data-bind="click: function(){keyword('')}"></a>
+			</div>
+			<label for="search_input" class="weui_search_text" id="search_text"> <i class="weui_icon_search"></i> <span>搜索</span>
+			</label>
+		</form>
+		<a href="javascript:" class="weui_search_cancel" id="search_cancel" data-bind="click: function(){keyword('')}">取消</a>
+	</div>
+	<!-- 宴会报备表单 -->
+	<div class="bd">
+		<div class="weui_panel_bd" data-bind="foreach: {data: filterList}">
+			<a href="" class="weui_media_box weui_media_appmsg" data-bind="attr: {href: window.PATH.BANQUET.HTML_DETAIL + '?banquetId=' + $data.id + '&id=' + $parent.id}">
+				<div class="weui_media_bd">
+					<h3 class="weui_media_title" style="font-size: 14px;">报备单号：<span data-bind="text: $data.id"></span></h3>
+					<p class="weui_media_desc">宴会地址：<span data-bind="text: $data.hostAddress"></span></p>
+					<p class="weui_media_desc">报备类型：<span data-bind="text: window.getEnumerationText('applicationType', $data.applicationType)"></span></p>
+					<p class="weui_media_desc">联系电话：<span data-bind="text: $data.hostPhone"></span></p>
+					<p class="weui_media_desc">宴会时间：<span data-bind="text: window.formatDate($data.banquetTime) + ' ' + window.getEnumerationText('timePoint',$data.timePoint)"></span></p>
+					<p class="weui_media_desc">跟单人ID：<span data-bind="text: $data.handler.id"></span></p>
+					<p class="weui_media_desc">跟单人姓名：<span data-bind="text: $data.handler.name"></span></p>
+				</div>
+				<div class="weui_media_ft" data-bind="text: window.getEnumerationText('banquetStatus',$data.banquetStatus)"></div>
+			</a>
+		</div>
+		<div class="weui-infinite-scroll">
+		  <div class="infinite-preloader"></div>
+		  正在加载...
+		</div>
+	</div>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/const.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/list.js" type="text/javascript" charset="utf-8"></script>
+</html>

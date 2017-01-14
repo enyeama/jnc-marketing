@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--删除苹果默认菜单栏和工具栏-->
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <!--添加到主屏幕后 全屏显示-->
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <!--状态栏颜色-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--不识别电话号码和邮箱-->	
+    <meta name="format-detection" content="telephone=no; email=no" />
+    <!-- uc强制竖屏 -->
+	<meta name="screen-orientation" content="portrait"/>
+	<!-- QQ强制竖屏 -->
+	<meta name="x5-orientation" content="portrait"/>
+	<!-- UC强制全屏 -->
+	<meta name="full-screen" content="yes"/>
+	<!-- QQ强制全屏 -->
+	<meta name="x5-fullscreen" content="true"/>
+	<!-- UC应用模式 -->
+	<meta name="browsermode" content="application"/>
+	<!-- QQ应用模式 -->
+	<meta name="x5-page-mode" content="app"/>
+	<!-- windows phone 点击无高光 -->
+	<meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>扫码抽奖</title>
+    <link rel="stylesheet" type="text/css" href="css/getHB.css"/>
+</head>
+<body class="body">
+	<img src="img/openHB.png" class="openHB" id="open_bonus_btn"/>
+	<input type="text" placeholder="请输入验证码" class="codeInput" id="yz_code" />
+	<img src="img/wines.png" class="wines" />
+	<!--<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
+	<script src="js/jquery-2.1.4.js"></script>
+	<script src="js/common/bonus-common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//打开红包
+		$(function () {
+			$("#open_bonus_btn").on("click", function () {
+				var code = $("#yz_code").val();
+				if (code == null || code == '') {
+					alert("请先输入验证码!");
+					return false;
+				}
+				var url = '/pay/bonus';
+				$.get(url, {code: code}, function(result) {
+					if (result.hasOwnProperty("code") && result.code == "e.ex.mm.0000") {
+						var message = "恭喜你获得" + result.result + "元红包,稍后将发送到你的钱包";
+						alert(message);
+						WeixinJSBridge.invoke('closeWindow',{},function(res){});
+					}
+				})
+			});
+		})
+	</script>	  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

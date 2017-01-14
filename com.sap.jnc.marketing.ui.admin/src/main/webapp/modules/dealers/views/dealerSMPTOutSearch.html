@@ -1,0 +1,52 @@
+<div class="row projects" ng-controller="jnc-admin.dealers.dealerSMPTOutSearch.controller">
+	<div class="col-lg-12">
+		<div class="hpanel hgreen">
+			<div class="panel-body">
+				<div class="row">
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
+					<div class="form-group col-lg-3">
+						<label class="form-label">组长</label>
+						<select id="filter" class="form-control" placeholder="无" 
+							ng-model="criteria.keywords.leaderId" ng-options="x.externalId as x.name for x in leaders">
+						</select>
+					</div>
+					<div class="form-group col-lg-1">
+						<label class="form-label">&nbsp;</label>
+						<button class="btn btn-primary form-control" ng-click="search()">查询</button>
+					</div>
+					<!-- <div class="clearfix"></div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="hpanel">
+			<div class="panel-body">
+				<table id="logisticList" class="footable table table-stripped toggle-arrow-tiny">
+					<thead>
+						<tr>
+							<th>组长</th>
+							<th>发货数量</th>
+							<th>已收货数量</th>
+							<th>待收货数量</th>
+							<th>发货时间</th>
+							<th>组长收货时间</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="info in model.content track by $index">
+							<td ng-bind="info.leadName"></td>
+							<td ng-bind="info.dealerOutCount"></td>
+							<td ng-bind="info.leadInCount"></td>
+							<td ng-bind="info.dealerOutCount - info.leadInCount"></td>
+							<td ng-bind="info.createOn | date: 'yyyy-MM-dd'"></td>
+							<td ng-bind="info.createOn | date: 'yyyy-MM-dd'""></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

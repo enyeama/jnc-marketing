@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>库存管理</title>
+    <link rel="stylesheet" type="text/css" href="../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/deliveryRecords.css"/>
+</head>
+<body>
+<div class="weui_tab">
+    <div class="weui_navbar">
+        <div id="inTransitTab" class="weui_navbar_item weui_bar_item_on" data-bind="click:navTap" data-type="0">
+            在途
+        </div>
+        <div id="deliveredTab" class="weui_navbar_item" data-bind="click:navTap" data-type="2">
+            已收货
+        </div>
+    </div>
+    <div class="weui_tab_bd">
+        <div class="weui_tab_bd_item weui_tab_bd_item_active" data-bind="foreach: aDeliveryRecords">
+            <div class="weui_panel delivery_panel">
+                <div class="weui_panel_hd delivery_panel_hd">
+                    <i class="weui_icon_waiting_circle"></i>
+                    发货单号：<span data-bind="text: $data.id"></span>
+                    <button type="button" class="weui_btn weui_btn_mini weui_btn_plain_primary btn_confirm" data-bind="visible: $data.deliveryStatus === 'IN_TRANSIT' ,click: $root.confirmReceipt">确认收货</button>
+                </div>
+                <div class="weui_panel_bd">
+                    <div class="weui_media_box weui_media_text">
+                        <p class="weui_media_desc" data-bind="text: '发货日期：' + $data.deliveryDate"></p>
+                        <p class="weui_media_desc" data-bind="text: '物料：' + $data.product"></p>
+                        <p class="weui_media_desc" data-bind="text: '数量：' + $data.deliveryQuantity"></p>
+                        <div data-bind="if: $data.acknowledgementDate">
+                        	<p class="weui_media_desc" data-bind="text: '收货日期：' + $data.acknowledgementDate"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="scrollDiv" class="weui-infinite-scroll">
+  			<div class="infinite-preloader"></div>
+  			<span id="loadingInfo">正在加载...</span>
+		</div>
+    </div>
+</div>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/sparematerial/deliveryRecords.js" type="text/javascript" charset="utf-8"></script>
+</html>

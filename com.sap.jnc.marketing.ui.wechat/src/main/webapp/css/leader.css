@@ -1,0 +1,28 @@
+.bottomBtnBox{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding:.5rem;
+    background: #fff;
+    border-top: 1px solid #ebebeb;
+}
+
+.btn_rt {
+	text-align: right;
+}
+
+.btn_rt::after {
+	content: ' ';
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+.smpadding {
+	padding: 0.2rem;
+}
+
+.status {
+	color: #ff0000;
+}

@@ -1,0 +1,100 @@
+<!-- author: Zero Yu -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>新增子帐号</title>
+<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../css/terminal.css" />
+</head>
+<body>
+	<div class="weui_panel weui_panel_access">
+		<div class="weui_panel_bd" data-bind="foreach: data">
+			<a href="javascript:void(0);"
+				class="weui_media_box weui_media_appmsg">
+				<div class="weui_media_bd">
+					<h4 class="weui_media_title" data-bind="text: name"></h4>
+					<!-- <p class="weui_media_desc" data-bind="text: '员工姓名' + name"></p> -->
+					<p class="weui_media_desc" data-bind="text: '手机号：' + phone"></p>
+				</div> <input type="checkbox" data-bind="checked: isSelected" />
+			</a>
+		</div>
+	</div>
+	<div class="bottomBtnBox">
+		<a href="javascript:;" class="weui_btn weui_btn_primary"
+			data-bind="click: submit">提交</a>
+	</div>
+</body>
+<script src="../../js/jquery-2.1.4.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/jquery-weui.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"
+	charset="UTF-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/common/common.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/common/path.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/common/wechat.js" type="text/javascript"
+	charset="utf-8"></script>
+<script type="text/javascript">
+	function TLACViewModel() {
+		var self = this;
+		self.data = ko.observableArray([]);
+		self.leaderEmployeeId = 628;
+		$.ajax({
+			type : "GET",
+			url : "/api/wechat/leaderterminalmaintenance/salesmen?leaderEmployeeId="+self.leaderEmployeeId,
+			contentType : "application/json; charset=utf-8",
+			dataType : 'json',
+			success : function(data) {
+				for(var i = data.length; i--;) {
+					data[i].isSelected = false;
+				}
+				self.data(data);
+			},
+			error : function(response) {
+				$.toast("加载失败", "forbidden");
+			},
+			complete : function() {
+				$.hideLoading();
+			}
+		});
+
+		self.addToRemove = function(item) {
+			self.removeArray.push(item);
+		};
+
+		self.submit = function() {
+			for (var i = self.data().length; i--;) {
+				if (self.data()[i].isSelected) {
+					var requestBody = {
+						salesmanExternalId : self.data()[i].jobId,
+						terminalId : COMMON.METHOD.GET_QUERY_STRING("tid")
+					};
+					$.ajax({
+						type : "POST",
+						url : "/api/wechat/leaderterminalmaintenance/relationships",
+						data : JSON.stringify(requestBody),
+						contentType : "application/json",
+						success : function(data) {
+							$.toast("新增成功");
+						},
+						error : function(response) {
+							$.toast("新增失败", "forbidden");
+						}
+					});
+				}
+			}
+		};
+	};
+	ko.applyBindings(new TLACViewModel());
+</script>
+</html>

@@ -1,0 +1,26 @@
+.jpform_yzCode.weui_label{
+	    width: 75px;
+    font-size: 14px;
+    border: 1px solid #04BE02;
+    color: #04BE02;
+    border-radius: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.jp_disabled.weui_label{
+	    width: 75px;
+    font-size: 14px;
+    border: 1px solid #999;
+    color: #999;
+    border-radius: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.regBtn{
+	margin: .5rem;
+	margin-top: 2rem;
+}

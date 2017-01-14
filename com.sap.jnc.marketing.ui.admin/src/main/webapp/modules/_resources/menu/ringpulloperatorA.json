@@ -1,0 +1,8 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "拉环核数",
+		"href": "banquet/ringPostList/verifiyCount"
+	}]
+}]

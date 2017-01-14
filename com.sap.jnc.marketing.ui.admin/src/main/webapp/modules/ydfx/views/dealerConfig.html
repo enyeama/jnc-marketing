@@ -1,0 +1,101 @@
+<!-- author: Zero Yu -->
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa fa-volume-up"></i> 经销商--组长--DMS第三大类逻辑关系维护
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="hpanel">
+		<div class="panel-body">
+			<div class="row">
+				<!-- <div class="col-lg-1 col-md-offset-9">
+					<button type="button" class="btn btn-primary" ng-click="search()">
+						<i class="fa fa-plus"></i> <span class="bold">查询</span>
+					</button>
+				</div> -->
+				<div class="col-lg-1 col-md-offset-10">
+					<button type="button" class="btn btn-primary"
+						ng-click="openDialog()">
+						<i class="fa fa-plus"></i> <span class="bold">新建</span>
+					</button>
+				</div>
+				<div class="col-lg-1">
+					<button type="button" class="btn btn-danger" ng-click="remove()">
+						<i class="fa fa-edit"></i> <span class="bold">删除</span>
+					</button>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<table
+					class="jnc-table footable table table-stripped toggle-arrow-tiny table-bordered">
+					<thead align="center">
+						<tr>
+							<th>选择</th>
+							<th>经销商编号</th>
+							<th>经销商名称</th>
+							<th>组长编号</th>
+							<th>组长名称</th>
+							<th>DMS第三级大类名称</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in model.content track by $index">
+							<td><input type="checkbox" ng-model="item.selected" /></td>
+							<td ng-bind="item.dealerId"></td>
+							<td ng-bind="item.dealerName"></td>
+							<td ng-bind="item.leaderId"></td>
+							<td ng-bind="item.leaderName"></td>
+							<td ng-bind="item.productName"></td>
+						</tr>
+						<tr>
+							<td td colspan="6" ng-if="model.content.length===0">没有相关记录</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="9" ng-show="model.numberOfElements">
+								<ul class="pagination pull-right" ng-cloak>
+									<li ng-click="page(0)" ng-hide="model.first"><span
+										aria-label="First" aria-hidden="true">&laquo;&laquo;</span></li>
+									<li ng-click="page(model.number - 1)" ng-hide="model.first"><span
+										aria-label="Previous" aria-hidden="true">&laquo;</span></li>
+									<li ng-click="page(model.number - 2)"
+										ng-show="model.number > model.totalPages - 1"><span
+										ng-bind="model.number - 1"></span></li>
+									<li ng-click="page(model.number - 1)"
+										ng-show="model.number > 0"><span ng-bind="model.number"></span>
+									</li>
+									<li class="active"><span ng-bind="model.number + 1"></span></li>
+									<li ng-click="page(model.number + 1)"
+										ng-show="model.number < model.totalPages - 1"><span
+										ng-bind="model.number + 2"></span></li>
+									<li ng-click="page(model.number + 2)"
+										ng-show="model.number < model.totalPages - 2"><span
+										ng-bind="model.number + 3"></span></li>
+									<li ng-click="page(model.number + 1)" ng-hide="model.last"><span
+										aria-label="Next" aria-hidden="true">&raquo;</span></li>
+									<li ng-click="page(model.totalPages - 1)" ng-hide="model.last">
+										<span aria-label="Next" aria-hidden="true">&raquo;&raquo;</span>
+									</li>
+									<li><select class="form-control"
+										ng-model="request.paging.size" ng-change="page()">
+											<option label="每页5个" value="5">5</option>
+											<option label="每页10个" value="10">10</option>
+											<option label="每页20个" value="20">20</option>
+											<option label="每页50个" value="50">50</option>
+											<option label="每页100个" value="100">100</option>
+									</select></li>
+								</ul>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,16 @@
+[{
+	"name": "移动访销",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "人事子范围-DMS大类",
+		"href": "ydfx/prodectsalescategory"
+	}]
+},
+{
+	"name": "全员营销",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "账号管理",
+		"href": ""
+	}]
+}]

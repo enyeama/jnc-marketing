@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/banquet.css" />
+</head>
+
+<body>
+	<div class="weui_panel weui_panel_access">
+		<div class="weui_panel_hd">物流码报备扫码</div>
+	</div>
+	<!-- 报备扫码 -->
+	<div class="bd">
+		<div class="weui_cells_title">
+			<a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" id="btnScan">扫箱码</a> <span id="count" style="float: right;">0</span>
+		</div>
+		<div class="weui_cell">
+			<div class="weui_cell_hd">
+				<label for="" class="weui_label">物流码</label>
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" id="input" name="input" type="number" value="" placeholder="请输入物流码" />
+			</div>
+			<div class="weui_cell_ft">
+				<a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" id="btnInput">确定</a>
+			</div>
+		</div>
+		<div class="weui_cells" id="list">
+			<!-- <div class="weui_cell">
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>123456789</p>
+				</div>
+				<div class="weui_cell_ft"></div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>123456789</p>
+				</div>
+				<div class="weui_cell_ft"></div>
+			</div> -->
+		</div>
+		<div class="weui_btn_area">
+			<a class="weui_btn weui_btn_primary" href="javascript:;" id="btnSave">保存</a> <a class="weui_btn weui_btn_default" href="javascript:;" id="btnCancel">取消</a>
+		</div>
+	</div>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="UTF-8"></script>
+<script src="../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/common/wechat.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/const.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/scan.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	(function($) {
+
+		var config = {
+			btnScan : "#btnScan",
+			btnSave : "#btnSave",
+			btnCancel : "#btnCancel",
+			btnInput : "#btnInput",
+			input : "#input",
+			container : "#list",
+			count : "#count",
+			type : "logistics",
+			url : PATH.BANQUET.SCAN_LOGISTICS,
+		}
+
+		banquet.scan.init(config);
+
+	})($);
+</script>
+
+</html>

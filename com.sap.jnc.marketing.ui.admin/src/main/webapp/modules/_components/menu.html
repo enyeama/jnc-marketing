@@ -1,0 +1,32 @@
+<aside id="menu" ng-controller="jnc-admin.menu.controller" class="show">
+	<div id="navigation" ng-show="user" ng-cloak>
+		<div class="profile-picture">
+			<div class="stats-label text-color">
+				<a href="index.html">
+					<img src="images/jnc_logo_125.png" class="img-circle m-b" alt="logo">
+				</a>
+				<h4 class="font-extra-bold font-uppercase" ng-bind="user.name"></h4>
+				<div>
+					<small class="text-muted"></small>
+				</div>
+			</div>
+		</div>
+		<ul class="nav" id="side-menu" ng-repeat="role in user.roles">
+			<li ng-repeat="privilegeParent in role.privileges">
+				<a>
+					<i class="fa" ng-class="privilegeParent.icon"></i>
+					<span class="nav-label" ng-bind="privilegeParent.name"></span>
+					<span class="fa arrow"></span>
+				</a>
+				<ul class="nav nav-second-level" ng-repeat="privilegeChild in privilegeParent.children">
+					<li>
+						<a href="#/{{privilegeChild.href}}">
+							<i class="fa" ng-class="privilegeChild.icon"></i>
+							<span ng-bind="privilegeChild.name"></span>
+						</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</aside>

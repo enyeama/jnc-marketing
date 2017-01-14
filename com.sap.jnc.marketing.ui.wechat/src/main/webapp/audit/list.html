@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>稽核列表</title>
+<link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/audit.css" />
+</head>
+
+<body>
+	<div class="weui_panel weui_panel_access">
+		<div class="weui_panel_hd">稽核待办列表</div>
+	</div>
+	<!-- 稽核列表 -->
+	<div class="bd">
+		<div class="weui_panel_bd" data-bind="foreach: list">
+            <a href="#" class="weui_media_box weui_media_appmsg" data-bind="attr: { href: url }">
+                <div class="weui_media_bd">
+                    <h3 class="weui_media_title" style="font-size: 14px;" data-bind="text: branchName">网点名称</h3>
+                    <p class="weui_media_desc" data-bind="if: $parent.auditType === 'TERMINAL'">网点地址：<span data-bind="text: address"></span></p>
+                    <p class="weui_media_desc" data-bind="if: $parent.auditType === 'BANQUET'">宴会地址：<span data-bind="text: hostAddress"></span></p>
+                    <p class="weui_media_desc">创建日期：<span data-bind="text: $parent.formatDate(createOn || new Date())"></span></p>
+                    <p class="weui_media_desc">分配日期：<span data-bind="text: $parent.formatDate(assignTime || new Date())"></span></p>
+                </div>
+                <div class="weui_media_ft"><span class="weui_btn weui_btn_mini weui_btn_warn weui_btn_primary"
+				data-bind="click: $parent.refuseAudit.bind($data, $parent)">拒绝稽核</span></div>
+            </a>
+        </div>
+	</div>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/audit/list.js" type="text/javascript" charset="utf-8"></script>
+</html>

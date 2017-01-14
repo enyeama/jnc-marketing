@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>兑付录入</title>
+    <link rel="stylesheet" type="text/css" href="../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/consumptionInput.css"/>
+</head>
+<body>
+<div class="weui_cells weui_cells_form">
+    <form id="consumptionForm" data-bind="submit: fnConfirmInput">
+        <div class="weui_cell">
+            <div class="weui_cell_hd">
+                <label class="weui_label" for="materialCategories">物料</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" id="materialCategories" type="text" value="" data-bind="value: sMaterialId">
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd">
+                <label class="weui_label" for="paidQuantityValue">数量</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input id="paidQuantityValue" class="weui_input" type="tel" placeholder="请输入兑付数量"
+                       data-bind="value: iPaidQuantityValue">
+            </div>
+        </div>
+    </form>
+</div>
+<div class="weui_cells_title">备注</div>
+<div class="weui_cells weui_cells_form">
+    <div class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+            <textarea id="paymentComment" class="weui_textarea" placeholder="请输入兑付备注" rows="3"
+                      data-bind="value: sPaymentComment"></textarea>
+        </div>
+    </div>
+</div>
+<button type="submit" id="btn_confirm" class="weui_btn weui_btn_primary" form="consumptionForm">确认</button>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/sparematerial/consumptionInput.js" type="text/javascript" charset="utf-8"></script>
+</html>

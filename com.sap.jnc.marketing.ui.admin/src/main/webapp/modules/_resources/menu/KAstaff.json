@@ -1,0 +1,8 @@
+[{
+	"name": "KA网点维护",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "KA网点信息维护",
+		"href": "ka/branchmanagement"
+	}]
+}]

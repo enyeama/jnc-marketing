@@ -1,0 +1,38 @@
+<!-- author: Zero Yu -->
+<div class="hpanel">
+	<div class="panel-heading">
+		<h3 class="modal-title">添加关系</h3>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="recipient-name" class="col-sm-4 control-label">人事子范围编号:</label>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="addRequest.salesExternalId"
+						ng-options="item.externalId as item.externalId for item in prodectSales.content"><option
+							value="" style="display: none;">请选择人事子范围编号</option></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="col-sm-4 control-label">人事子范围名称:</label>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="addRequest.salesExternalId"
+						ng-options="item.externalId as item.name for item in prodectSales.content"><option
+							value="" style="display: none;">请选择人事子范围名称</option></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="col-sm-4 control-label">DMS第三级大类名称:</label>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="addRequest.dmsId"
+						ng-options="item.id as item.name for item in dmsl3.content"><option
+							value="" style="display: none;">请选择DMS第三级大类名称</option></select>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" ng-click="saveData()">保存</button>
+		<button type="button" class="btn btn-default" ng-click="close()">取消</button>
+	</div>
+</div>

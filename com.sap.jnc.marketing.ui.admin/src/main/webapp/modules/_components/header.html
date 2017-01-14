@@ -1,0 +1,50 @@
+<!-- 头部 -->
+<div ng-controller="jnc-admin.header.controller">
+	<div id="header">
+		<div class="color-line"></div>
+		<div class="light-version">剑南春后台管理系统</div>
+		<nav role="navigation">
+			<div class="navbar-right" ng-show="isLogin" ng-cloak>
+				<ul class="nav navbar-nav no-borders">
+					<li class="dropdown">
+						<a ng-click="changeScreenSize()">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a ng-click="changeProfile()">
+							<i class="fa fa-user"></i>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a ng-click="confirmLogout()">
+							<i class="glyphicon glyphicon-log-out"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div id="modal-logout-success" class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">登出</h4>
+				</div>
+				<div style="height: 50px; padding: 20px 25px 20px 25px;">
+					<h5>
+						<i class="fa fa-sign-out"></i>
+						<span>您是否真的要登出系统？</span>
+					</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消登出</button>
+					<button type="button" class="btn btn-danger" ng-click="logout()">确定退出</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

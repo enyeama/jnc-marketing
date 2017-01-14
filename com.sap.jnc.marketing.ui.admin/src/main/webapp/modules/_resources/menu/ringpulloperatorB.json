@@ -1,0 +1,8 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "拉环验证",
+		"href": "banquet/ringPostList/verification"
+	}]
+}]

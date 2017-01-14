@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>KA列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/terminal.css"/>
+</head>
+<body>
+	<div class="weui_panel weui_panel_access">
+	  <div class="weui_search_bar" id="search_bar">
+		  <form class="weui_search_outer">
+		    <div class="weui_search_inner">
+		      <i class="weui_icon_search"></i>
+		      <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
+		      <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+		    </div>
+		    <label for="search_input" class="weui_search_text" id="search_text">
+		      <i class="weui_icon_search"></i>
+		      <span>搜索</span>
+		    </label>
+		  </form>
+		  <a href="javascript:;" class="weui_search_cancel" onclick="doSearch()">搜索</a>
+		</div>
+	</div>
+	<!-- KA列表 -->
+	<div class="weui_panel weui_panel_access">
+	  <div class="weui_panel_bd" data-bind="foreach: terminals">
+		<a data-bind="attr: {href: 'kaOrders.html?kaTerminalId=' + $data.id}" class="weui_media_box weui_media_appmsg">
+			<div class="weui_media_bd">
+				<h4 class="weui_media_title" data-bind="text: $data.title"></h4>
+				<p class="weui_media_desc" data-bind="text: '编号：' + $data.id"></p>
+				<p class="weui_media_desc" data-bind="text: '渠道：' + $data.channel"></p>
+				<p class="weui_media_desc" data-bind="text: '拜访类型：' + $data.branchLevel"></p>
+				<p class="weui_media_desc" data-bind="text: '网点类型：' + $data.type"></p>
+			</div>
+		</a>
+	  </div>
+	</div>
+</body>
+<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var viewModel = {
+		terminals : ko.observableArray([]),
+		initList: function(){
+			var _this = this;
+			$.showLoading("数据加载中...");
+			$.get(ROOT + '/ka/sales/terminals', {
+				'kaSalesId': CONSTANT.YDFX.salesId
+			}).done(function(data) {
+				_this.terminals(data);
+				$.hideLoading();
+			}).fail(function(response) {
+				$.toast("数据加载失败", "forbidden");
+			});
+		}
+	};
+	ko.applyBindings(viewModel);
+	
+	var doSearch = function() {
+		var titleKey = $('#search_input').val();
+		$.showLoading("数据加载中...");
+		$.get(ROOT + '/ka/sales/terminals', {
+			'kaSalesId': CONSTANT.YDFX.salesId,
+			'titleKey': titleKey
+		}).done(function(data) {
+			viewModel.terminals(data);
+			$.hideLoading();
+		}).fail(function(response) {
+			$.toast("数据加载失败", "forbidden");
+		});
+	}
+
+	$(function () {
+		viewModel.initList();
+	});
+</script>
+</html>

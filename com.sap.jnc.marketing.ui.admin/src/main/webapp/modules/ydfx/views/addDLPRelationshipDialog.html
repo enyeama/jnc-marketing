@@ -1,0 +1,56 @@
+<!-- author: Zero Yu -->
+<div class="hpanel">
+	<div class="panel-heading">
+		<h3 class="modal-title">添加关系</h3>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="recipient-name" class="col-sm-4 control-label">经销商编号:</label>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="$parent.addRequest.dealerId"
+						ng-options="dealer.id as dealer.id for dealer in dealer.content"><option
+							value="" style="display: none;">请选择经销商编号</option></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="col-sm-4 control-label">经销商名称:</label>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="$parent.addRequest.dealerId"
+						ng-options="dealer.id as dealer.name for dealer in dealer.content"><option
+							value="" style="display: none;">请选择经销商名称</option></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="col-sm-4 control-label">组长编号:</label>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="addRequest.leaderId"
+						ng-options="leader.id as leader.id for leader in leader.content"><option
+							value="" style="display: none;">请选择组长编号</option></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="col-sm-4 control-label">组长名称:</label>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="addRequest.leaderId"
+						ng-options="leader.id as leader.name for leader in leader.content"><option
+							value="" style="display: none;">请选择组长名称</option></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="col-sm-4 control-label">DMS第三级大类名称:</label>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="addRequest.productId"
+						ng-options="dms.id as dms.name for dms in dmsl3.content"><option
+							value="" style="display: none;">请选择DMS第三级大类名称</option></select>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="panel-footer">
+		<div class="text-right">
+			<button type="button" class="btn btn-primary" ng-click="saveData()">保存</button>
+			<button type="button" class="btn btn-default" ng-click="close()">取消</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,7 @@
+#head {
+    padding: 5px 15px;
+}
+
+.consumption_panel:before {
+	border-top: none;
+}

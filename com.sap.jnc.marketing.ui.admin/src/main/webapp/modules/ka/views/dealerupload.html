@@ -1,0 +1,42 @@
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa fa-volume-up"></i> 经销商主数据导入
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="row">
+		<form id="uploadForm"  enctype="multipart/form-data" method="POST">
+			<div class="col-lg-6">
+				<input type="file" id="file" class="form-control"
+					name="file" placeholder="">
+			</div>
+			<div class="col-lg-6">
+				<button type="submit" class="btn btn-primary" ng-click="submitForm()">确认导入</button>
+			</div>
+		</form>
+		<div class="clearfix"></div>
+		<hr />
+		<div class="col-lg-12">
+			<div class="box-body">
+				<table id="errorTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Excel行号</th>
+							<th>操作</th>
+							<th>经销商ID</th>
+							<th>经销商名称</th>
+							<th>错误消息</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.box-body -->
+		</div>
+	</div>
+</div>

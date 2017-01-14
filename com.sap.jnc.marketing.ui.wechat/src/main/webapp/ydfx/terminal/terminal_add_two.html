@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>酒店渠道网点新增</title>
+    <link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/addTypeOfOne.css"/>
+</head>
+<body>
+	<div class="weui_cells weui_cells_form">
+		<form id="bind_terminal_form">
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">门头照片</label></div>
+			<div class="weui_uploader_bd">
+				<div class="weui_uploader_input_wrp bind_picture">
+				<input class="weui_uploader_input" type="button" onclick="chooseImg(this, 0)">
+			  </div>
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">描述</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text" disabled="disabled" name="description" data-bind="value: info().description ? info().description : '精确到:20米,定位方式:微信'">
+			</div>
+		  </div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd"><label for="" class="weui_label">GPS地址</label></div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<!--基本信息 -->
+					<input style="display: none;" name="type" value="0"/>
+					<input style="display: none" name="id" data-bind="value: info().id"/>
+					<!--地址相关信息 -->
+					<input style="display: none;" name="accuracy" data-bind="value: info().accuracy"/>
+					<input style="display: none;" name="longitude" data-bind="value: info().longitude"/>
+					<input style="display: none;" name="latitude" data-bind="value: info().latitude"/>
+					<input style="display: none;" name="province" data-bind="value: info().province"/>
+					<input style="display: none;" name="city" data-bind="value: info().city"/>
+					<input style="display: none;" name="country" data-bind="value: info().country"/>
+					<input class="weui_input" type="text" data-bind="value: info().gpsDescription"  name="gpsDescription" readonly="readonly" >
+				</div>
+				<div class="weui_btn weui_btn_mini weui_btn_primary bind_gps_btn" onclick="addressInfo(position_back)">定位</div>
+			</div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label for="" class="weui_label">省市区(县)</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" name="fullAddress" data-bind="value: (info().province || '') + ' ' + (info().city|| '') + ' ' + (info().country || '')" readonly="readonly">
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">区县编码 <span style="color:red;"> *</span></label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input bind_county" type="text" readonly="readonly"
+					 data-bind="value: info().countyId" name="countyId" onchange="changeCounty(this)">
+			</div>
+		  </div>
+			<!--
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">网点名称</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" name="name" >
+			</div>
+		  </div>
+		  -->
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">门头名称<span style="color:red;"> *</span></label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="40" data-bind="value: info().title" name="title" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">网点地址<span style="color:red;"> *</span></label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input bind_address_name"  maxlength="40" data-bind="value: info().address" type="text" name="address" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">收货地址</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="40" data-bind="value: info().warehouseAddress" name="warehouseAddress">
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">营业执照名称</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="20" data-bind="value: info().businessLicenseName" name="businessLicenseName" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">注册人姓名<span style="color:red;"> *</span></label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="20" data-bind="value: info().registrantName" name="registrantName" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">网点等级</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" id="wd" name="branchLevel" data-bind="value: info().branchLevel" readonly="readonly" placeholder="请选择">
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">网点类型</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" name="branchType" value="终端" disabled="disabled" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">座机号码</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="20" data-bind="value: info().phone" name="phone" >
+			</div>
+		  </div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd"><label class="weui_label">组织机构代码<span style="color:red;"> *</span></label></div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<input class="weui_input" type="text" name="organizationCode" data-bind="value: info().organizationCode" maxlength="20" >
+				</div>
+			</div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">关键人职位<span style="color:red;"> *</span></label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" id="gj" name="keyUserPosition" onchange="changeKeyUser(this)" data-bind="value: info().keyUserPosition" readonly="readonly" placeholder="请选择">
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">采购人姓名<span class="bind_key_user_need" style="color: red;">*</span></label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="20" data-bind="value: info().purchaserName" name="purchaserName" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">采购人手机<span class="bind_key_user_need" style="color: red;">*</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="tel" maxlength="11" data-bind="value: info().purchaserPhone" name="purchaserPhone" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">采购人微信</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="20" data-bind="value: info().purchaserWechat" name="purchaserWechat" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">吧台主管姓名<span class="bind_key_user_need" style="color: red;">*</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="20" data-bind="value: info().supervisorName" name="supervisorName" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">吧台主管手机<span class="bind_key_user_need" style="color: red;">*</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="11" data-bind="value: info().supervisorPhone" name="supervisorPhone" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">吧台主管微信</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text"   maxlength="20" data-bind="value: info().supervisorWechat"  name="supervisorWechat" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">业务联系人姓名<span class="bind_key_user_need" style="color: red;">*</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text" maxlength="20" data-bind="value: info().businessName"  name="businessName" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">业务联系人电话<span class="bind_key_user_need" style="color: red;">*</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text" maxlength="11" data-bind="value: info().businessPhone" name="businessPhone" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">业务联系人微信</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text"  maxlength="20" data-bind="value: info().businessWechat" name="businessWechat" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">促销员姓名<span class="bind_key_user_need" style="color: red;">*</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="20" data-bind="value: info().promoterName"  name="promoterName" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">促销员手机<span class="bind_key_user_need" style="color: red;">*</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text" maxlength="11" data-bind="value: info().promoterPhone" name="promoterPhone" >
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">促销员微信</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+			  <input class="weui_input" type="text"  maxlength="20" data-bind="value: info().promoterWechat" name="promoterWechat" >
+			</div>
+		  </div>
+		  <div class="weui_cell weui_cell_switch">
+			<div class="weui_cell_hd weui_cell_primary">宴会酒店</div>
+			<div class="weui_cell_ft">
+			  <input class="weui_switch bind_isBanquetHotel" type="checkbox">
+			</div>
+		  </div>
+		  <div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">营业执照拍照</label></div>
+			<div class="weui_uploader_bd">
+				<div class="weui_uploader_input_wrp bind_license_picture">
+				<input class="weui_uploader_input" onclick="chooseImg(this, 1)" type="button">
+			  </div>
+			</div>
+		  </div>
+		</form>
+	</div>
+	<div class="bottomBtnBox">
+		<a href="javascript:;" class="weui_btn weui_btn_primary" onclick="submitForm()">提交</a>
+	</div>
+
+</body>
+	<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/city-picker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="UTF-8"></script>
+	<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/validator.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/wechat.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/termial/terminal.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript">
+		$("#gj").select({
+		  title: "选择职位",
+		  items: ["吧台主管", "促销员", "业务联系人", "采购人"]
+		});
+
+		$("#wd").select({
+		  title: "选择网点",
+		  items: ["A", "B", "C"]
+		});
+
+
+	</script>
+</html>

@@ -1,0 +1,8 @@
+[{
+	"name": "稽核",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "稽核人员分配",
+		"href": "audit/audits?type=market"
+	}]
+}]

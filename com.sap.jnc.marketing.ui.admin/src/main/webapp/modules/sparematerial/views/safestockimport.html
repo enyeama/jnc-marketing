@@ -1,0 +1,123 @@
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa fa-volume-up"></i> 安全库存导入
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="row">
+			<!-- 正在导入库存数据，请稍候-->
+			<div class="modal fade in" id="uploadingModal" tabindex="-1" role="dialog" 
+				   aria-labelledby="uploadingModal" aria-hidden="true">
+				   <div class="modal-dialog">
+				      <div class="modal-content">
+				         <div class="modal-header">
+				            <button type="button" class="close" 
+				               data-dismiss="modal" aria-hidden="true">
+				                  &times;
+				            </button>
+				            <h1 class="modal-title" id="uploadingModal">安全库存导入</h1>
+				         </div>
+				         <div class="modal-body">正在导入库存数据...请稍候</div>
+				          <div class="modal-footer text-center"></div>
+				      </div>
+				</div>
+			</div>
+			<!-- 正在导入库存数据结束区域 -->
+			<div class="text-right"><button type="button" class="btn btn-info" ng-click="returnToSafeStock()" >返回至库存页面</button> </div>
+			<div class="form-group col-lg-12">
+				<!-- 导入表单起始 -->
+				<form role="form" ng-submit="uploadAndSubmit()" class="form-inline"	enctype="multipart/form-data">
+					<div class="form-group">
+						<div class="form-group">
+							<!-- <label class="btn btn-default btn-file">选择文件</label> -->
+							<input type="file" name="file">
+						</div>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#uploadingModal">提交</button>
+						
+						<!-- 错误信息总条目数 -->
+						<span id="importErrorCounts">
+				          &nbsp;&nbsp;&nbsp;<b>共{{importTotalCount}}笔,{{importErrorCount}}笔验证失败!</b>
+				        </span>
+				        <!-- 成功多少笔数 -->
+				        <span id="importSuccessCounts">
+				          &nbsp;&nbsp;&nbsp;<b>{{importSuccessCount}}笔操作成功!</b>
+				        </span>
+					</div>
+					
+				</form>
+				<br/><br/>
+				<!-- 导入表单结尾 -->
+				<!-- 导入成功/失败条目数 -->
+				<div>
+				     <button type="button"  class="btn btn-info" ng-click="exportErrorSafeStock()">导出错误信息</button>&nbsp;
+				</div>
+				<br/>
+				
+				<table id="errorSafeStockList" class="table table-bordered table-hover"
+					data-page-size="2" data-filter=#filter>
+					<thead>
+						<tr>
+							<th>行号</th>
+							<th>操作</th>
+							<th>岗位编号</th>
+							<th>物料编号</th>
+							<th>安全库存</th>
+							<th>错误信息</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr	ng-repeat="item in errorResults | startFrom:currentErrorPage*PageConfigProperties.pageSize | limitTo:PageConfigProperties.pageSize">
+							<td ng-bind="item.rowNumber"></td>
+							<td ng-bind="item.operation"></td>
+							<td ng-bind="item.positionId"></td>
+							<td ng-bind="item.materialId"></td>
+							<td ng-bind="item.safetyStockQuantity"></td>
+							<td ng-bind="item.errorMsg"></td>
+						</tr>
+					</tbody>
+					
+					<tfoot>
+						<tr>
+							<td colspan="26">
+								<div style="float: left">
+									<span>每页显示</span> <select
+										ng-model="PageConfigProperties.pageSize" id="pageSize"
+										ng-change="changePageSize()">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+									</select> <span>条</span>
+								</div>
+								<div style="float: right">
+									<button ng-disabled="currentErrorPage == 0" ng-click="currentErrorPage=0">
+										首页</button>
+									<button ng-disabled="currentErrorPage == 0"
+										ng-click="currentErrorPage=currentErrorPage-1">上一页</button>
+									{{currentErrorPage+1}}/{{numberOfErrorPages()}}
+									<button ng-disabled="currentErrorPage >= numberOfErrorPages()-1"
+										ng-click="currentErrorPage=currentErrorPage+1">下一页</button>
+									<button ng-disabled="currentErrorPage >= data.length/pageSize - 1"
+										ng-click="currentErrorPage=numberOfErrorPages()-1">末页</button>
+									<input type="text" class="page-number-input" ng-model="pagenum"
+										ng-keypress="pageNoKeyDown($event)" />
+									<button ng-click="currentErrorPage=goToErrorPage()">GO</button>
+								</div>
+
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<!--end for table div-->
+		</div>
+</div>

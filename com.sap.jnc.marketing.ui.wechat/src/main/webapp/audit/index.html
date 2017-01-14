@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>稽核功能首页</title>
+    <link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../css/audit.css" />
+</head>
+
+<body>
+    <!-- 稽核员信息 -->
+    <div class="weui_panel weui_panel_access">
+        <div class="weui_panel_bd">
+            <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+                <div class="weui_media_hd">
+                    <img class="weui_media_appmsg_thumb weui_cycle" src="../img/007.jpg" alt="">
+                </div>
+                <div class="weui_media_bd">
+                    <h5 class="weui_media_title">丁朝勇</h5>
+                    <h5 class="weui_media_title">岗位</h5>
+                    <h5 class="weui_media_title">NO.446513785757</h5>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- 功能菜单 -->
+    <div class="weui_grids">
+        <div class="weui-row weui-no-gutter">
+            <a href="#" class="weui_grid js_grid weui-col-50" data-id="button" data-bind="attr: { href: terminalUrl }">
+                <div class="weui_grid_icon">
+                    <img src="../img/bar10.png" alt="">
+                </div>
+                <p class="weui_grid_label">
+                    网点稽核
+                </p>
+                <span class="weui_counter" data-bind="text: terminalCount, visible: terminalCount() > 0">0</span>
+            </a>
+            <a href="#" class="weui_grid js_grid weui-col-50" data-id="cell" data-bind="attr: { href: banquetUrl }">
+                <div class="weui_grid_icon">
+                    <img src="../img/bar10.png" alt="">
+                </div>
+                <p class="weui_grid_label">
+                    宴会稽核
+                </p>
+            </a>
+            <span class="weui_counter" data-bind="text: banquetCount, visible: banquetCount() > 0">0</span>
+        </div>
+        <div class="weui-row weui-no-gutter">
+            <a href="#" class="weui_grid js_grid weui-col-50" data-id="button" data-bind="attr: { href: promotionUrl }">
+                <div class="weui_grid_icon">
+                    <img src="../img/bar10.png" alt="">
+                </div>
+                <p class="weui_grid_label">
+                    访销稽核
+                </p>
+                <span class="weui_counter" data-bind="text: promotionCount, visible: promotionCount() > 0">0</span>
+            </a>
+            <a href="#" class="weui_grid js_grid weui-col-50" data-id="cell" data-bind="attr: { href: exhibitionUrl }">
+                <div class="weui_grid_icon">
+                    <img src="../img/bar10.png" alt="">
+                </div>
+                <p class="weui_grid_label">
+                    陈列稽核
+                </p>
+                <span class="weui_counter" data-bind="text: exhibitionCount, visible: exhibitionCount() > 0">0</span>
+            </a>
+        </div>
+    </div>
+    <div class="weui_cell">
+		<div class="weui_cell_hd">
+			<label for="" class="weui_label">用户ID</label>
+		</div>
+		<div class="weui_cell_bd weui_cell_primary">
+			<input class="weui_input" type="text" value="12" data-bind="value: auditorId" placeholder="请输入测试用户id">
+		</div>
+		<div class="weui_cell_ft">
+			<a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" value="23" data-bind="click: init">确定</a>
+		</div>
+	</div>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/audit/index.js" type="text/javascript" charset="utf-8"></script>
+</html>

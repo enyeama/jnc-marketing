@@ -1,0 +1,8 @@
+[{
+	"name": "业务配置",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "红包金额配置",
+		"href": "bonus/list"
+	}]
+}]

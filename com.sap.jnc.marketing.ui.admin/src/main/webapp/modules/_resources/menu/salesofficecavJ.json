@@ -1,0 +1,8 @@
+[{
+	"name": "陈列",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "陈列核销",
+		"href": "exhibition/exhibitionList?type=verification"
+	}]
+}]

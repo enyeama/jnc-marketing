@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <security:global-method-security secured-annotations="enabled"/>
+
+    <security:http pattern="/resources/**" security="none"/>
+    <security:http pattern="/login" security="none"/>
+    <security:http pattern="/oauth_login" security="none"/>
+    <security:http pattern="/get_openid" security="none"/>
+    <security:http pattern="/captcha/**" security="none"/>
+    <security:http pattern="/favicon.ico" security="none"/>
+    <security:http pattern="/imgs/**" security="none"/>
+    <security:http pattern="/wechat/push" security="none"/>
+    <security:http pattern="/wechat_oauth_callback" security="none"/>
+    <security:http pattern="/ui/**" security="none"/>
+    <!--<security:http pattern="/api/**" security="none"/>-->
+    <!-- <security:http pattern="/api/system/**" security="none"/>
+    <security:http pattern="/api/wechat_oauth_callback" security="none"/>
+    <security:http pattern="/api/wechat/transfer" security="none"/>
+    <security:http pattern="/api/wechat/**" security="none"/>-->
+    <security:http pattern="/track/**" security="none"/><!--activity tracking-->
+
+    <security:http pattern="/**" auto-config="false" use-expressions="true" create-session="stateless"
+                   entry-point-ref="authenticationEntryPoint">
+        <security:intercept-url pattern="/backdoor" access="permitAll"/>
+        <security:intercept-url pattern="/system" access="permitAll"/>
+        <security:intercept-url pattern="/register/**" access="permitAll"/>
+        <security:intercept-url pattern="/pay/transfer" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/pay/bonus" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/qrCodeEntrance" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/wechat/js_config" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/activities/**" access="isAuthenticated()"/>
+        <!--<security:intercept-url pattern="/**" access="isAuthenticated()"/>-->
+        <security:headers>
+            <security:cache-control/>
+            <security:content-type-options/>
+            <security:hsts/>
+            <security:frame-options policy="SAMEORIGIN"/>
+            <security:xss-protection/>
+        </security:headers>
+        <security:csrf disabled="true"/>
+        <security:access-denied-handler ref="accessDeniedHandler"/>
+        <!--<security:session-management>-->
+            <!--<security:concurrency-control-->
+                    <!--error-if-maximum-exceeded="true"-->
+                    <!--max-sessions="2"-->
+                    <!--expired-url="/WEB-INF/common/error/accessDeniedError.html"/>-->
+        <!--</security:session-management>-->
+        <!--<security:logout logout-url="/logout"-->
+                         <!--logout-success-url="/"-->
+                         <!--delete-cookies="JSESSIONID"/>-->
+        <security:form-login login-page="/oauth_login"
+                             username-parameter="j_username"
+                             password-parameter="j_password"
+                             default-target-url="/"
+                             login-processing-url="/api/authentication"
+                             always-use-default-target="false"
+                             authentication-failure-url="/login?error=true"
+                             authentication-success-handler-ref="apiAuthenticationSuccessHandler"
+                             authentication-failure-handler-ref="apiAuthenticationFailureHandler"/>
+        <!--<security:custom-filter ref="openIDFilter" before="FIRST"/>-->
+        <!--<security:custom-filter ref="authenticationFilter" position="PRE_AUTH_FILTER" />-->
+        <!--<security:custom-filter ref="uerStatusConsistencyFilter" after="LAST"/>-->
+        <security:custom-filter ref="authenticationTokenFilter" before="FORM_LOGIN_FILTER" />
+    </security:http>
+
+    <bean id="authenticationEntryPoint"
+          class="com.sap.jnc.marketing.service.security.ApiAuthenticationEntryPoint">
+    </bean>
+
+    <bean id="saltSource"
+          class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+        <property name="userPropertyToUse" value="salt"/>
+    </bean>
+
+    <bean id="passwordEncoder"
+          class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+    <bean id="openIDFilter" class="com.sap.jnc.marketing.service.security.OpenIDFilter"/>
+    <bean id="uerStatusConsistencyFilter"
+          class="com.sap.jnc.marketing.service.security.UserStatusConsistencyFilter"/>
+    <bean id="authenticationTokenFilter" class="com.sap.jnc.marketing.service.security.AuthenticationTokenFilter" />
+
+    <!--<security:authentication-manager>-->
+        <!--<security:authentication-provider user-service-ref="identityService"/>-->
+    <!--</security:authentication-manager>-->
+
+    <bean id="apiAuthenticationSuccessHandler"
+          class="com.sap.jnc.marketing.service.security.ApiAuthenticationSuccessHandler"/>
+
+    <bean id="apiAuthenticationFailureHandler"
+          class="com.sap.jnc.marketing.service.security.ApiAuthenticationFailureHandler"/>
+
+    <bean id="loginFailureHandler"
+          class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"/>
+
+    <bean id="securityContextPersistenceFilter"
+          class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+        <constructor-arg index="0"
+                         ref="storeUserHttpSessionSecurityContextRepository"/>
+    </bean>
+
+    <bean id="storeUserHttpSessionSecurityContextRepository"
+          class="com.sap.jnc.marketing.service.security.UserHttpSessionSecurityContextRepository">
+    </bean>
+
+    <bean id="sessionAuthenticationStrategy"
+          class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <constructor-arg index="0">
+            <list>
+                <bean
+                        class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"/>
+                <bean
+                        class="org.springframework.security.web.csrf.CsrfAuthenticationStrategy">
+                    <constructor-arg index="0" ref="csrfTokenRepository"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+
+    <!-- CSRF Protection -->
+    <bean id="accessDeniedHandler"
+          class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
+        <constructor-arg index="0">
+            <map>
+                <entry
+                        key="org.springframework.security.web.csrf.InvalidCsrfTokenException">
+                    <bean
+                            class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+                        <property name="errorPage"
+                                  value="/WEB-INF/views/common/error/invalidCsrfTokenError.html"/>
+                    </bean>
+                </entry>
+                <entry
+                        key="org.springframework.security.web.csrf.MissingCsrfTokenException">
+                    <bean
+                            class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+                        <property name="errorPage"
+                                  value="/WEB-INF/views/common/error/missingCsrfTokenError.html"/>
+                    </bean>
+                </entry>
+            </map>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <bean
+                    class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+                <property name="errorPage"
+                          value="/WEB-INF/views/common/error/accessDeniedError.html"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <!-- CSRF Protection -->
+    <bean id="csrfTokenRepository"
+          class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository"/>
+
+</beans>

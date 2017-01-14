@@ -1,0 +1,82 @@
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa fa-user"></i>
+				修改个人资料
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="row">
+		<form class="form-horizontal" ng-submit="confirmSave()">
+			<div class="form-group col-sm-offset-4" ng-show="errors" ng-repeat="error in errors" ng-cloak>
+				<div class="alert alert-danger">
+					<label class="control-label" ng-bind="error.message"></label>
+				</div>
+			</div>
+			<div class="form-group col-sm-offset-4" ng-show="notifications" ng-repeat="notification in notifications" ng-cloak>
+				<div class="alert alert-success">
+					<label class="control-label" ng-bind="notification.field + ' ' + notification.message"></label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">用户名</label>
+				<div class="col-sm-4">
+					<label class="control-label" ng-bind="model.userName"></label>
+				</div>
+			</div>
+			<hr class="hr">
+			<div class="form-group">
+				<label for="oldPassword" class="col-sm-4 control-label">旧密码</label>
+				<div class="col-sm-4">
+					<input class="form-control" id="oldPassword" type="password" placeholder="旧密码" required ng-model="model.oldPassword">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="newPassword" class="col-sm-4 control-label">新密码</label>
+				<div class="col-sm-4">
+					<input class="form-control" id="newPassword" type="password" placeholder="新密码" required ng-model="model.newPassword">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="confirmPassword" class="col-sm-4 control-label">确认密码</label>
+				<div class="col-sm-4">
+					<input class="form-control" id="confirmPassword" type="password" placeholder="确认密码" required ng-model="model.confirmPassword">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-2">
+					<input class="btn btn-block btn-success" type="submit" value="修改">
+				</div>
+				<div class="col-sm-2">
+					<input class="btn btn-block" type="reset" value="重置">
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 弹窗确认修改个人信息 -->
+	<div id="modal-confirm-save" class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">确认</h4>
+				</div>
+				<div style="height: 50px; padding: 10px;">
+					<h5>
+						<i class="fa fa-exclamation-circle text-warning"></i>
+						<span>是否确定要修改您的个人信息？</span>
+					</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-danger" ng-click="save()">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

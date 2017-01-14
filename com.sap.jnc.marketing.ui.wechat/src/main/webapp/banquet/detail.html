@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>宴会报备详细</title>
+<link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/banquet.css" />
+</head>
+
+<body>
+	<div class="bd" data-bind="with: data">
+		<div class="weui_panel_bd">
+			<a href="javascript:void(0);"
+				class="weui_media_box weui_media_appmsg">
+				<div class="weui_media_bd">
+					<h4 class="weui_media_title">订单编号:<span data-bind="text: id"></span></h4>
+					<p class="weui_media_desc">商品名称：<span data-bind="text: product.name"></span></p>
+					<p class="weui_media_desc">宴会地址：<span data-bind="text: hostAddress"></span></p>
+					<p class="weui_media_desc">联系电话：<span data-bind="text: hostPhone"></span></p>
+					<p class="weui_media_desc">跟单人ID：<span data-bind="text: handler.id"></span></p>
+					<p class="weui_media_desc">跟单人姓名：<span data-bind="text: handler.name"></span></p>
+				</div>
+				<div class="weui_media_ft" data-bind="text: window.getEnumerationText('banquetStatus', banquetStatus)"></div>
+			</a>
+		</div>
+		<div class="weui_grids">
+			<div class="weui-row weui-no-gutter">
+				<a href="" class="weui_grid js_grid weui-col-50" data-id="button" data-bind="visible: banquetStatus === 'APPLIED', attr: {href: window.PATH.BANQUET.HTML_FORM + '?banquetId=' + id + '&id=' + $parent.id}">
+					<div class="weui_grid_icon">
+						<img src="../img/bar10.png" alt="">
+					</div>
+					<p class="weui_grid_label">报备修改</p>
+				</a> 
+				<a href="" class="weui_grid js_grid weui-col-50" data-id="button" data-bind="visible: banquetStatus === 'APPLIED' || banquetStatus === 'APPROVED', attr: {href: window.PATH.BANQUET.HTML_ASSIGN + '?handlerId=' + handler.id + '&banquetId=' + id}">
+					<div class="weui_grid_icon">
+						<img src="../img/bar10.png" alt="">
+					</div>
+					<p class="weui_grid_label">指定跟单人</p>
+				</a>
+			<!-- </div>
+			<div class="weui-row weui-no-gutter"> -->
+				<a href="" class="weui_grid js_grid weui-col-50" data-id="button" data-bind="visible: banquetStatus === 'APPLIED' || banquetStatus === 'APPROVED', attr: {href: $parent.scanUrl}">
+					<div class="weui_grid_icon">
+						<img src="../img/bar10.png" alt="">
+					</div>
+					<p class="weui_grid_label">报备扫码</p>
+				</a> 
+				<a href="" class="weui_grid js_grid weui-col-50" data-id="button" data-bind="visible: banquetStatus === 'APPROVED', attr: {href: $parent.rebateUrl}">
+					<div class="weui_grid_icon">
+						<img src="../img/bar10.png" alt="">
+					</div>
+					<p class="weui_grid_label">兑付扫码</p>
+				</a>
+			<!-- </div>
+			<div class="weui-row weui-no-gutter"> -->
+				<a href="#" class="weui_grid js_grid weui-col-50" data-id="button" data-bind="visible: banquetStatus === 'APPROVED' || banquetStatus === 'PAID'">
+					<div class="weui_grid_icon">
+						<img src="../img/bar10.png" alt="">
+					</div>
+					<p class="weui_grid_label">宴会拍照</p>
+				</a> 
+				<!-- <a href="#" class="weui_grid js_grid weui-col-50" data-id="cell">
+					<div class="weui_grid_icon">
+						<img src="../img/bar10.png" alt="">
+					</div>
+					<p class="weui_grid_label">拉环回收</p>
+				</a> -->
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/const.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/banquet/detail.js" type="text/javascript" charset="utf-8"></script>
+</html>

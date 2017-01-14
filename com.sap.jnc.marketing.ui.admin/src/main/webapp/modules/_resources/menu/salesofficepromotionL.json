@@ -1,0 +1,12 @@
+[{
+	"name": "备用物料",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "安全库存管理",
+		"href": "sparematerial/safestock"
+	},
+	{
+		"name": "兑付明细",
+		"href": "sparematerial/consumptiondetail"
+	}]
+}]

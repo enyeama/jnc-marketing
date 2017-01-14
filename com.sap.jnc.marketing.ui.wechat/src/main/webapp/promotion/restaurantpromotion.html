@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="../css/activity.css"/>
+	<link href='http://api.youziku.com/webfont/CSS/5779e3e6f629df12402dde09' rel='stylesheet' type='text/css' />
+    <title>剑南春酒店赠饮</title>
+</head>
+<body>
+	<img src="../img/wineWord.png" class="noticeImg"/>
+	<div class="BtnBox">
+		<img src="../img/wineBtn.png" class="Btn" onclick="gainWine();"/>
+	</div>
+	<div class="noticeBox">
+		<div class="noticeTitle">
+			<p>活动说明：</p>
+		</div>
+		<p class="noticeWord">1.每个微信号五天内只能参与一次<br />2.仅指定酒店可参与此活动</p>
+		<div class="mbs-cf"></div>
+	</div>
+	<div class="PopBg load5">
+		<div class="loader">加载中...</div>
+	</div>
+	<div class="PopAlert">
+		<p>恭喜您</p>
+		<p>领取成功</p>
+		<img src="../img/wine.png"/>
+		<p style="font-size: 14px;">请向剑南春推广员展示此页面领取赠饮</p>
+	</div>
+</body>
+<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="../js/wx.js"></script>
+<script type="text/javascript" src="../js/common/bonus-path.js"></script>
+<script src="../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/common/bonus-common.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../js/common/wechat.js"></script>
+<script type="text/javascript">
+	function gainWine() {
+		//出现带loading效果 背景遮罩
+		$(".PopBg").fadeIn();
+		$(".loader").show();
+		$.getJSON(PATH.PORTAL.GAIN_WINE_CHECK, {}, function(resp) {
+			var data = {url: location.href};
+			if(resp) {
+				wx.ready(function() {
+					wx.getLocation({
+						type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+						success: function (res) {
+							data.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+							data.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+							data.speed = res.speed; // 速度，以米/每秒计
+							data.accuracy = res.accuracy; // 位置精度
+							acquireLocation(data);
+						},
+						fail: function (res) {
+							$(".loader").hide();
+							$(".PopBg").fadeOut();
+							alert('允许访问地理信息才能领酒');
+						},
+						cancel: function(resp) {
+							$(".loader").hide();
+							$(".PopBg").fadeOut();
+							alert('允许访问地理信息才能领酒');
+						}
+					});
+				});
+			} else {
+				$(".loader").hide();
+				$(".PopBg").fadeOut();
+				alert('您已在五天内领取过！');
+			}
+		})
+	}
+	function acquireLocation(data) {
+		$.ajax({
+			url: PATH.PORTAL.GAIN_WINE_LOCATION,
+			data: {latitude: data.latitude, longitude: data.longitude},
+			success: function(resp, status, xhr) {
+				console.log(resp);
+				var userOpenId = xhr.getResponseHeader("user_open_id");
+				var token = xhr.getResponseHeader("token");
+				if (isNotNull(userOpenId)) {
+					$.cookie("user_open_id", userOpenId, {path: '/'});
+				}
+				if (isNotNull(token)) {
+					$.cookie("token", token, {path: '/'});
+				}
+				console.log("userOpenId from response header: ", userOpenId);
+				console.log("token from response header: ", token);
+				if(resp && resp.status == 0) {
+					var result = resp.result;
+					data.addressRecommend = result.formatted_addresses.recommend;
+					data.addressAdcode = result.ad_info.adcode;
+					data.addressNation = result.address_component.nation;
+					data.addressProvince = result.address_component.province;
+					data.addressCity = result.address_component.city;
+					data.addressDistrict = result.address_component.district;
+					data.addressStreet = result.address_component.street;
+					data.addressStreetNumber = result.address_component.street_number;
+					doGainWine(data);
+				} else {
+					$(".loader").hide();
+					$(".PopBg").fadeOut();
+					alert('获取地理位置失败!');
+				}
+			},
+			error: function(resp) {
+				$(".loader").hide();
+				$(".PopBg").fadeOut();
+				alert('获取地理位置失败!');
+			}
+		});
+	}
+	function doGainWine(data) {
+		$.ajax({
+			url: PATH.PORTAL.GAIN_WINE_ADD,
+			type: 'post',
+			data: data,
+			success: function(resp) {
+				$(".loader").hide();
+				$(".PopAlert").fadeIn();
+			},
+			error: function(resp) {
+				$(".loader").hide();
+				$(".PopBg").fadeOut();
+				alert('获取失败');
+			}
+		});
+	}
+	//领取成功 关闭遮罩
+	function closePop(){
+		$(".PopAlert").fadeOut();
+		$(".PopBg").fadeOut();
+	}
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

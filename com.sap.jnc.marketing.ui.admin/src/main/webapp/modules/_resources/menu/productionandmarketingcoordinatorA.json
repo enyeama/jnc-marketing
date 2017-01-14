@@ -1,0 +1,24 @@
+[{
+	"name": "数据导入",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "HR主数据",
+		"href": "migration/employee"
+	},
+	{
+		"name": "物料主数据",
+		"href": "migration/product"
+	},
+	{
+		"name": "合同",
+		"href": "migration/contract"
+	},
+	{
+		"name": "经销商",
+		"href": "migration/dealer"
+	},
+	{
+		"name": "旧物流码",
+		"href": ""
+	}]
+}]

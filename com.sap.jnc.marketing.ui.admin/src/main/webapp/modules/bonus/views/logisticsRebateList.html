@@ -1,0 +1,249 @@
+<!-- author: Herbert ZHAO -->
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa"></i> 报表 > <a href="#/bonus/logisticsRebateList">物流返利报表</a>
+			</h2>
+		</div>
+	</div>
+</div>
+
+<div class="content">
+	<div class="hpanel panel-default">
+        <div class="text-right marginBottm10">
+        	<input type="button" class="btn btn-info" value="显示/隐藏搜索条件" data-toggle="collapse" ng-click="toggleDisplay()"> 
+       	</div>
+		<div id="logisticsRebateSearchPanel" class="panel-body panel-collapse collapse in">
+			<form name="myForm">
+				<div class="row">
+					<div class="form-group col-lg-8 col-md-12">
+						<label class="col-lg-2 col-md-4 control-label form-label-slim">消费者扫码日期</label> 
+						<div class='input-group date'>
+							<select
+								ng-model="criteria.keywords.consumerScanDateSelectOption" ng-change="changeConsumerScanDateOption(criteria.keywords.consumerScanDateSelectOption)"
+								class="selectpicker rangeSelectControl form-control-slim selectControl-slim" ng-init="criteria.keywords.consumerScanDateSelectOption='between'">
+								<option value="between">介于</option>
+								<option value="older">大于</option>
+								<option value="earlier">小于</option>
+								<option value="equal">等于</option>
+							</select>
+							<div class='input-inline-group date'>
+								<input type='text' ng-hide="cosumerScanDateSelectOptionIsBetween" id="searchConsumerScanDate" class="form-control-slim selectDateControl-slim" ng-model="criteria.keywords.consumerScanDate" />
+			                    <input type='text' ng-show="cosumerScanDateSelectOptionIsBetween" id="searchConsumerScanStartDate" class="form-control-slim selectDateControl-slim" placeholder="起始日期" ng-model="criteria.keywords.consumerScanStartDate"  />
+			                    <span  ng-show="cosumerScanDateSelectOptionIsBetween">
+			                        <span>-</span>
+			                    </span>
+			                    <input type='text' ng-show="cosumerScanDateSelectOptionIsBetween" class="form-control-slim selectDateControl-slim" id="searchConsumerScanEndDate" ng-model="criteria.keywords.consumerScanEndDate" placeholder="截止日期"/>
+		         			</div>
+		                </div>
+					</div>
+					<div class="form-group col-lg-8">
+						<label class="col-lg-2 col-md-4 control-label form-label-slim">终端入库日期</label> 
+						<div class='input-group date'>
+							<select
+								ng-model="criteria.keywords.terminalInDateSelectOption" ng-change="changeTerminalInDateOption(criteria.keywords.terminalInDateSelectOption)"
+								class="selectpicker  rangeSelectControl form-control-slim selectControl-slim" ng-init="criteria.keywords.terminalInDateSelectOption='between'">
+								<option value="between">介于</option>
+								<option value="older">大于</option>
+								<option value="earlier">小于</option>
+								<option value="equal">等于</option>
+							</select>
+							<div class='input-inline-group date'>
+								<input type='text' ng-hide="terminalInDateOptionIsBetween" id="searchTerminalInDate" class="form-control-slim selectDateControl-slim" ng-model="criteria.keywords.terminalInDate"  />
+			                    <input type='text' ng-show="terminalInDateOptionIsBetween" id="searchTerminalInStartDate" class="form-control-slim selectDateControl-slim" placeholder="起始日期" ng-model="criteria.keywords.terminalInStartDate"  />
+			                    <span ng-show="terminalInDateOptionIsBetween">
+			                        <span>-</span>
+			                    </span>
+			                    <input type='text' ng-show="terminalInDateOptionIsBetween" class="form-control-slim selectDateControl-slim" id="searchTerminalInEndDate" ng-model="criteria.keywords.terminalInEndDate" placeholder="截止日期"/>
+		         			</div>
+		                </div>
+					</div>
+					<div class="form-group col-lg-12 col-md-12">
+						<div class="col-lg-8 col-md-12 clearSpacingMarginLeft">
+								<label class="col-lg-2 col-md-4 control-label form-label-slim">组长出货日期</label> 
+								<div class='input-group date'>
+								<select
+									ng-model="criteria.keywords.leaderOutDateSelectOption" ng-change="changeLeaderOutDateOption(criteria.keywords.leaderOutDateSelectOption)"
+									class="selectpicker rangeSelectControl form-control-slim selectControl-slim" ng-init="criteria.keywords.leaderOutDateSelectOption='between'">
+									<option value="between">介于</option>
+									<option value="older">大于</option>
+									<option value="earlier">小于</option>
+									<option value="equal">等于</option>
+								</select>
+								<div class='input-inline-group date'>
+									<input type='text' ng-hide="leaderOutDateOptionIsBetween" id="searchLeaderOutDate" class="form-control-slim selectDateControl-slim" ng-model="criteria.keywords.leaderOutDate"  />
+				                    <input type='text' ng-show="leaderOutDateOptionIsBetween" id="searchLeaderOutStartDate" class="form-control-slim selectDateControl-slim" placeholder="起始日期" ng-model="criteria.keywords.leaderOutStartDate"  />
+				                    <span ng-show="leaderOutDateOptionIsBetween">
+				                        <span>-</span>
+				                    </span>
+				                    <input type='text' ng-show="leaderOutDateOptionIsBetween" class="form-control-slim selectDateControl-slim" id="searchLeaderOutEndDate" ng-model="criteria.keywords.leaderOutEndDate" placeholder="截止日期"/>
+			         			</div>
+			                </div>
+						</div>
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">产品</label> 
+						<input ng-model="criteria.keywords.product" id="searchFieldProduct" type="text" class="col-lg-8 col-md-8 form-control-slim" >
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">终端名称</label> 
+						<input ng-model="criteria.keywords.terminalName" type="text" class="col-lg-8 col-md-8 form-control-slim" >
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">终端编号</label> 
+						<input ng-model="criteria.keywords.terminalId" type="text" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">经销商名称</label> 
+						<input  ng-model="crit4eria.keywords.dealerName" type="text" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">经销商编号</label> 
+						<input ng-model="criteria.keywords.dealerId" type="text" class="col-lg-8 col-md-8 form-control-slim ">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">终端所在省</label> 
+						<input  ng-model="criteria.keywords.terminalProvince" type="text" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">终端所在市</label> 
+						<input ng-model="criteria.keywords.terminalCity" type="text" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">终端所在县</label> 
+						<input  ng-model="criteria.keywords.terminalCountry" type="text" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">瓶盖内物流码</label> 
+						<input type="text" ng-model="criteria.keywords.capInnerCode" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">品牌经理姓名</label> 
+						<input type="text" ng-model="criteria.keywords.brandManagerName" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">品牌经理编号</label> 
+						<input type="text" ng-model="criteria.keywords.brandManagerId" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">组长姓名</label> 
+						<input type="text" ng-model="criteria.keywords.leaderName" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">组长编号</label> 
+						<input type="text" ng-model="criteria.keywords.leaderId" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">业务员姓名</label> 
+						<input type="text" ng-model="criteria.keywords.salesManName" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+					<div class="form-group col-lg-4 col-md-12">
+						<label class="col-lg-4 col-md-4 control-label form-label-slim">业务员编号</label> 
+						<input type="text" ng-model="criteria.keywords.salesManId" class="col-lg-8 col-md-8 form-control-slim">
+					</div>
+				    <div class="form-group col-lg-4 col-md-12" id="city">
+				    	<label class="col-lg-4 col-md-4 control-label form-label-slim">所在地区</label>
+			            <select class="province form-control-slim" data-value="" data-first-title="选择省" disabled="disabled" ></select>  
+			            <select class="city form-control-slim" data-value="" data-first-title="选择市" disabled="disabled"></select>  
+			            <select class="area form-control-slim" data-value="" data-first-title="选择地区" disabled="disabled"></select>  
+				    </div>  
+				</div>
+				<div class="text-center">
+					<input type="button" class="btn btn-primary rightMarginSpacing" value="查询" data-toggle="collapse" ng-click="search()"> 
+					<input type="reset" ng-click="clearAduitQuery()" class="btn btn-default" value="清空">
+				</div>
+			</form>
+		</div>
+	</div>
+	
+		<div class="text-right marginBottm10">
+			<input type="button" class="btn btn-primary" value="导出CSV" ng-click="exportCSV()"> 
+		</div>
+		<div class="tableContainer">
+				<table class="footable table table-stripped table-bordered no-wrap toggle-arrow-tiny dataTable tableFixWidth jnc-table" data-page-size="2" data-filter=#filter>
+				<thead>
+				    <tr>
+				    	<th>操作</th>
+				        <th>瓶盖内物流码</th>
+				        <th>产品</th>
+				        <th>终端名称</th>
+				        <th>经销商名称</th>
+				        <th>业务员</th>
+				        <th>组长</th>
+				        <th>品牌经理</th>
+				        <th>区域合法性</th>
+				        <th>销售环节完整性</th> 
+				        <th>是否平台业务</th> 
+				        <th>组长出库日期</th>
+				        <th>终端入库日期</th>
+				        <th>消费者扫码日期</th>
+				        <th>合法经营地级市</th>
+				        <th>消费扫码地级市</th>
+				        <th>终端所在省</th>
+				        <th>终端所在市</th>
+				        <th>终端所在县</th>
+				        
+				    </tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="logistic in model.content" ng-if="model.content.length>0">
+							<td><input type="button" class="btn btn-primary" ng-model="logistic" value="查看" ng-click="navToDetail()"></td>
+							<td ng-bind="logistic.capInnerCode"></td>
+							<td>{{logistic.product}}</td>
+							<td>{{logistic.terminalName}}</td>
+							<td>{{logistic.dealerName}}</td>
+							<td>{{logistic.salesManName}}</td>
+							<td>{{logistic.leaderName}}</td>
+							<td>{{logistic.brandManagerName}}</td>
+							<td ng-switch="logistic.regionValid">
+								<div ng-switch-when="1" class="btn btn-xs btn-success">是</div>
+								<div ng-switch-default class="btn btn-xs btn-warning">否</div>
+							</td>
+							<td ng-switch="logistic.salesLinkIntegrity">
+				        		<div ng-switch-when="1" class="btn btn-xs btn-success">是</div>
+								<div ng-switch-when="0" class="btn btn-xs btn-danger">否</div> 
+							</td>
+							<td ng-switch="logistic.isPlatformDealer">
+				        		<div ng-switch-when="true" class="btn btn-xs btn-success">是</div>
+								<div ng-switch-when="false" class="btn btn-xs btn-danger">否</div>
+							</td>
+							<td>{{logistic.leaderOutDate}}</td>
+							<td>{{logistic.terminalInDate}}</td>
+							<td>{{logistic.consumerScanDate}}</td>
+							<td>{{logistic.legalOperationCity}}</td>
+							<td>{{logistic.counsumerScanCity}}</td>
+							<td>{{logistic.terminalProvince}}</td>
+							<td>{{logistic.terminalCity}}</td>
+							<td>{{logistic.terminalCounty}}</td>
+						</tr>
+						<tr>
+							<td colspan="19" ng-if="model.content.length===0" class="alignLeft">没有相关记录</td>
+						</tr>
+					</tbody>
+					</table>
+					</div>
+					<div ng-show="model.totalElements" class="paginationBar">
+						<div style="float: left">
+							<span>每页显示</span>
+							<select ng-model="criteria.paging.size" id="pageSize" ng-change="page()">
+								<option value="5">5</option>
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+							</select>
+							<span>条</span>
+						</div>
+						<div style="float: right">
+							<button ng-hide="model.first" ng-click="page(0)">首页</button>
+							<button ng-hide="model.first" ng-click="page(model.number - 1)">上一页</button>
+							{{currentPage+1}}/{{model.totalPages}}
+							<button ng-hide="model.last" ng-click="page(model.number + 1)">下一页</button>
+							<button ng-hide="model.last" ng-click="page(model.totalPages - 1)">末页</button>
+							<input type="text" class="page-number-input input-small input-align-center" align="center" ng-model="model.number" ng-keypress="pageNoKeyDown($event)" />
+							<button ng-click="model.number=goToPage()">GO</button>
+						</div>
+					</div>
+</div>

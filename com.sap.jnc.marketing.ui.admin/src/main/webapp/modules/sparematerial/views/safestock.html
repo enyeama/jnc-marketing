@@ -1,0 +1,126 @@
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa"></i> 备用物料 > <a href="#/sparematerial/safestock">安全库存管理</a>
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content">
+		<div class="hpanel">
+		
+			<div class="panel-body">
+				<div class="row">
+					<div>
+						<div class="form-group col-lg-12 col-md-12">
+							<label class="col-lg-2 col-md-2 control-label form-label-slim">岗位编号</label> 
+							<input type="text" value="" id="positionId"
+								class="col-lg-4 col-md-4 form-control-slim" ng-model="queryForm.positionId" placeholder="岗位编号ID">
+						</div>
+						<div class="form-group col-lg-12 col-md-12">
+							<label class="col-lg-2 col-md-2 control-label form-label-slim">物料编号</label> 
+							<input type="text" value="" id="materialId"
+								class="col-lg-4 col-md-4 form-control-slim" ng-model="queryForm.materialId" placeholder="物料编号ID">
+						</div>
+						<div class="form-group col-lg-12 col-md-12">
+							<label class="col-lg-2 col-md-2 control-label form-label-slim"></label> 
+							<input type="button" class="btn btn-primary rightMarginSpacing" value="查询" ng-click="searchSpareMaterial()">
+                    		<input type="reset" class="btn btn-default" value="清空">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  start table div -->
+		<div class="hpanel">
+			<div class="panel-body">
+				<div class="text-right marginBottm10">
+					<input type="button" class="btn btn-primary rightMarginSpacing" ng-click="importSafeStock()" value="导入"></input>
+					<input type="button" class="btn btn-primary" ng-click="exportSafeStock()" value="导出"></input>
+				</div>
+				<div class="tableContainer">
+					<table id="orderList" class="table table-bordered tableFixWidth jnc-table"
+						data-page-size="2" data-filter=#filter>
+						<thead>
+							<tr>
+								<th>操作</th>
+								<th>岗位编号</th>
+								<th>岗位名称</th>
+								<th>员工姓名</th>
+								<th>物料编号</th>
+								<th>物料名称</th>
+								<th>安全库存</th>
+								<th>在途库存</th>
+								<th>当前库存</th>
+								<th>需补库存</th>
+								<th>累计发放数</th>
+								<th>累计兑付树</th>
+								<th>累计核销数</th>
+								<th>累计差异数</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="item in materials | startFrom:currentPage*PageConfigProperties.pageSize | limitTo:PageConfigProperties.pageSize">
+								<td>
+									<input class="btn btn-primary btn-xs" ng-model="item" type="button" value="发货" ng-click="openDialog()" />
+								</td>
+								<td ng-bind="item.positionId"></td>
+								<td ng-bind="item.positionName"></td>
+								<td ng-bind="item.employeeName"></td>
+								<td ng-bind="item.materialId"></td>
+								<td ng-bind="item.materialName"></td>
+								<td ng-bind="item.safetyStockQuantity"></td>
+								<!-- 在途库存  -->
+								<td ng-bind="item.inTransitStockQuantity"></td>
+								<!-- 当前库存  -->
+								<td ng-bind="item.currentStockQuantity"></td>
+								<!-- 需补库存  -->
+								<td ng-bind="item.requiredStockQuantity"></td>
+								<!-- 累积发放数 -->
+								<td ng-bind="item.totalDeliveredQuantity"></td>
+								<!-- 累积兑付数 -->
+								<td ng-bind="item.totalPaidQuantity"></td>
+								<!-- 累计核销数 -->
+								<td ng-bind="item.totalVerifiedQuantity"></td>
+								<!-- 累计差异数 -->
+								<td ng-bind="item.totalDifferenceQuantity"></td>
+							</tr>
+							<tr>
+							<td td colspan="14" ng-if="materials.length===0" align="left">没有相关记录</td>
+						</tr>
+						</tbody>
+					</table>
+									</div>
+				<!--end for table div-->
+				<div ng-show="materials.length">
+					<div style="float: left">
+						<span>每页显示</span> <select
+							ng-model="PageConfigProperties.pageSize" id="pageSize"
+							ng-change="changePageSize()">
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+						</select> <span>条</span>
+					</div>
+					<div style="float: right">
+						<button ng-disabled="currentPage == 0" ng-click="currentPage=0">
+							首页</button>
+						<button ng-disabled="currentPage == 0"
+							ng-click="currentPage=currentPage-1">上一页</button>
+						{{currentPage+1}}/{{numberOfPages()}}
+						<button ng-disabled="currentPage >= numberOfPages()-1"
+							ng-click="currentPage=currentPage+1">下一页</button>
+						<button ng-disabled="currentPage >= data.length/pageSize - 1"
+							ng-click="currentPage=numberOfPages()-1">末页</button>
+						<input type="text" class="page-number-input" ng-model="pagenum"
+							ng-keypress="pageNoKeyDown($event)" />
+						<button ng-click="currentPage=goToPage()">GO</button>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>

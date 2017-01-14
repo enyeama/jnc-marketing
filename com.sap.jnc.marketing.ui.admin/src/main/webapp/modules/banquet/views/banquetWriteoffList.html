@@ -1,0 +1,401 @@
+﻿<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa"></i>  宴会 > <a href="#">宴会审批</a>
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="hpanel">
+		<script type="text/ng-template" id="firstDialogId">
+        			<div class="ngdialog-message">
+            			<h3>ngDialog template</h3>
+            			<p ng-show="theme">Test content for <code>{{theme}}</code></p>
+            			<p ng-show="ngDialogId">Dialog Id: <code>{{ngDialogId}}</code></p>
+            			<p class="data-passed-through" ng-show="ngDialogData.foo">Data passed through: <code>{{ngDialogData.foo}}</code></p>
+            			<p ng-show="dialogModel.message">Scope passed through: <code>{{dialogModel.message}}</code></p>
+            			<p>Close this dialog: <button class="inline close-this-dialog" ng-click="closeThisDialog()">Close</button></p>
+        			</div>
+        			<div class="ngdialog-buttons">
+            			<button type="button" class="ngdialog-button ngdialog-button-secondary"
+                			ng-dialog="secondDialogId"
+                			ng-dialog-class="ngdialog-theme-default"
+                			ng-dialog-controller="SecondModalCtrl"
+                			ng-dialog-close-previous>Close and open</button>
+            			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()">Open next</button>
+        			</div>
+    	</script>
+        <div class="text-right marginBottm10">
+        		<input type="button" class="btn btn-info" value="显示/隐藏搜索条件" data-toggle="collapse" ng-click="toggleDisplay()"> 
+       	</div>
+		<div class="panel-body panel-collapse collapse in" id="searchBanquetReportPanel">
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-label">宴会时间</label> 
+					<div class='input-group date'>
+						<select
+							ng-model="criteria.keywords.dateSelectOption" ng-change="changeDateOption(criteria.keywords.dateSelectOption)"
+							class="selectpicker  rangeSelectControl" ng-init="criteria.keywords.dateSelectOption='between'">
+							<option value="between">介于</option>
+							<option value="older">大于</option>
+							<option value="earlier">小于</option>
+							<option value="equal">等于</option>
+						</select>
+						<div class='input-inline-group date'>
+							<input type='text' ng-hide="dateSelectOptionIsBetween" id="searchDate" ng-model="criteria.keywords.consumerScanDate"  />
+		                    <input type='text' ng-show="dateSelectOptionIsBetween" id="banquetTimeFrom"  placeholder="起始日期"/>
+		                    <span  ng-show="dateSelectOptionIsBetween">
+		                        <span>-</span>
+		                    </span>
+		                    <input type='text' ng-show="dateSelectOptionIsBetween" id="banquetTimeTo" placeholder="截止日期"/>
+	         			</div>
+                	</div>
+				</div>
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-label">办事处</label> 
+					<input id="banquetOffice" class="col-md-4"  type="text" ng-model="criteria.keywords.officeName"/>
+				</div>
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-label">报备单号</label> 
+					<input type="text" value="" placeholder=""  class="col-md-4" 
+						ng-keypress="searchKeyDown($event)" ng-model="criteria.keywords.id"/>
+				</div>
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-label">流程状态</label>
+					<!--important-->
+					<select ng-model="criteria.keywords.status"
+						ng-options="statusItem.value as statusItem.name for statusItem in banquetQueryEnum.banquetStatusEnum"></select>
+				</div>
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-label"></label>
+					<input type="button" class="btn btn-primary rightMarginSpacing" data-toggle="modal" value="查询" ng-click="searchBanquetItem()"></input>
+					<input type="reset" ng-click="clearAduitQuery()" class="btn btn-default" value="清空">
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<!--  start table div -->
+			<div class="text-right marginBottm10" >
+				<input type="button" class="btn btn-primary" ng-show="criteria.keywords.status=='APPLIED'"
+				ng-click="verificationReport('APPROVED',true)" value="批量合格"></input>
+			</div>
+			<div class="tableContainer">
+				<table id="orderList" style="min-width: 2400px;"
+					class="footable table table-stripped table-bordered toggle-arrow-tiny dataTable jnc-table"
+					data-page-size="2" data-filter=#filter>
+					<thead>
+						<tr>
+							<th width="50">
+								<input id="selectAll" type="checkbox" name="checkAll" class="middle"
+								ng-click="updateSelected('selectAll','checkAll');"/></th>
+							<th>操作</th>
+							<th>报备单号</th>
+							<th>报备类型</th>
+							<th>宴会地址</th>
+							<th>宴会日期</th>
+							<th>使用时间</th>
+							<th>计划数量</th>
+                            <th>桌数</th>
+							<th>流程状态</th>
+							<th>办事处</th>
+							<th>经销商</th>
+							<th>终端网点</th>
+							<th>消费者姓名</th>
+							<th>消费者联系电话</th>
+							<th>宴会类型</th>
+							<th>商品名称</th>
+							<th>报备人</th>
+							<th>报备人电话</th>
+							<th>宴会备注</th>
+							<th>审核意见</th>
+							<th>宴会拍照地址</th>
+							<th>照片</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in banquetData" ng-if="banquetData.length>0">
+							<td>
+								<div class="icheckbox_minimal-blue" aria-checked="false"
+									aria-disabled="false">
+								 <input type="checkbox" id="{{item.id}}" name="banquetReportItem"  ng-click="updateSelected(item.id,'banquetReportItem');">
+								</div>
+							</td>
+							<td>
+								<input class="btn btn-primary btn-xs" ng-model="item.productId"
+									type="button" data-toggle="modal"
+									ng-show="item.banquetStatus=='APPLIED'"
+									data-target="#banquetDetailModal"
+									data-whatever="{{item.id}}"
+									data-action="verify" value="审核">
+								</input> 
+								<input class="btn btn-primary btn-xs" ng-model="item.productId"
+									type="button" data-toggle="modal"
+									data-target="#banquetDetailModal" data-whatever="{{item.id}}" data-action="edit" value="编辑">
+								</input>
+							</td>
+							<td ng-bind="item.id" align="center"></td>
+							<td ng-bind="item.banquetType.name"></td>
+							<td ng-bind="item.hostAddress"></td>
+							<td>{{item.banquetTime| date:'yyyy-MM-dd'}}</td>
+							<td ng-bind="item.timePoint|getBanquetPeriod:banquetQueryEnum.banquetPeriodEnum"></td>
+							<td ng-bind="item.planQuantity.value"></td>
+							<td ng-bind="item.tableCount"></td>
+							<td ng-bind="item.banquetStatus|getBanquetStatus:banquetQueryEnum.banquetStatusEnum"></td>
+							<td ng-bind="item.office.name"></td>
+							<td ng-bind="item.dealer.name"></td>
+							<td ng-bind="item.terminal.title"></td>
+							<td ng-bind="item.customerName"></td>
+							<td ng-bind="item.customerPhone"></td>
+							
+							<td ng-bind="item.banquetType.name"></td>
+							<td ng-bind="item.product.name"></td>
+							
+							<td>报备人</td>
+							<td>报备电话</td>
+							<td ng-bind="item.banquetComment"></td>
+							
+							<td ng-bind="item.approveComment"></td>
+							<td>宴会拍照地址</td>
+							<td>照片</td>
+
+						</tr>
+						<tr ng-if="!banquetData.length>0">
+							<td td colspan="23" style="font-weight:bold;" align="left">没有相关记录</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div ng-show="banquetData.length">
+				    <div style="float: left">
+						<label>显示</label> 
+						<select ng-model="criteria.paging.size" ng-options="statusItem.value as statusItem.label for statusItem in criteria.pageConfig"
+						  ng-change="changePageSize()">
+						</select> 
+						<label>条/页</label>
+			        </div>
+					<div style="float:right;">
+						<button ng-disabled="criteria.paging.index == 0" ng-click="changePageNo('first')">首页</button>
+						<button ng-disabled="criteria.paging.index == 0" ng-click="changePageNo('previous')">上一页</button>
+							{{criteria.paging.index+1}}/{{numberOfPages}}
+					    <button ng-disabled="criteria.paging.index >= numberOfPages-1" ng-click="changePageNo('next')">下一页</button>
+						<button ng-disabled="criteria.paging.index >= data.length/pageSize - 1" ng-click="changePageNo('last')">末页</button>
+					     <input type="number" class="page-number-input input-small input-align-center" ng-model="pagenum" ng-keypress="pageNoKeyDown($event)" />
+						<button ng-click="switchPage()">转到</button>
+					</div>
+				</div>
+	<!--end for table div-->
+	
+		<!--Start Dialog div-->
+	<div class="col-lg-2">
+		<div class="modal fade" id="banquetDetailModal" tabindex="-1" role="dialog" aria-labelledby="banquetDetailDialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="exampleModalLabel">宴会信息</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label for="recipient-name" class="col-sm-4 control-label">报备类型:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text2" ng-readonly="true"
+										ng-model="formData.banquetType.name" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">网点类型:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text2" ng-readonly="true"
+										ng-model="formData.channel.channelName" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">网点:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text3" ng-readonly="true"
+										ng-model="formData.terminal.title" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">经销商:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text4" ng-readonly="true"
+										ng-model="formData.dealer.name" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">城市经理:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text5" ng-readonly="true"
+										ng-model="formData.cityManager.name" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">消费者:</label>
+								<div class="col-md-6">
+									<input type="text" class="form-control" id="message-text5" ng-readonly="true"
+										ng-model="formData.customerName" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">消费者电话:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text7" ng-readonly="true"
+										ng-model="formData.customerPhone" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">订餐人:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text7" ng-readonly="true"
+										ng-model="formData.reservationistName" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">订餐电话:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text7" ng-readonly="true"
+										ng-model="formData.reservationistPhone" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">宴会地址:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text7" ng-readonly="formData.action=='verify'"
+										ng-model="formData.hostAddress" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">场地电话:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="message-text8" ng-readonly="true"
+										ng-model="formData.hostPhone" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">宴会日期:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control pull-right" ng-readonly="formData.action=='verify'"
+										ng-model="formData.banquetTime" datetime="yyyy-MM-dd"
+										id="banquetFormTime" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">使用时间:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control pull-right" ng-readonly="true"
+										id="deliveryTime" ng-model="formData.deliveryTime">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">桌数:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control pull-right" ng-readonly="true"
+										ng-model="formData.tableCount">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">宴会类型:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control pull-right" ng-readonly="true"
+										ng-model="formData.banquetType.name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">版本:</label>
+								<div class="col-sm-6">
+									<select class="form-control" ng-model="formData.channel.id" 
+                                              ng-options="channelItem.id as channelItem.channelName for channelItem in banquetVersionData">
+									</select> 
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">商品名称:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control pull-right" ng-readonly="true"
+										ng-model="formData.product.name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">计划数量(瓶):</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control pull-right" ng-readonly="true"
+										ng-model="formData.planQuantity.value">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">扫码类型:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control pull-right" ng-readonly="true"
+										ng-model="formData.scanType.value">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-sm-4 control-label">宴会备注:</label>
+								<div class="col-sm-6">
+									<textarea rows="5" cols="30" id="verificationTextarea" name=""
+										class="form-control" ng-model="formData.banquetComment" ng-readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group"  ng-show="formData.action=='verify'">
+								<label for="message-text" class="col-sm-4 control-label">审核意见:</label>
+								<div class="col-sm-6">
+									<textarea rows="5" cols="30" id="approvalComment" name=""
+										class="form-control" ng-model="formData.approveComment"/>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer" ng-if="formData.action=='edit'">
+					    <button type="button" class="btn btn-default" ng-show="formData.banquetStatus=='APPLIED'||formData.banquetStatus=='APPROVED'"
+							ng-click="cancelBanquetItem()">取消宴会</button>
+						<button type="button" class="btn btn-info" ng-if="formData.banquetStatus!==3"
+							ng-click="saveBanquetItem()" >保存</button>
+						<button type="button" class="btn btn-default"
+							data-dismiss="modal" data-toggle="modal" id="cancelBtn">取消</button>
+					</div>
+					
+					<div class="modal-footer" ng-if="formData.action=='verify'">
+						<button type="button" class="btn btn-default"
+							data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-default"
+							data-dismiss="modal" ng-click="verificationReport('NOT_APPROVED')">不合格</button>
+						<button type="button" class="btn btn-info"
+							ng-click="verificationReport('APPROVED')">合格</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal modal-success" id="myModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="message-modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close"
+						ng-click="hideMsgDialog('myModal')">
+						<span aria-hidden="true">&times;</span><span
+							class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title message-dialog-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="message-dialog-body">数据已成功保存!</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info"
+						ng-click="hideMsgDialog('myModal')">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--End Dialog div-->
+</div>

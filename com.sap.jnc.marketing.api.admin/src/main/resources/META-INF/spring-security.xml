@@ -1,0 +1,21 @@
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+	<security:http pattern="/**" use-expressions="true" auto-config="false" authentication-manager-ref="adminAuthenticationManager">
+		<security:csrf disabled="true" />
+		<security:intercept-url pattern="/**" access="isAuthenticated()" />
+		<security:form-login login-processing-url="/login" authentication-success-forward-url="/login/success"
+			authentication-failure-url="/login/error" authentication-success-handler-ref="apiAuthenticationSuccessHandler"
+			authentication-failure-handler-ref="apiAuthenticationFailureHandler" />
+		<security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/login" />
+	</security:http>
+	<security:global-method-security pre-post-annotations="enabled" />
+	<security:authentication-manager id="adminAuthenticationManager">
+		<security:authentication-provider user-service-ref="adminUserDetailsService">
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>

@@ -1,0 +1,93 @@
+<!-- author: Marco Huang I323691 -->
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h2 class="font-light m-b-xs">
+                <i class="fa fa-volume-up"></i> 主经销商导入
+            </h2>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="hpanel panel-default">
+        <div class="panel-body">
+            <div class="text-right marginBottm10">
+                <form name="file" role="form" class="form-inline"
+                      enctype="multipart/form-data">
+                    <button type="button" class="btn btn-primary"
+                            onclick="$('input[id=importButton]').click();">
+                        <span class="bold">导入文件</span>
+                    </button>
+                    <input id="importButton" type="file" style="display: none"
+                           onchange="angular.element(this).scope().uploadAndSubmit(this)"/>
+                    <a href="#/migration/dealer" class="btn btn-primary">返回查询页面</a>
+                </form>
+                <span id="importErrorCounts">
+            	&nbsp;&nbsp;&nbsp;<b>共{{importTotalCount}}笔,{{importErrorCount}}笔验证失败!</b>
+           		</span>
+                <!-- 成功多少笔数 -->
+            	<span id="importSuccessCounts">
+            		&nbsp;&nbsp;&nbsp;<b>{{importSuccessCount}}笔操作成功!</b>
+            	</span>
+            </div>
+            <table class="footable table table-stripped table-bordered no-wrap toggle-arrow-tiny dataTable jnc-table"
+                   data-page-size="2" data-filter=#filter>
+                <thead>
+                <tr>
+                    <th>行号</th>
+                    <th>操作</th>
+                    <th>经销商编码</th>
+                    <th>经销商名称</th>
+                    <th>经销商状态</th>
+                    <th>错误信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-hide="importTotalCount <= 0 || importTotalCount >= 1000" ng-repeat="item in errorResults | startFrom:currentErrorPage*PageConfigProperties.pageSize | limitTo:PageConfigProperties.pageSize">
+                    <td>{{item.rowNumber}}</td>
+                    <td>{{item.operation}}</td>
+                    <td>{{item.externalId}}</td>
+                    <td>{{item.name}}</td>
+                    <td ng-bind="item.status | statusFormatter"></td>
+                    <td>{{item.errorInfo}}</td>
+                </tr>
+                <tr>
+                    <td colspan="6" ng-show="importTotalCount <= 0 || importTotalCount >= 1000">没有相关记录</td>
+                </tr>
+                </tbody>
+            </table>
+            <div ng-show="importTotalCount > 0" class="paginationBar">
+                <div style="float: left">
+                    <span>每页显示</span> <select
+                        ng-model="PageConfigProperties.pageSize" id="pageSize"
+                        ng-change="changePageSize()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select> <span>条</span>
+                </div>
+                <div style="float: right">
+                    <button ng-disabled="currentErrorPage == 0" ng-click="currentErrorPage=0">
+                        首页
+                    </button>
+                    <button ng-disabled="currentErrorPage == 0"
+                            ng-click="currentErrorPage=currentErrorPage-1">上一页
+                    </button>
+                    {{currentErrorPage+1}}/{{numberOfErrorPages()}}
+                    <button ng-disabled="currentErrorPage >= numberOfErrorPages()-1"
+                            ng-click="currentErrorPage=currentErrorPage+1">下一页
+                    </button>
+                    <button ng-disabled="currentErrorPage >= data.length/pageSize - 1"
+                            ng-click="currentErrorPage=numberOfErrorPages()-1">末页
+                    </button>
+                    <input type="text" class="page-number-input" ng-model="pagenum"
+                           ng-keypress="pageNoKeyDown($event)"/>
+                    <button ng-click="currentErrorPage=goToErrorPage()">GO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

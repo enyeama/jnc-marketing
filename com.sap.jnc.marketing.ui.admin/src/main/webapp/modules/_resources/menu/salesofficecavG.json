@@ -1,0 +1,28 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "宴会照片审批",
+		"href": "banquet/banquetPhotoAuditList"
+	}]
+},
+{
+	"name": "陈列",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "陈列审核",
+		"href": "exhibitionList?type=check"
+	},
+	{
+		"name": "陈列兑付",
+		"href": "exhibitionList?type=cash"
+	}]
+},
+{
+	"name": "稽核",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "稽核查询",
+		"href": "audit/audits?type=sale"
+	}]
+}]

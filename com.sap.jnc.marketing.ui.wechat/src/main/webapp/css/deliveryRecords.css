@@ -1,0 +1,9 @@
+.weui_panel_hd.delivery_panel_hd {
+	position: relative;
+}
+
+.btn_confirm {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+}

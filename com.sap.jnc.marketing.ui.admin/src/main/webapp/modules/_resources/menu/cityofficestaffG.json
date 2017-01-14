@@ -1,0 +1,8 @@
+[{
+	"name": "报表",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "物流环节返利报表",
+		"href": "bonus/logisticsRebateList"
+	}]
+}]

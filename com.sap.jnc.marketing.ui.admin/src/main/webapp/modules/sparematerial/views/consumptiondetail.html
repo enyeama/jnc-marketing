@@ -1,0 +1,194 @@
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa"></i> 备用物料 > <a href="#/sparematerial/consumptiondetail">兑付明细</a>
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="row">
+			<div class="hpanel">
+				<div class="modal fade" id="hxModal" tabindex="-1" role="dialog"
+					aria-labelledby="hxModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h2 class="modal-title" id="hxModal">
+									核销
+									</h2>
+									<div class="modal-body">
+										<div>
+											<label>核销数量&nbsp;</label> <input type="text" id="hxQuantity"
+												onkeyup="this.value=this.value.replace(/\D/g,'')"
+												onafterpaste="this.value=this.value.replace(/\D/g,'')"
+												ng-model="hxForm.verifiedQuantity" placeholder="请输入核销数量">
+										</div>
+										<div>
+											<label>备注&nbsp;</label>
+											<textarea rows="10" cols="60" style="vertical-align: top;" ng-model="hxForm.verificationComment"></textarea>
+										</div>
+											
+										
+									</div>
+									<div class="modal-footer text-center">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal"
+											ng-click="hxsubmit(hxForm.id, hxForm.verifiedQuantity, hxForm.different,hxForm.verificationComment,'hx')">确认核销</button>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="txModal" tabindex="-1" role="dialog"
+					aria-labelledby="txModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h1 class="modal-title" id="txModal">调差</h1>
+							</div>
+							<div class="modal-body">
+								<div>
+									<label>调差数量&nbsp;</label> <input type="text"
+										onkeyup="this.value=this.value.replace(/\D/g,'')"
+										onafterpaste="this.value=this.value.replace(/\D/g,'')"
+										id="txQuantity" ng-model="hxForm.differency">
+								</div>
+								<div>
+											<label>备注&nbsp;</label>
+											<textarea rows="10" cols="60" style="vertical-align: top;" ng-model="hxForm.manualAdjustmentComment" ></textarea>
+								</div>
+							</div>
+							<div class="modal-footer text-center">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal"
+									ng-click="hxsubmit(hxForm.id, hxForm.verifiedQuantity, hxForm.differency, hxForm.manualAdjustmentComment, 'tx')">确认调差</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-body">
+					<div class="row">
+						<div>
+							<div class="form-group col-lg-12 col-md-12">
+								<label class="col-lg-2 col-md-2 control-label form-label-slim">兑付单号</label> 
+								<input type="text" class="col-lg-4 col-md-4 form-control-slim"
+									ng-model="searchParameter.id" id="id" 
+									name="importFile" placeholder="兑付单号">
+							</div>
+							<div class="form-group col-lg-12 col-md-12">
+								<label class="col-lg-2 col-md-2 control-label form-label-slim">岗位编号</label> 
+								<input type="text" class="col-lg-4 col-md-4 form-control-slim"
+									ng-model="searchParameter.positionId" id="posotionID"
+									name="importFile" placeholder="岗位编号">
+							</div>
+							<div class="form-group col-lg-12 col-md-12">
+								<label class="col-lg-2 col-md-2 control-label form-label-slim"></label> 
+								<input type="button" class="btn btn-primary rightMarginSpacing"
+									ng-click="search($event)" value="查询"></input>
+								<input type="reset" class="btn btn-default" value="清空">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="text-right marginBottm10">
+				<input type="button" class="btn btn-primary"
+							ng-click="export($event)" value="导出"></input>
+			</div>
+			<div class="tableContainer">
+				<table id="orderList" class="table table-bordered tableFixWidth jnc-table"
+					data-page-size="2" data-filter=#filter>
+					<thead>
+						<tr>
+							<th>操作</th>
+							<th>兑付单号</th>
+							<th>核销状态</th>
+							<th>兑付日期</th>
+							<th>岗位编号</th>
+							<th>岗位名称</th>
+							<th>员工姓名</th>
+							<th>物料编号</th>
+							<th>物料名称</th>
+							<th>兑付数量</th>
+							<th>核销数量</th>
+							<th>调差数量</th>
+							<th>差异数量</th>
+
+							<th>兑付备注</th>
+							<th>核销备注</th>
+							<th>调差备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							ng-repeat="item in data | startFrom:currentPage*PageConfigProperties.pageSize | limitTo:PageConfigProperties.pageSize">
+							<td col-span="2">
+								<input class="btn btn-primary btn-xs" data-toggle="modal"
+									data-target="#hxModal" type="button" value="核销"
+									ng-click="hx($event, item.id, item.verifiedQuantity,item.verificationComment)">
+								</input>
+								<input class="btn btn-primary btn-xs" data-toggle="modal"
+									data-target="#txModal" type="button" value="调差"
+									ng-click="tx($event, item.id, item.manualAdjustmentQuantity, item.manualAdjustmentComment)">
+								</input>
+							</td>
+							<td ng-bind="item.id"></td>
+							<td ng-bind="item.verificationStatus"></td>
+							<td ng-bind="item.paymentDate | date:'yyyy-MM-dd'"></td>
+							<td ng-bind="item.positionId"></td>
+							<td ng-bind="item.positionDescription"></td>
+							<td ng-bind="item.employeeName"></td>
+							<td ng-bind="item.materialID"></td>
+							<td ng-bind="item.materialName"></td>
+							<td ng-bind="item.paidQuantity"></td>
+							<td ng-bind="item.verifiedQuantity"></td>
+							<td ng-bind="item.manualAdjustmentQuantity"></td>
+							<td ng-bind="item.differenceQuantity"></td>
+							<td ng-bind="item.paymentComment"></td>
+							<td ng-bind="item.verificationComment"></td>
+							<td ng-bind="item.manualAdjustmentComment"></td>
+						</tr>
+					</tbody>
+				</table>
+				<!--end for table div-->
+			</div>
+			<div ng-show="data.length" class="paginationBar">
+					<div style="float: left">
+						<span>每页显示</span> <select
+							ng-model="PageConfigProperties.pageSize" id="pageSize"
+							ng-change="changePageSize()">
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+						</select> 
+						<span>条</span>
+					</div>
+					<div style="float: right">
+						<button ng-disabled="currentPage == 0"
+							ng-click="currentPage=0">首页</button>
+						<button ng-disabled="currentPage == 0"
+							ng-click="currentPage=currentPage-1">上一页</button>
+						{{currentPage+1}}/{{numberOfPages()}}
+						<button ng-disabled="currentPage >= numberOfPages()-1"
+							ng-click="currentPage=currentPage+1">下一页</button>
+						<button ng-disabled="currentPage >= data.length/pageSize - 1"
+							ng-click="currentPage=numberOfPages()-1">末页</button>
+						<input type="text" class="page-number-input input-small input-align-center"
+							ng-model="pagenum" ng-keypress="pageNoKeyDown($event)" />
+						<button ng-click="currentPage=goToPage()">GO</button>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

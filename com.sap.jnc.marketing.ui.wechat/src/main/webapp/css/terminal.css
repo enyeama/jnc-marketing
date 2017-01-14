@@ -1,0 +1,30 @@
+.weui_cell_ft.left:after{
+	content: " ";
+    display: inline-block;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    height: 6px;
+    width: 6px;
+    border-width: 2px 2px 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    position: relative;
+    top: -2px;
+    top: -1px;
+    margin-left: .3em;
+}
+.weui_media_box .weui_media_desc{
+	line-height: 1rem;
+}
+body,html{
+    padding-bottom: 1.7rem;
+}
+.bottomBtnBox{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding:.5rem;
+    background: #fff;
+    border-top: 1px solid #ebebeb;
+}

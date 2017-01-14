@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>订单详情</title>
+<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../css/leader.css" />
+</head>
+<body>
+	<div class="weui_cells">
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				数量：<span id="prodCnt" data-bind="text: productCnt"></span>
+			</div>
+			<div class="weui_cell_ft">
+				<a href="javascript:;" onclick="toQrCode()"
+					class="weui_btn weui_btn_mini weui_btn_primary">扫码</a>
+			</div>
+		</div>
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<h4>
+					订单编号：<span data-bind="text: orderNO"></span>
+				</h4>
+				<p data-bind="text: materialName"></p>
+				<p data-bind="text: terminalTitle"></p>
+				<p data-bind="text: address"></p>
+				<p>
+					联系电话：<span data-bind="text: tel"></span>
+				</p>
+			</div>
+			<div class="weui_cell_ft">
+				<h4 data-bind="text: status"></h4>
+				<p>
+					<span data-bind="text: quantity"></span>瓶
+				</p>
+				<p>&nbsp;</p>
+				<p>&nbsp;</p>
+				<p>&nbsp;</p>
+			</div>
+		</div>
+	</div>
+	<div class="weui_cells" data-bind="foreach: materialList">
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<div class="weui_media_box weui_media_text smpadding">
+					<h4 class="weui_media_title" data-bind="text: materia"></h4>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bottomBtnBox">
+		<a href="javascript:;" class="weui_btn weui_btn_primary"
+			onclick="inCase()">入库</a>
+	</div>
+</body>
+<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-weui.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/wx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/wechat.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var viewModel = {
+		orderNO : ko.observable(),
+		materialName : ko.observable(),
+		terminalTitle : ko.observable(),
+		address : ko.observable(),
+		tel : ko.observable(),
+		status : ko.observable(),
+		quantity : ko.observable(),
+		isPTOrder : ko.observable(),
+		terminalId : ko.observable(),
+
+		materialList : ko.observableArray(),
+		
+		getMaterials: function() {
+			var materials = this.materialList();
+			var list = [];
+			$.each(materials, function(idx, d) {
+				list.push(d.materia);
+			});
+			return list;
+		},
+
+		initPage : function() {
+			_this = this;
+			$.showLoading("数据加载中...");
+			// load terminal order by orderNO
+			$.get(PATH.PORTAL.TERMINAL_ORDER_DETAIL, {
+				'orderId' : viewModel.orderNO()
+			}).done(function(data) {
+				_this.orderNO(data.orderNO);
+				_this.materialName(data.materialName);
+				_this.terminalTitle(data.terminalTitle);
+				_this.address(data.address);
+				_this.tel(data.tel);
+				_this.status(data.status);
+				_this.quantity(data.quantity);
+				$.hideLoading();
+			}).fail(function(response) {
+				$.hideLoading();
+				$.toast("数据加载失败", "forbidden");
+			});
+		}
+	}
+
+	viewModel.productCnt = ko.dependentObservable(function() {
+		return Array.isArray(this.materialList()) ? this.materialList().length : 1;
+	}, viewModel);
+
+	ko.applyBindings(viewModel);
+
+	var toQrCode = function() {
+		wx.scanQRCode({
+			needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+		    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+		    success: function (res) {
+			    checkCode(res.resultStr);
+			}
+		});
+	}
+	
+	var checkCode = function(code) {
+		var data = {
+			'qrCodes' : [code],
+			'operatorId' : viewModel.terminalId(),
+			'operatorType' : 'TERMINAL',
+			'orderId' : viewModel.orderNO(),
+			'orderType' : 'TERMINAL_ORDER',
+			'movementType' : viewModel.isPTOrder() ? 'TL_IN' : 'DEALERTOTERMINAL_TERMINAL_IN'
+		}
+		$.showLoading("正在处理...");
+		$.ajax({
+			type : "POST",
+			url : PATH.PORTAL.TERMINAL_LOGISTIC_VALIDATEQRCODE,
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(data),
+			dataType : 'json',
+			success: function(data) {
+				$.hideLoading();
+				if (data.errCode != 0) {
+					$.toast(data.errDescription, "forbidden");
+				} else {
+					var list = viewModel.materialList();
+					list.push({
+						'materia': code
+					});
+					viewModel.materialList(list);
+				}
+			},
+			error: function(response) {
+				$.hideLoading();
+				$.toast("处理失败", "forbidden");
+			} 
+		});
+	}
+
+	var inCase = function() {
+		var data = {
+			'qrCodes' : viewModel.getMaterials(),
+			'operatorId' : viewModel.terminalId(),
+			'operatorType' : 'TERMINAL',
+			'orderId' : viewModel.orderNO(),
+			'orderType' : 'TERMINAL_ORDER',
+			'movementType' : viewModel.isPTOrder() ? 'TL_IN' : 'DEALERTOTERMINAL_TERMINAL_IN'
+		}
+		$.showLoading("正在处理...");
+		$.ajax({
+			type : "POST",
+			url : PATH.PORTAL.TERMINAL_LOGISTIC,
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(data),
+			dataType : 'json',
+			success : function(data) {
+				$.hideLoading();
+				if (data.failedRecords.length > 0) {
+					$.toast("数据错误", "forbidden");
+				}
+				else {
+					viewModel.materialList([]);
+					$.toast("入库完成");
+				}
+			},
+			error : function(response) {
+				$.hideLoading();
+				$.toast("处理失败", "forbidden");
+			}
+		});
+	}
+
+	$(function() {
+		// get order NO.
+		viewModel.orderNO(COMMON.METHOD.GET_QUERY_STRING('orderNO'));
+		viewModel.isPTOrder(COMMON.METHOD.GET_QUERY_STRING('isPT'));
+		viewModel.terminalId(COMMON.METHOD.GET_QUERY_STRING('terminalId'));
+		// load data
+		viewModel.initPage();
+	});
+</script>
+</html>

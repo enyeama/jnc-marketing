@@ -1,0 +1,436 @@
+﻿<div class="row">
+	<div class="col-lg-12">
+		<div class="hpanel">
+			<script type="text/ng-template" id="firstDialogId">
+        <div class="ngdialog-message">
+            <h3>ngDialog template</h3>
+            <p ng-show="theme">Test content for <code>{{theme}}</code></p>
+            <p ng-show="ngDialogId">Dialog Id: <code>{{ngDialogId}}</code></p>
+            <p class="data-passed-through" ng-show="ngDialogData.foo">Data passed through: <code>{{ngDialogData.foo}}</code></p>
+            <p ng-show="dialogModel.message">Scope passed through: <code>{{dialogModel.message}}</code></p>
+            <p>Close this dialog: <button class="inline close-this-dialog" ng-click="closeThisDialog()">Close</button></p>
+
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary"
+                ng-dialog="secondDialogId"
+                ng-dialog-class="ngdialog-theme-default"
+                ng-dialog-controller="SecondModalCtrl"
+                ng-dialog-close-previous>Close and open</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()">Open next</button>
+        </div>
+    </script>
+			<div class="panel-heading">
+			   <a href="#">宴会申请签收
+					<!--button class="btn btn-success btn-xs pull-right" type="button">
+						<i class="fa fa-plus"></i> <span class="bold"></span>
+					</button-->
+				</a>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="row">
+						<div class="col-lg-2">
+							<label>回收单号</label> <input type="text" value="" id="officeName"
+								class="form-control" name="username" placeholder="" width="10px"
+								ng-keypress="searchKeyDown($event)" />
+						</div>
+						<div class="col-lg-2">
+							<label>经销商名称</label> <input type="text" value="" id="reportBillNo"
+								class="form-control" name="username" placeholder=""
+								ng-keypress="searchKeyDown($event)" />
+						</div>
+						<div class="col-lg-2">
+							<label>签收状态</label> 
+							<select class="form-control" ng-model="criteria.keywords.signStatus"
+								ng-options="statusItem.value as statusItem.label for statusItem in criteria.signStatus"></select>
+					
+						</div>
+						<div class="col-lg-2">
+							<label>邮寄单号</label> <input type="text" value="" id="officeName"
+								class="form-control" name="username" placeholder="" width="10px"
+								ng-keypress="searchKeyDown($event)" />
+						</div>
+					
+					</div>
+					<div class="row" style="margin-top:10px;">
+						
+						<div class="col-lg-2">
+							<label>报备单号</label> <input type="text" value="" id="reportBillNo"
+								class="form-control" name="username" placeholder=""
+								ng-keypress="searchKeyDown($event)" />
+						</div>
+						<div class="col-lg-2">
+							<label>邮寄时间</label> 
+							<input type="text" class="form-control pull-right" id="postTimeFrom">
+					
+						</div>
+					
+						<div class="col-lg-2">
+							<label>&nbsp;</label> 
+							<div class="row">
+							  <div style="float:left;margin:10px 15px 0px 5px;"><label>到</label></div>
+							  <div style="float:left"><input type="text" class="form-control pull-right" id="postTimeTo" /></div>
+						    </div>
+						</div>
+					
+						<div class="col-lg-2">
+							<button type="button" class="btn btn-info search-btn" data-toggle="modal"
+								ng-click="searchBanquetItem()">查询</button>
+						</div>
+					</div>
+					<!--Start Dialog div-->
+					<div class="col-lg-2">
+
+
+
+						<div class="modal fade" id="banquetWriteOffDetailModal" tabindex="-1"
+							role="dialog" aria-labelledby="banquetDetailDialog">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="exampleModalLabel">初次核对</h4>
+									</div>
+									<div class="modal-body">
+										<form class="form-horizontal">
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">回收单号:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="message-text2"
+														ng-model="formData.product" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">报备单号:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="message-text3"
+														ng-model="formData.postMan" />
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">申报瓶盖数:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="message-text4"
+														ng-model="formData.dealerName" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">申报盒盖数:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="message-text5"
+														ng-model="formData.cityManager.name" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">核对瓶盖数:</label>
+												<div class="col-md-6">
+													<input type="text" class="form-control" id="message-text5"
+														ng-model="formData.customerName" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">核对母扣数:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="message-text7"
+														ng-model="formData.customerPhone" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">核对子扣数:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="message-text7"
+														ng-model="formData.customerIDCardNO" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">初次核对判断人:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="activityTime"
+														ng-model="formData.orderPersonName" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">初次核对日期:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="paymentTime"
+														ng-model="formData.orderPhone" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="message-text" class="col-sm-4 control-label">备注:</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" id="message-text7"
+														ng-model="formData.banquetAddr" />
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-info"
+											ng-click="saveBanquetItem()">保存</button>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal" data-toggle="modal">取消</button>
+
+
+										<div class="modal modal-success" id="myModal" tabindex="-1"
+											role="dialog" aria-labelledby="myModalLabel"
+											aria-hidden="true">
+											<div class="message-modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close"
+															ng-click="hideMsgDialog('myModal')">
+															<span aria-hidden="true">&times;</span><span
+																class="sr-only">Close</span>
+														</button>
+														<h4 class="modal-title" id="myModalLabel"
+															style="font-size: 16px; font-weight: bold">提示</h4>
+													</div>
+													<div class="message-modal-body"
+														style="font-size: 14px; font-weight: bold; margin-left: 20px;">
+														数据已成功保存!</div>
+													<div class="modal-footer">
+
+														<button type="button" class="btn btn-info"
+															ng-click="hideMsgDialog('myModal')">确定</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+					<div class="modal fade" id="banquetWriteOffModal" tabindex="-1"
+						role="dialog" aria-labelledby="banquetVerificationModal">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="banquetVerificationModal">核销申请</h4>
+								</div>
+								<div class="modal-body">
+								  <form class="form-horizontal">
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">邮寄单号:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">邮寄日期:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">预计到达日期:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">邮寄人:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">快递公司:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">办事处:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">销售渠道:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">报备单号:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">邮寄瓶盖数:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-sm-4 control-label">邮寄盒盖数:</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="message-text7"
+												ng-model="formData.customerPhone" />
+										</div>
+									</div>
+								  </form>
+								</div>
+								<div class="modal-footer">
+								   <button type="button" class="btn btn-info"
+										ng-click="verificationReport(2)">保存</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">取消</button>
+									
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--End Dialog div-->
+			</div>
+			<div>
+				<button type="button" class="btn btn-info left-btn" data-toggle="modal" data-target="#banquetWriteOffDetailModal" data-whatever="">签收</button>
+				<button type="button" class="btn btn-info left-btn" data-toggle="modal" data-target="#banquetWriteOffDetailModal" data-whatever="">审核</button>
+				<button type="button" class="btn btn-info right-btn" data-toggle="modal" data-target="#banquetWriteOffModal" data-whatever="">打印流转单</button>
+			</div>
+
+			<div style="overflow: auto; clear: both; height: 350px;">
+				<table id="orderList" style="width: 2400px;"
+					class="footable table table-stripped table-bordered toggle-arrow-tiny dataTable"
+					data-page-size="2" data-filter=#filter>
+					<thead>
+						<tr class="info">
+							<th><input id="selectAll" type="checkbox" name="checkAll" class="middle"
+								ng-click="updateSelected('selectAll','checkAll');"/>全选</th>
+							<th>操作</th>
+							<th>邮寄单号</th>
+							<th>报备单号</th>
+							<th>回收单号</th>
+							<th>办事处</th>
+							<th>经销商编号</th>
+							<th>经销商名称</th>
+							<th>销售版本</th>
+							<th>销售产品</th>
+							<th>活动时间</th>
+							<th>兑付时间</th>
+							<th>邮寄人</th>
+							<th>邮寄公司</th>
+							<th>邮寄瓶盒数</th>
+							<th>邮寄瓶盖数</th>
+							<th>邮寄时间</th>
+							<th>预计到达时间</th>
+							<th>添加邮寄时间</th>
+							<th>发起核销时间</th>
+							<th>状态</th>
+							
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in banquetData" ng-if="banquetData.length>0">
+							<td>
+								<div class="icheckbox_minimal-blue"
+									style="width: 140%; height: 140%;" aria-checked="false"
+									aria-disabled="false">
+									<!--input type="checkbox" name="banquetReportItem"
+										class="middle"
+										ng-click="updateSelection($event,item.productId)" /-->
+										
+								<!-- input id="{{item.productId}}" type="checkbox" ng-model="isSelect" ng-checked="master" ng-click="updateSelection($event,item.productId)"-->
+								 <input type="checkbox" id="{{item.id}}" name="banquetReportItem"  ng-click="updateSelected(item.id,'banquetReportItem');">
+								</div>
+							</td>
+							<td>
+								<button class="btn btn-success btn-xs" ng-model="item.productId"
+									type="button" data-toggle="modal"
+									data-target="#banquetWriteOffDetailModal" data-whatever="{{item.id}}">
+									<i class="fa fa-pencil"></i> <span class="bold">编辑</span>
+								</button>
+							</td>
+							<td ng-bind="item.id"></td>
+							<td ng-bind="{{item.banquetTime}}"></td>
+							<td ng-bind="item.banquetAddr"></td>
+							<td ng-bind="item.banquetTime"></td>
+							<td ng-bind="item.banquetTime"></td>
+							<td ng-bind="item.status"></td>
+							<td ng-bind="item.banquetTime"></td>
+							<td ng-bind="item.dealerName"></td>
+							<td ng-bind="item.terminal"></td>
+							<td ng-bind="item.customerName"></td>
+							<td ng-bind="item.customerPhone"></td>
+
+
+							<td ng-bind="item.banquetTime"></td>
+							<td ng-bind="item.banquetTime"></td>
+
+
+							<td ng-bind="item.banquetTime"></td>
+							<td ng-bind="item.tableCount"></td>
+							<td ng-bind="item.banquetTypeID"></td>
+							<td ng-bind="item.product.name"></td>
+							<td ng-bind="item.planQuantity"></td>
+							<td ng-bind="item.dealPrice"></td>
+
+						</tr>
+						<tr ng-if="!banquetData.length>0">
+							<td td colspan="15" align="center" style="font-weight:bold;">没有相关记录</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						 <tr>
+					    <td colspan="28" valign="middle">
+						    <div style="float: left">
+								<label>显示</label> 
+								<select ng-model="criteria.paging.size" ng-options="statusItem.value as statusItem.label for statusItem in criteria.pageConfig"
+								  ng-change="searchBanquetItem()">
+								</select> 
+								<label>条/页</label>
+					        </div>
+							<div style="float:left;margin-left:20px;">
+								<button ng-disabled="criteria.paging.index == 0"
+									ng-click="changePageNo('first')">首页</button>
+								<button ng-disabled="criteria.paging.index == 0"
+									ng-click="changePageNo('previous')">上一页</button>
+								<label>{{criteria.paging.index}}/{{numberOfPages}}</label>
+								<button ng-disabled="currentPage >= numberOfPages-1"
+									ng-click="changePageNo('next')">下一页</button>
+								<button ng-disabled="currentPage >= data.length/pageSize - 1"
+									ng-click="changePageNo('last')">末页</button>
+								<input type="text" class="page-number-input" ng-model="pagenum"
+									ng-keypress="pageNoKeyDown($event)" />
+								<button ng-click="switchPage()">转到</button>
+							</div>
+                          </td>
+                        </tr>
+					</tfoot>
+				</table>
+			</div>
+			<!--end for table div-->
+		</div>
+	</div>
+</div>
+</div>
+</div>

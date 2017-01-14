@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>终端访销</title>
+    <link rel="stylesheet" type="text/css" href="css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/reg.css"/>
+</head>
+<body>
+	<form action="" method="post" id="reg_form">
+		<div class="weui_cells weui_cells_form">
+		  <div class="weui_cell">
+		    <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+		    <div class="weui_cell_bd weui_cell_primary">
+		      <input class="weui_input" type="text" name="userName" placeholder="请输入姓名">
+		    </div>
+		  </div>
+		  <div class="weui_cell">
+		    <div class="weui_cell_hd"><label class="weui_label">手机号</label></div>
+		    <div class="weui_cell_bd weui_cell_primary">
+		      <input class="weui_input" type="tel" name="phoneNumber" placeholder="请输入手机号">
+		    </div>
+		  </div>
+		  <div class="weui_cell">
+		    <div class="weui_cell_hd"><label class="weui_label">验证码</label></div>
+		    <div class="weui_cell_bd weui_cell_primary">
+		      <input class="weui_input" type="tel" name="code" placeholder="请输入验证码">
+		    </div>
+		     <div class="weui_cell_hd"><label class="jpform_yzCode weui_label" onclick="obtain_code(this)">获取验证码</label></div>
+		  </div>
+		</div>
+		<a href="javascript:;" class="weui_btn weui_btn_primary regBtn">注册</a>
+	</form>
+</body>
+	<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/validator.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/common/path.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/common/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/reg.js" type="text/javascript" charset="utf-8"></script>
+</html>

@@ -1,0 +1,32 @@
+[{
+	"name": "KA订单管理",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "KA网点订单",
+		"href": "ka/ordermanagement"
+	}]
+},
+{
+	"name": "备用物料",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "兑付明细",
+		"href": "sparematerial/consumptiondetail"
+	}]
+},
+{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "核销申请",
+		"href": "banquet/banquets/application"
+	}]
+},
+{
+	"name": "移动访销",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "经销商-组长-产品",
+		"href": "ydfx/dealerconfig"
+	}]
+}]

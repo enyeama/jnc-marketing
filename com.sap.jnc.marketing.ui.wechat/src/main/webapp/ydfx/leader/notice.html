@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>领货通知</title>
+    <link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/leader.css"/>
+</head>
+<body>
+	<div class="weui_panel weui_panel_access">
+	  <div class="weui_panel_hd">
+	  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary bind_scan_btn"
+		 onclick="scanNotice()" style="float: right;margin-top: -.2rem;">扫码</a>
+	  <div style="clear: both;"></div>
+	  </div>
+	</div>
+	<!-- 商品列表 -->
+	<div class="weui_cells" data-bind="foreach: infos; style:{display: infos.length > 0 ? '' : 'none'}">
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p data-bind="text: $data.materia"></p>
+			</div>
+		</div>
+	</div>
+	<div class="bottomBtnBox">
+		<a href="javascript:;" class="weui_btn weui_btn_primary" onclick="inCase()">入库</a>
+	</div>
+</body>
+<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="UTF-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/wechat.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/notice/notice.js" type="text/javascript" charset="utf-8"></script>
+</html>

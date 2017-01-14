@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>KA门店信息</title>
+    <link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/terminal.css"/>
+</head>
+<style type="text/css">
+	.weui_label{
+		width: 75px;	
+	}
+	.weui_cell_bd p{
+		color: #888;
+	}
+	.weui_btn{
+		margin:.5rem;
+	}
+</style>
+<body>
+<form>
+	<div class="weui_cells weui_cells_form">
+	  <div class="weui_cell">
+	    <div class="weui_cell_hd"><label class="weui_label">GPS地址</label></div>
+	    <div class="weui_cell_bd weui_cell_primary">
+			<input style="display: none" name="id" data-bind="value: info().id"/>
+			<!--地址相关信息 -->
+			<input style="display: none;" name="accuracy" data-bind="value: info().accuracy"/>
+			<input style="display: none;" name="longitude" data-bind="value: info().longitude"/>
+			<input style="display: none;" name="latitude" data-bind="value: info().latitude"/>
+			<input style="display: none;" name="province" data-bind="value: info().province"/>
+			<input style="display: none;" name="city" data-bind="value: info().city"/>
+			<input style="display: none;" name="country" data-bind="value: info().country"/>
+			<input class="weui_input" type="text" name="gpsDescription" data-bind="value: info().gpsDescription" readonly="readonly">
+	    </div>
+		<a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini">获取</a>
+	  </div>
+	  <div class="weui_cell">
+	  	<div class="weui_cell_hd"><label class="weui_label">门头照片</label></div>
+	    <div class="weui_uploader_bd">
+          <div class="weui_uploader_input_wrp" data-bind="attr: {style: 'background-image:url(' + $data.pictureUrl + ');background-size:100%;'}">
+            <input class="weui_uploader_input" name="picture" disabled="disabled" onclick="chooseKaImg(this)">
+          </div>
+        </div>
+	  </div>
+	  <div class="weui_cell">
+	    <div class="weui_cell_hd"><label class="weui_label">店号</label></div>
+	    <div class="weui_cell_bd weui_cell_primary">
+	      <p data-bind="info().storeNumber"></p>
+	    </div>
+	  </div>
+	  <div class="weui_cell">
+	    <div class="weui_cell_hd"><label class="weui_label">省市区</label></div>
+	    <div class="weui_cell_bd weui_cell_primary">
+	      <p data-bind="info().province + info().city + info().county"></p>
+	    </div>
+	  </div>
+	  <div class="weui_cell">
+	    <div class="weui_cell_hd"><label class="weui_label">网点名称</label></div>
+	    <div class="weui_cell_bd weui_cell_primary">
+	      <p data-bind="info().branchName"></p>
+	    </div>
+	  </div>
+	  <div class="weui_cell">
+	    <div class="weui_cell_hd"><label class="weui_label">网店地址</label></div>
+	    <div class="weui_cell_bd weui_cell_primary">
+	      <p data-bind="info().address"></p>
+	    </div>
+	  </div>
+	 </div>
+	  <a href="javascript:;" class="weui_btn weui_btn_primary" onclick="submitKaForm()">提交</a>
+</form>
+</body>
+	<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="UTF-8"></script>
+	<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/validator.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/wechat.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	var viewModel = {
+		info : ko.observable({}),
+		initInfo: function(){
+			var _this = this;
+			var options = {};
+			options.kaId = $('input[name=id]').val() || 1;
+			$.get(PATH.PORTAL.KA_INFO, options, function(data){
+				_this.accounts(data);
+			});
+		}
+	};
+
+	ko.applyBindings(viewModel);
+	$(function () {
+		viewModel.initInfo();
+	});
+
+	function submitKaForm(){
+		var options = {};
+		options = $('#bind_ka_form').serialize();
+		var _latitude = $('input[name=latitude]');
+		var message = '';
+		if(!validateNotNull(_latitude.val())){
+			message += '请定位KA位置!';
+		}
+		if(message == ''){
+			$.post(PATH.PORTAL.KA_SAVE, options, function(data){
+				$.toast('变更KA信心成功');
+				setTimeout(function(){
+					location.href = PATH.PORTAL.TO_KA_LIST;
+				}, 1500);
+			}).error(function(data){
+				if(data.status == 200){
+					$.toast('变更KA信息成功');
+					setTimeout(function(){
+						location.href = PATH.PORTAL.TO_KA_LIST;
+					}, 1500);
+				}else{
+					$.toast('变更KA信息失败!');
+				}
+			});
+		}
+	}
+
+	var chooseKaImg = function(element){
+		chooseWxCamera(function(data){
+			var img = data.localIds[0];
+		});
+	};
+
+
+</script>
+</html>

@@ -1,0 +1,20 @@
+[{
+	"name": "KA考核",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "送货及时率",
+		"href": "ka/goodsratioreport"
+	},
+	{
+		"name": "到货汇总",
+		"href": "ka/goodsreceiptreport"
+	}]
+},
+{
+	"name": "KA订单管理",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "KA网点订单",
+		"href": "ka/ordermanagement"
+	}]
+}]

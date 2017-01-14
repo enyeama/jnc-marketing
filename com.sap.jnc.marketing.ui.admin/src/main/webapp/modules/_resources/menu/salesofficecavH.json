@@ -1,0 +1,8 @@
+[{
+	"name": "宴会",
+	"icon": "fa-list-alt",
+	"items": [{
+		"name": "核销三项统计报表",
+		"href": "banquet/banquetSaleReport"
+	}]
+}]

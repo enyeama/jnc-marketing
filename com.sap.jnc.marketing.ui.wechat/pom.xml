@@ -1,0 +1,87 @@
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jnc-marketing-ui-wechat</artifactId>
+	<packaging>war</packaging>
+	<name>JNC Marketing Wechat API</name>
+	<parent>
+		<groupId>com.sap.jnc.marketing</groupId>
+		<artifactId>jnc-marketing</artifactId>
+		<version>${com.sap.jnc.marketing.version}</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<properties>
+		<!-- Project Build Up -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.8</jdk.version>
+		<maven-war-plugin.version>2.6</maven-war-plugin.version>
+		<!-- Dependencies Variables -->
+		<org.apache.tomcat-catalina.version>8.5.2</org.apache.tomcat-catalina.version>
+	</properties>
+	<dependencies>
+		<!-- Web Container -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>${org.apache.tomcat-catalina.version}</version>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>ui-deploy</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<url>${tomcat.url}</url>
+							<username>${tomcat.username}</username>
+							<password>${tomcat.password}</password>
+							<path>/wechat</path>
+						</configuration>
+						<executions>
+							<execution>
+					            <id>undeploy-war</id>
+					            <phase>install</phase>
+					            <goals>
+					              <goal>undeploy</goal>
+					            </goals>
+					         </execution>
+							<execution>
+								<id>deploy-war</id>
+								<phase>install</phase>
+								<goals>
+									<goal>redeploy-only</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

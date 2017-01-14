@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>兑付记录</title>
+    <link rel="stylesheet" type="text/css" href="../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/consumptionRecords.css"/>
+</head>
+<body>
+<div class="weui-pull-to-refresh-layer">
+    <div class="pull-to-refresh-arrow"></div>
+    <div class="pull-to-refresh-preloader"></div>
+    <div class="down">下拉刷新</div>
+    <div class="up">释放刷新</div>
+    <div class="refresh">正在刷新...</div>
+</div>
+<header id="head">
+    <a href="consumptionInput.html" class="weui_btn weui_btn_primary">兑付录入</a>
+</header>
+<div class="weui_panel consumption_panel" data-bind="foreach: aConsumptionRecords">
+    <div class="weui_panel_hd">
+        <i class="weui_icon_waiting_circle"></i>
+        兑付单号：<span data-bind="text: $data.id"></span>
+    </div>
+    <div class="weui_panel_bd">
+        <div class="weui_media_box weui_media_text">
+            <p class="weui_media_desc" data-bind="text: '兑付日期：' + $data.paymentDate"></p>
+            <p class="weui_media_desc" data-bind="text: '物料：' + $data.product"></p>
+            <p class="weui_media_desc" data-bind="text: '兑付数量：' + $data.paidQuantity"></p>
+            <p class="weui_media_desc" data-bind="text: '备注：' + $data.paymentComment"></p>
+        </div>
+    </div>
+</div>
+<div id="scrollDiv" class="weui-infinite-scroll">
+  	<div class="infinite-preloader"></div>
+  	正在加载...
+</div>
+</body>
+<script src="../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/sparematerial/consumptionRecords.js" type="text/javascript" charset="utf-8"></script>
+</html>

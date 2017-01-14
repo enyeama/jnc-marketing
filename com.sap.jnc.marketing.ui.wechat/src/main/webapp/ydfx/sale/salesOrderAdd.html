@@ -1,0 +1,128 @@
+<! DOCTYPE html />
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>新增订单</title>
+	<link rel="stylesheet" type="text/css" href="../../css/weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-weui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/salesman.css"/>
+</head>
+<body>
+	<div class="weui_cells weui_cells_form">
+		<form id="orderForm">
+			<div class="weui_cell weui_cell_select weui_select_after">
+				<div class="weui_cell_hd">
+					<label class="weui_label">品类</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<select id="category" class="weui_select" data-bind="options: categories, optionsText: 'name', optionsValue: 'id'"
+					onchange="getProduct(this.id)">
+					</select>
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">版本</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<label class="weui_label">烟酒版</label>
+				</div>
+			</div>
+			<div class="weui_cell weui_cell_select weui_select_after">
+				<div class="weui_cell_hd">
+					<label class="weui_label">商品名称</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<select name="materialID" class="weui_select" data-bind="options: products, optionsText: 'name', optionsValue: 'id'">
+					</select>
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">数量（瓶）</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<input name="quantity" class="weui_input" type="text" value="" />
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">备注</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<textarea name="comment" class="weui_textarea" placeholder="备注" rows="4"></textarea>
+				</div>
+			</div>
+		</form>
+		<div class="bottomBtnBox">
+			<a href="javascript:;" class="weui_btn weui_btn_primary" onclick="addOrder()">提交订单</a>
+		</div>
+	</div>
+</body>
+<script src="../../js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-weui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/wx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common/path.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+	var viewModel = {
+		salesId: ko.observable(),
+		terminalId: ko.observable(),
+		categories: ko.observableArray([]),
+		products: ko.observableArray([])
+	};
+	
+	ko.applyBindings(viewModel);
+
+	var addOrder = function() {
+		var data = $('#orderForm').serialize();
+		data += '&terminalID=' + viewModel.terminalId();
+		data += '&salesId=' + viewModel.salesId();
+		$.showLoading("正在处理...");
+		$.post(PATH.PORTAL.SALESMAN_ORDERS, data).done(function(response) {
+			$.hideLoading();
+			window.location.href = PATH.PORTAL.TO_SALESMAN_ORDERS + "?id=" + response.orderNO;
+		}).fail(function(response) {
+			$.hideLoading();
+			$.toast("下单失败", "forbidden");
+		});
+	}
+	
+	var getProduct = function(id) {
+		var categoryId = $('#' + id).val();
+		if (!categoryId) {
+			return;
+		}
+		$.showLoading("数据加载中...");
+		$.get( ROOT + '/salesman/products/dmscategoryid/' + categoryId + '/chanelid/' + CONSTANT.YDFX.chanelId)
+		.done(function(data) {
+			viewModel.products(data);
+			$.hideLoading();
+		}).fail(function(response) {
+			$.hideLoading();
+			$.toast("数据加载失败", "forbidden");
+		});
+	}
+	
+	$(function() {
+		// get terminalId
+		viewModel.terminalId(COMMON.METHOD.GET_QUERY_STRING('terminalId'));
+		viewModel.salesId(COMMON.METHOD.GET_QUERY_STRING('salesId'));
+		$.showLoading("数据加载中...");
+		// load category list
+		$.get(ROOT + '/salesman/category/' + CONSTANT.YDFX.salesCategoryId)
+		.done(function(data) {
+			data.splice(0, 0, {id: '', name: ''});
+			viewModel.categories(data);
+			$.hideLoading();
+		}).fail(function(response) {
+			$.hideLoading();
+			$.toast("数据加载失败", "forbidden");
+		});
+	});
+</script>
+</html>

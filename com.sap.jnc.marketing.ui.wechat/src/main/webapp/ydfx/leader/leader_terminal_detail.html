@@ -1,0 +1,142 @@
+<!-- author: Zero Yu -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>终端管理（组长）</title>
+<link rel="stylesheet" type="text/css" href="../../css/weui.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/jquery-weui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../css/terminal.css" />
+</head>
+<body>
+	<div class="weui_panel weui_panel_access">
+		<div class="weui_panel_bd">
+			<div class="weui_media_box weui_media_text">
+				<h4 class="weui_media_title"
+					data-bind="text: terminalData().ternimalName"></h4>
+				<div class="weui_media_desc">
+					<p class="weui_media_desc"
+						data-bind="text: '编号：' + terminalData().ternimalId"></p>
+					<p class="weui_media_desc"
+						data-bind="text: '地址：' + terminalData().ternimalAddress"></p>
+				</div>
+				<div class="weui_media_desc">
+					<span style="width: 50%; display: inline-block;"
+						class="weui_media_desc"
+						data-bind="text: '网店等级：' + terminalData().branchLevel"></span> <span
+						style="width: 40%; display: inline-block;" class="weui_media_desc"
+						data-bind="text: '渠道：' + terminalData().channelName"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="weui_panel weui_panel_access">
+		<div class="weui_panel_bd" data-bind="foreach: data">
+			<a href="javascript:void(0);"
+				class="weui_media_box weui_media_appmsg">
+				<div class="weui_media_bd">
+					<h4 class="weui_media_title" data-bind="text: name"></h4>
+					<!-- <p class="weui_media_desc" data-bind="text: '员工姓名：' + name"></p> -->
+					<p class="weui_media_desc" data-bind="text: '手机号：' + phone"></p>
+				</div>
+				<div class="weui_btn weui_btn_mini weui_btn_warn"
+					data-bind="click: $parent.removeSaler, visible: $parent.data().length>0">删除</div>
+			</a>
+		</div>
+	</div>
+	<div class="bottomBtnBox">
+		<a href="javascript:;" class="weui_btn weui_btn_primary"
+			data-bind="click: toAddChild">新增</a>
+	</div>
+</body>
+<script src="../../js/jquery-2.1.4.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/jquery-weui.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/knockout-3.4.0.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"
+	charset="UTF-8"></script>
+<script src="../../js/jquery.cookie.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/common/common.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/common/path.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="../../js/common/wechat.js" type="text/javascript"
+	charset="utf-8"></script>
+<script type="text/javascript">
+	function TLDViewModel() {
+		var self = this;
+		self.terminalData = ko.observable({
+			ternimalName : "",
+			ternimalId : "",
+			channelName : "",
+			branchLevel : "",
+			ternimalAddress : ""
+		});
+		self.data = ko.observableArray([]);
+
+		$.ajax({
+			type : "GET",
+			url : "/api/wechat/leaderterminalmaintenance/terminal?terminalId=" + COMMON.METHOD.GET_QUERY_STRING("terminalId"),
+			contentType : "application/json; charset=utf-8",
+			dataType : 'json',
+			success : function(data) {
+				self.terminalData(data);
+			},
+			error : function(response) {
+				$.toast("加载终端信息失败", "forbidden");
+			},
+			complete : function() {
+				$.hideLoading();
+			}
+		});
+
+		$.showLoading();
+		$.ajax({
+			type : "GET",
+			url : "/api/wechat/leaderterminalmaintenance/terminal/salesmen?terminalId=" + COMMON.METHOD.GET_QUERY_STRING("terminalId"),
+			contentType : "application/json; charset=utf-8",
+			dataType : 'json',
+			success : function(data) {
+				self.data(data);
+			},
+			error : function(response) {
+				$.toast("加载业务员失败", "forbidden");
+			},
+			complete : function() {
+				$.hideLoading();
+			}
+		});
+
+		self.removeSaler = function(item) {
+			var requestBody = {
+				salesmanExternalId : item.jobId,
+				terminalId : self.terminalData().ternimalId
+			};
+			$.ajax({
+				type : "POST",
+				url : "/api/wechat/leaderterminalmaintenance/relationships/config",
+				data : JSON.stringify(requestBody),
+				contentType : "application/json",
+				success : function(data) {
+					$.toast("删除成功");
+					self.data.remove(item);
+				},
+				error : function(response) {
+					$.toast("删除失败", "forbidden");
+				}
+			});
+		};
+
+		self.toAddChild = function() {
+			window.location.href = "/wechat/ydfx/leader/leader_terminal_add_child.html?tid=" + self.terminalData().ternimalId;
+		};
+	};
+	ko.applyBindings(new TLDViewModel());
+</script>
+</html>

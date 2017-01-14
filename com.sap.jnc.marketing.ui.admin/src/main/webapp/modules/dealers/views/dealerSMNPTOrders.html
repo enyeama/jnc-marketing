@@ -1,0 +1,124 @@
+<div class="normalheader transition animated fadeIn small-header">
+	<div class="hpanel">
+		<div class="panel-body">
+			<h2 class="font-light m-b-xs">
+				<i class="fa"></i> 订单管理 > <a href="#/dealers/smNPtOrders">终端订单</a>
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="content" ng-controller="jnc-admin.dealers.dealerSMNPTOrders.controller">
+<div class="row projects">		
+	<div class="col-lg-12">
+		<div class="hpanel hgreen">
+			<div class="panel-body">
+				<div class="row">
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
+					<div class="form-group col-lg-3">
+						<label class="form-label">订单编号</label>
+						<input type="text" class="form-control" placeholder="无" ng-model="criteria.keywords.orderId" />
+					</div>
+					<div class="form-group col-lg-3">
+						<label class="form-label">订单状态</label>
+						<select class="form-control" ng-model="criteria.keywords.status">
+							<option value="WAITFORDELIVERY">待发货</option>
+							<option value="INDELIVERY">配送中</option>
+							<option value="FINISH">完成</option>
+							<option value="CANCEL">取消</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-3">
+						<label class="form-label">终端名称</label>
+						<input type="text" class="form-control" placeholder="无" ng-model="criteria.keywords.terminal" />
+					</div>
+					<div class="clearfix"></div>
+					<div class="form-group col-lg-1">
+						<label class="form-label">&nbsp;</label>
+						<button class="btn btn-primary form-control" ng-click="search()">查询</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="hpanel">
+			<div class="panel-body">
+				<table id="orderList" class="footable table table-stripped toggle-arrow-tiny" data-page-size="20" data-filter=#filter>
+					<thead>
+						<tr>
+							<th>订单编号</th>
+							<th>订单状态</th>
+							<th>终端名称</th>
+							<th>商品名称</th>
+							<th>数量</th>
+							<th>送货地址</th>
+							<th>联系电话</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="orderInfo in model.content track by $index">
+							<td ng-bind="orderInfo.orderId"></td>
+							<td ng-bind="orderInfo.statusText"></td>
+							<td ng-bind="orderInfo.terminal"></td>
+							<td ng-bind="orderInfo.product"></td>
+							<td ng-bind="orderInfo.cnt"></td>
+							<td ng-bind="orderInfo.address"></td>
+							<td ng-bind="orderInfo.tel"></td>
+							<td>
+								<a class="btn btn-primary btn-xs" ng-click="cancel(orderInfo.orderId)" ng-show="orderInfo.status == 'WAITFORDELIVERY'">取消订单</a>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="9" ng-show="model.numberOfElements > 0">
+								<ul class="pagination pull-right" ng-cloak>
+									<li ng-click="page(0)" ng-hide="model.first">
+										<span aria-label="First" aria-hidden="true">&laquo;&laquo;</span>
+									</li>
+									<li ng-click="page(model.number - 1)" ng-hide="model.first">
+										<span aria-label="Previous" aria-hidden="true">&laquo;</span>
+									</li>
+									<li ng-click="page(model.number - 2)" ng-show="model.number > model.totalPages - 1">
+										<span ng-bind="model.number - 1"></span>
+									</li>
+									<li ng-click="page(model.number - 1)" ng-show="model.number > 0">
+										<span ng-bind="model.number"></span>
+									</li>
+									<li class="active">
+										<span ng-bind="model.number + 1"></span>
+									</li>
+									<li ng-click="page(model.number + 1)" ng-show="model.number < model.totalPages - 1">
+										<span ng-bind="model.number + 2"></span>
+									</li>
+									<li ng-click="page(model.number + 2)" ng-show="model.number < 1">
+										<span ng-bind="model.number + 3"></span>
+									</li>
+									<li ng-click="page(model.number + 1)" ng-hide="model.last">
+										<span aria-label="Next" aria-hidden="true">&raquo;</span>
+									</li>
+									<li ng-click="page(model.totalPages - 1)" ng-hide="model.last">
+										<span aria-label="Next" aria-hidden="true">&raquo;&raquo;</span>
+									</li>
+									<li>
+										<select class="form-control" ng-model="criteria.paging.size" ng-change="page()">
+											<option label="每页5个" value="5">5</option>
+											<option label="每页10个" value="10" selected>10</option>
+											<option label="每页20个" value="20">20</option>
+											<option label="每页50个" value="50">50</option>
+											<option label="每页100个" value="100">100</option>
+										</select>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
